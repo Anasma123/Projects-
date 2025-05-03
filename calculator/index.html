@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Scientific Calculator</title>
+    <link <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-theme="light">
+    <div class="container calculator-container">
+        <div class="calculator-header">
+            <h1>Ultimate Calculator</h1>
+            <div class="calculator-controls">
+                <div class="theme-switcher">
+                    <button class="btn btn-sm theme-btn active" data-theme="light">☀️ Light</button>
+                    <button class="btn btn-sm theme-btn" data-theme="dark">🌙 Dark</button>
+                    <button class="btn btn-sm theme-btn" data-theme="professional">💼 Pro</button>
+                    <button class="btn btn-sm theme-btn" data-theme="vibrant">🌈 Vibrant</button>
+                </div>
+                <div class="mode-switcher">
+                    <button class="btn btn-sm mode-btn active" data-mode="basic">Basic</button>
+                    <button class="btn btn-sm mode-btn" data-mode="scientific">Scientific</button>
+                    <button class="btn btn-sm mode-btn" data-mode="programmer">Programmer</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="calculator-display">
+            <div class="previous-operand"></div>
+            <div class="current-operand">0</div>
+            <div class="memory-indicator"></div>
+            <div class="angle-indicator">DEG</div>
+        </div>
+        
+        <div class="calculator-buttons basic-mode active-mode">
+            <button class="btn btn-calculator btn-operation btn-danger" data-value="clear">AC</button>
+            <button class="btn btn-calculator btn-operation btn-warning" data-value="delete">DEL</button>
+            <button class="btn btn-calculator btn-operation btn-info" data-value="percentage">%</button>
+            <button class="btn btn-calculator btn-operation btn-primary" data-value="÷">÷</button>
+            
+            <button class="btn btn-calculator btn-number" data-value="7">7</button>
+            <button class="btn btn-calculator btn-number" data-value="8">8</button>
+            <button class="btn btn-calculator btn-number" data-value="9">9</button>
+            <button class="btn btn-calculator btn-operation btn-primary" data-value="×">×</button>
+            
+            <button class="btn btn-calculator btn-number" data-value="4">4</button>
+            <button class="btn btn-calculator btn-number" data-value="5">5</button>
+            <button class="btn btn-calculator btn-number" data-value="6">6</button>
+            <button class="btn btn-calculator btn-operation btn-primary" data-value="-">-</button>
+            
+            <button class="btn btn-calculator btn-number" data-value="1">1</button>
+            <button class="btn btn-calculator btn-number" data-value="2">2</button>
+            <button class="btn btn-calculator btn-number" data-value="3">3</button>
+            <button class="btn btn-calculator btn-operation btn-primary" data-value="+">+</button>
+            
+            <button class="btn btn-calculator btn-zero btn-number" data-value="0">0</button>
+            <button class="btn btn-calculator btn-number" data-value=".">.</button>
+            <button class="btn btn-calculator btn-equals btn-success" data-value="=">=</button>
+        </div>
+        
+        <div class="calculator-buttons scientific-mode">
+            <button class="btn btn-calculator btn-scientific" data-value="sin">sin</button>
+            <button class="btn btn-calculator btn-scientific" data-value="cos">cos</button>
+            <button class="btn btn-calculator btn-scientific" data-value="tan">tan</button>
+            <button class="btn btn-calculator btn-scientific" data-value="log">log</button>
+            <button class="btn btn-calculator btn-scientific" data-value="ln">ln</button>
+            
+            <button class="btn btn-calculator btn-scientific" data-value="sinh">sinh</button>
+            <button class="btn btn-calculator btn-scientific" data-value="cosh">cosh</button>
+            <button class="btn btn-calculator btn-scientific" data-value="tanh">tanh</button>
+            <button class="btn btn-calculator btn-scientific" data-value="exp">exp</button>
+            <button class="btn btn-calculator btn-scientific" data-value="mod">mod</button>
+            
+            <button class="btn btn-calculator btn-scientific" data-value="√">√</button>
+            <button class="btn btn-calculator btn-scientific" data-value="x²">x²</button>
+            <button class="btn btn-calculator btn-scientific" data-value="x³">x³</button>
+            <button class="btn btn-calculator btn-scientific" data-value="x^y">x^y</button>
+            <button class="btn btn-calculator btn-scientific" data-value="10^x">10^x</button>
+            
+            <button class="btn btn-calculator btn-scientific" data-value="(">(</button>
+            <button class="btn btn-calculator btn-scientific" data-value=")">)</button>
+            <button class="btn btn-calculator btn-scientific" data-value="π">π</button>
+            <button class="btn btn-calculator btn-scientific" data-value="e">e</button>
+            <button class="btn btn-calculator btn-scientific" data-value="rand">Rand</button>
+            
+            <button class="btn btn-calculator btn-angle-unit active" data-value="deg">Deg</button>
+            <button class="btn btn-calculator btn-angle-unit" data-value="rad">Rad</button>
+            <button class="btn btn-calculator btn-scientific" data-value="fact">n!</button>
+            <button class="btn btn-calculator btn-scientific" data-value="1/x">1/x</button>
+            <button class="btn btn-calculator btn-scientific" data-value="|x|">|x|</button>
+        </div>
+        
+        <div class="calculator-buttons programmer-mode">
+            <button class="btn btn-calculator btn-programmer active" data-value="hex">HEX</button>
+            <button class="btn btn-calculator btn-programmer" data-value="dec">DEC</button>
+            <button class="btn btn-calculator btn-programmer" data-value="oct">OCT</button>
+            <button class="btn btn-calculator btn-programmer" data-value="bin">BIN</button>
+            
+            <button class="btn btn-calculator btn-programmer" data-value="and">AND</button>
+            <button class="btn btn-calculator btn-programmer" data-value="or">OR</button>
+            <button class="btn btn-calculator btn-programmer" data-value="xor">XOR</button>
+            <button class="btn btn-calculator btn-programmer" data-value="not">NOT</button>
+            
+            <button class="btn btn-calculator btn-programmer" data-value="lsh">&lt;&lt;</button>
+            <button class="btn btn-calculator btn-programmer" data-value="rsh">&gt;&gt;</button>
+            <button class="btn btn-calculator btn-programmer" data-value="nand">NAND</button>
+            <button class="btn btn-calculator btn-programmer" data-value="nor">NOR</button>
+            
+            <button class="btn btn-calculator btn-programmer" data-value="A">A</button>
+            <button class="btn btn-calculator btn-programmer" data-value="B">B</button>
+            <button class="btn btn-calculator btn-programmer" data-value="C">C</button>
+            <button class="btn btn-calculator btn-programmer" data-value="D">D</button>
+            <button class="btn btn-calculator btn-programmer" data-value="E">E</button>
+            <button class="btn btn-calculator btn-programmer" data-value="F">F</button>
+        </div>
+        
+        <div class="memory-buttons">
+            <button class="btn btn-memory btn-secondary" data-value="mc">MC</button>
+            <button class="btn btn-memory btn-secondary" data-value="mr">MR</button>
+            <button class="btn btn-memory btn-secondary" data-value="m+">M+</button>
+            <button class="btn btn-memory btn-secondary" data-value="m-">M-</button>
+            <button class="btn btn-memory btn-secondary" data-value="ms">MS</button>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
