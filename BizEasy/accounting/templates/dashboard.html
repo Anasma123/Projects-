@@ -1,0 +1,15 @@
+<body>
+    <h2>Welcome to BizEasy Dashboard</h2>
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+
+    <p>Total Income: ₹{{ total_income }}</p>
+    <p>Total Expense: ₹{{ total_expense }}</p>
+    <p>Net Balance: ₹{{ net_balance }}</p>
+
+    <h3>Recent Transactions:</h3>
+    <ul>
+        {% for txn in recent_transactions %}
+        <li>{{ txn.date }} - {{ txn.type }} - ₹{{ txn.amount }} ({{ txn.product.name }})</li>
+        {% endfor %}
+    </ul>
+</body>
