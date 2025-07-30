@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Owner Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Owner {{ user.username }}</h1>
+    <p>This is the Owner's dashboard.</p>
+
+    <p>User ID: {{ user.id }}</p>
+    <p>Role: {{ user.role }}</p>
+
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
