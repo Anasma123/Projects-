@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Purchase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            background-color: #4CAF50;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn.back {
+            background-color: #555;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .total-display {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>🧾 Add Purchase</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" name="product_name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category" id="category" onchange="filterSubcategories()">
+                <option value="">Select Category</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Subcategory</label>
+            <select name="subcategory" id="subcategory">
+                <option value="">Select Subcategory</option>
+                {% for sub in subcategories %}
+                    <option value="{{ sub.id }}" data-category="{{ sub.category.id }}">{{ sub.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" name="quantity" id="quantity" required oninput="updateTotal()">
+        </div>
+
+        <div class="form-group">
+            <label>Product Rate</label>
+            <input type="number" name="product_rate" id="product_rate" required oninput="updateTotal()">
+        </div>
+
+        <div class="form-group">
+            <label>Total Purchase Rate</label>
+            <input type="text" name="total_rate" id="total_rate" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Selling Rate</label>
+            <input type="number" name="sale_rate" id="sale_rate" required>
+        </div>
+
+        <div class="form-group">
+            <label>MRP</label>
+            <input type="number" name="mrp">
+        </div>
+
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="date" required>
+        </div>
+
+        <div class="form-group">
+            <label>Notes (Optional)</label>
+            <textarea name="notes" rows="3"></textarea>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn" type="submit">💾 Save</button>
+            <a href="{% url 'list_purchases' %}" class="btn back">🔙 Back</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function updateTotal() {
+        let qty = parseFloat(document.getElementById("quantity").value) || 0;
+        let rate = parseFloat(document.getElementById("product_rate").value) || 0;
+        document.getElementById("total_rate").value = (qty * rate).toFixed(2);
+    }
+
+    function filterSubcategories() {
+        const catId = document.getElementById("category").value;
+        const subSelect = document.getElementById("subcategory");
+        const options = subSelect.options;
+        
+        // First, hide all options except the first one (Select Subcategory)
+        for (let i = 1; i < options.length; i++) {
+            options[i].style.display = 'none';
+            options[i].disabled = true;
+        }
+        
+        // Then show only the ones that match the selected category
+        if (catId) {
+            for (let i = 1; i < options.length; i++) {
+                if (options[i].getAttribute('data-category') === catId) {
+                    options[i].style.display = 'block';
+                    options[i].disabled = false;
+                }
+            }
+        }
+        
+        // Reset the selected value
+        subSelect.value = "";
+    }
+
+    // Initialize the subcategories filter when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        filterSubcategories();
+    });
+</script>
+
+</body>
+</html>
