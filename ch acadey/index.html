@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CH Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 font-sans">
+    <!-- Welcome Popup -->
+    <div id="welcome-popup" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50" x-data="{ open: true }" x-show="open" x-transition>
+        <div class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 p-8 rounded-xl shadow-2xl max-w-md w-11/12 text-center transform transition-all duration-500 scale-0" x-bind:class="{'scale-100': open}">
+            <div class="animate-bounce mb-4">
+                <i class="fas fa-graduation-cap text-5xl text-yellow-400"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-4">Welcome to CH Academy!</h2>
+            <p class="text-blue-100 mb-6">Unlock your potential with our 100% Pass Guarantee for classes 5-10!</p>
+            <button @click="open = false" class="bg-yellow-400 text-blue-800 font-bold px-8 py-3 rounded-full hover:bg-yellow-300 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                Start Your Journey
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white sticky top-0 z-40 py-3 px-6 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="https://placehold.co/150x50?text=CH+Academy" alt="CH Academy Logo" class="h-10">
+                <h1 class="text-xl md:text-2xl font-bold">CH Academy</h1>
+            </div>
+            
+            <nav class="hidden lg:flex space-x-1">
+                <a href="#home" class="nav-link px-4 py-2 rounded-lg">Home</a>
+                <a href="#about" class="nav-link px-4 py-2 rounded-lg">About</a>
+                <a href="#vision" class="nav-link px-4 py-2 rounded-lg">Vision</a>
+                <a href="#features" class="nav-link px-4 py-2 rounded-lg">Features</a>
+                <a href="#leadership" class="nav-link px-4 py-2 rounded-lg">Leadership</a>
+                <a href="#success" class="nav-link px-4 py-2 rounded-lg">Success</a>
+                <a href="#gallery" class="nav-link px-4 py-2 rounded-lg">Gallery</a>
+                <a href="#staff" class="nav-link px-4 py-2 rounded-lg">Staff</a>
+                <a href="#contact" class="nav-link px-4 py-2 rounded-lg">Contact</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button id="darkModeToggle" class="text-xl focus:outline-none">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                </button>
+                <button id="menuToggle" class="lg:hidden text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black bg-opacity-90 z-30 flex items-center justify-center hidden transition-opacity duration-300">
+        <div class="text-center w-full px-6">
+            <button id="closeMenu" class="absolute top-6 right-6 text-3xl text-white hover:text-yellow-400 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <nav class="flex flex-col space-y-6">
+                <a href="#home" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Home</a>
+                <a href="#about" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">About</a>
+                <a href="#vision" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Vision</a>
+                <a href="#features" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Features</a>
+                <a href="#leadership" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Leadership</a>
+                <a href="#success" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Success</a>
+                <a href="#gallery" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Gallery</a>
+                <a href="#staff" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Staff</a>
+                <a href="#contact" class="mobile-nav-link text-2xl text-white font-medium hover:text-yellow-400 transition transform hover:translate-x-2">Contact</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/919526295899" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-xl hover:bg-green-600 transition-all duration-300 z-20 animate-bounce" style="animation-delay: 2s;">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Home Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-700/80 z-10"></div>
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center"></div>
+        
+        <div class="container mx-auto px-6 text-center relative z-20">
+            <div class="animate__animated animate__fadeInDown">
+                <img src="https://placehold.co/300x100?text=CH+Academy" alt="Logo" class="mx-auto mb-8 h-16 md:h-20">
+            </div>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white animate__animated animate__fadeIn animate__delay-1s">
+                <span class="text-yellow-400">Igniting</span> Potential, <br>
+                <span class="text-yellow-400">Crafting</span> Futures
+            </h1>
+            <p class="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto animate__animated animate__fadeIn animate__delay-1s">
+                Excellence in Education for Classes 5-10 with 100% Pass Guarantee
+            </p>
+            <div class="animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="#contact" class="inline-block bg-yellow-400 hover:bg-yellow-300 text-blue-900 font-bold px-10 py-4 rounded-full text-lg md:text-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    Enroll Now
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 text-center animate-bounce">
+            <a href="#about" class="text-white text-3xl hover:text-yellow-400 transition">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-blue-800 dark:text-blue-400 relative">
+                <span class="section-title">About Us</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="animate__animated">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                         alt="CH Academy Students" 
+                         class="rounded-xl shadow-2xl w-full h-auto object-cover">
+                </div>
+                
+                <div>
+                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                        Founded in 2010, CH Academy For Education stands as a beacon of transformative education, dedicated to nurturing young minds from classes 5 to 10 with a holistic and innovative approach in English and Malayalam mediums.
+                    </p>
+                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                        Our academy combines traditional values with modern teaching methodologies to create an environment where students thrive academically, socially, and emotionally.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="feature-card bg-blue-50 dark:bg-gray-700 p-4 rounded-lg text-center shadow-md">
+                            <div class="text-blue-600 dark:text-blue-400 text-3xl mb-2">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <h3 class="font-bold text-blue-800 dark:text-blue-300">500+</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Students</p>
+                        </div>
+                        
+                        <div class="feature-card bg-blue-50 dark:bg-gray-700 p-4 rounded-lg text-center shadow-md">
+                            <div class="text-blue-600 dark:text-blue-400 text-3xl mb-2">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <h3 class="font-bold text-blue-800 dark:text-blue-300">25+</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Expert Faculty</p>
+                        </div>
+                        
+                        <div class="feature-card bg-blue-50 dark:bg-gray-700 p-4 rounded-lg text-center shadow-md">
+                            <div class="text-blue-600 dark:text-blue-400 text-3xl mb-2">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h3 class="font-bold text-blue-800 dark:text-blue-300">99%</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Success Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision & Mission -->
+    <section id="vision" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-blue-800 dark:text-blue-400 relative">
+                <span class="section-title">Vision & Mission</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl">
+                    <div class="text-yellow-500 text-4xl mb-4">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-blue-700 dark:text-blue-400 mb-4">Our Vision</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        To be a global leader in education, inspiring excellence and innovation in every student, creating responsible citizens who contribute positively to society.
+                    </p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl">
+                    <div class="text-yellow-500 text-4xl mb-4">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-blue-700 dark:text-blue-400 mb-4">Our Mission</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        To provide quality education that empowers students with knowledge, skills, and values to succeed in a dynamic world, through dedicated teaching and holistic development.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-blue-800 dark:text-blue-400 relative">
+                <span class="section-title">Features & Qualities</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="feature-card bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">Expert Faculty</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Highly experienced and passionate teachers dedicated to student success.
+                    </p>
+                </div>
+                
+                <div class="feature-card bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">Digital Classrooms</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        State-of-the-art interactive digital classrooms for enhanced learning.
+                    </p>
+                </div>
+                
+                <div class="feature-card bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">Study Resources</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Extensive, curriculum-aligned study materials and resources.
+                    </p>
+                </div>
+                
+                <div class="feature-card bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">Science Labs</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Advanced science and technology laboratories for practical learning.
+                    </p>
+                </div>
+                
+                <div class="feature-card bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">Success Guarantee</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        100% pass guarantee with our proven teaching methodology.
+                    </p>
+                </div>
+                
+                <div class="feature-card bg-blue-50 dark:bg-gray-700 p-6 rounded-xl shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">Holistic Development</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Focus on academic excellence along with moral and ethical values.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Leadership Section -->
+<section id="leadership" class="py-20 bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16 text-blue-800 dark:text-blue-400 relative">
+            <span class="section-title">Our Leadership</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <div class="leader-card bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02]">
+                <div class="relative h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Dr. Priya Menon" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl md:text-2xl font-bold text-blue-800 dark:text-blue-300 mb-2">Dr. Priya Menon</h3>
+                    <p class="text-blue-600 dark:text-blue-400 font-medium mb-4">Principal</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm md:text-base mb-6">
+                        Visionary leader with 20+ years of experience in transforming educational institutions.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-300 text-xl">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-300 text-xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-300 text-xl">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="leader-card bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02]">
+                <div class="relative h-48 md:h-64">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Mr. Anil Kumar" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 to-transparent"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl md:text-2xl font-bold text-blue-800 dark:text-blue-300 mb-2">Mr. Anil Kumar</h3>
+                    <p class="text-blue-600 dark:text-blue-400 font-medium mb-4">Vice Principal</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm md:text-base mb-6">
+                        Champion of educational excellence with a focus on innovative teaching methodologies.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-300 text-xl">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-300 text-xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-300 text-xl">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Success Rates -->
+    <section id="success" class="py-20 bg-gradient-to-r from-blue-700 to-blue-900 text-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 relative">
+                <span class="section-title-light">Our Success Rates</span>
+            </h2>
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="success-card bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-500 hover:scale-105 hover:bg-white/20">
+                    <div class="text-5xl font-bold text-yellow-400 mb-3">98%</div>
+                    <h3 class="text-xl font-bold mb-2">Classes 5-7</h3>
+                    <p class="text-blue-100">
+                        Comprehensive curriculum with personalized support ensures success.
+                    </p>
+                </div>
+                
+                <div class="success-card bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-500 hover:scale-105 hover:bg-white/20">
+                    <div class="text-5xl font-bold text-yellow-400 mb-3">97%</div>
+                    <h3 class="text-xl font-bold mb-2">Classes 8-9</h3>
+                    <p class="text-blue-100">
+                        Advanced coaching with mock exams drives academic excellence.
+                    </p>
+                </div>
+                
+                <div class="success-card bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-500 hover:scale-105 hover:bg-white/20">
+                    <div class="text-5xl font-bold text-yellow-400 mb-3">99%</div>
+                    <h3 class="text-xl font-bold mb-2">Class 10 (SSLC)</h3>
+                    <p class="text-blue-100">
+                        Intensive SSLC prep with exam strategies guarantees results.
+                    </p>
+                </div>
+                
+                <div class="success-card bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 transform transition-all duration-500 hover:scale-105 hover:bg-white/20">
+                    <div class="text-5xl font-bold text-yellow-400 mb-3">98.5%</div>
+                    <h3 class="text-xl font-bold mb-2">Overall Excellence</h3>
+                    <p class="text-blue-100">
+                        Consistently high performance across all grades.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-blue-800 dark:text-blue-400 relative">
+                <span class="section-title">Our Gallery</span>
+            </h2>
+            
+            <div class="gallery-container relative">
+                <div class="gallery-track flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                    <div class="gallery-slide flex-none w-64 h-64 rounded-xl shadow-lg overflow-hidden relative group" 
+                         x-data="{ open: false }" 
+                         @click="open = true">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Classroom" 
+                             class="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div>
+                                <h3 class="text-white text-xl font-bold">Interactive Classroom</h3>
+                                <p class="text-blue-100">Students engaged in digital learning</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide flex-none w-64 h-64 rounded-xl shadow-lg overflow-hidden relative group" 
+                         x-data="{ open: false }" 
+                         @click="open = true">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="Science Lab" 
+                             class="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div>
+                                <h3 class="text-white text-xl font-bold">Science Laboratory</h3>
+                                <p class="text-blue-100">Hands-on experiments in physics</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide flex-none w-64 h-64 rounded-xl shadow-lg overflow-hidden relative group" 
+                         x-data="{ open: false }" 
+                         @click="open = true">
+                        <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="Sports Day" 
+                             class="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div>
+                                <h3 class="text-white text-xl font-bold">Annual Sports Day</h3>
+                                <p class="text-blue-100">Students competing in track events</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide flex-none w-64 h-64 rounded-xl shadow-lg overflow-hidden relative group" 
+                         x-data="{ open: false }" 
+                         @click="open = true">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80" 
+                             alt="Library" 
+                             class="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div>
+                                <h3 class="text-white text-xl font-bold">School Library</h3>
+                                <p class="text-blue-100">Students engaged in reading</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide flex-none w-64 h-64 rounded-xl shadow-lg overflow-hidden relative group" 
+                         x-data="{ open: false }" 
+                         @click="open = true">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Cultural Event" 
+                             class="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div>
+                                <h3 class="text-white text-xl font-bold">Cultural Festival</h3>
+                                <p class="text-blue-100">Students performing traditional dance</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide flex-none w-64 h-64 rounded-xl shadow-lg overflow-hidden relative group" 
+                         x-data="{ open: false }" 
+                         @click="open = true">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="Group Study" 
+                             class="w-full h-full object-cover transform transition-all duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                            <div>
+                                <h3 class="text-white text-xl font-bold">Group Study Session</h3>
+                                <p class="text-blue-100">Students collaborating on projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="gallery-nav gallery-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-gray-700 p-2 rounded-full shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <i class="fas fa-chevron-left text-blue-600 dark:text-blue-400"></i>
+                </button>
+                <button class="gallery-nav gallery-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-gray-700 p-2 rounded-full shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <i class="fas fa-chevron-right text-blue-600 dark:text-blue-400"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+<!-- Staff Section -->
+<section id="staff" class="py-20 bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4 sm:px-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16 text-blue-800 dark:text-blue-400 relative">
+            <span class="section-title">Our Expert Faculty</span>
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
+            <div class="staff-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.03]">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                     alt="Ms. Sneha Nair" 
+                     class="w-full h-40 object-cover">
+                <div class="p-4 text-center">
+                    <h3 class="text-base md:text-lg font-bold text-blue-800 dark:text-blue-300 mb-1">Ms. Sneha Nair</h3>
+                    <p class="text-blue-600 dark:text-blue-400 text-xs md:text-sm mb-3">Maths Specialist</p>
+                    <button @click="document.getElementById('staff-popup-1').__x.$data.open = true" 
+                            class="text-xs md:text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full transition">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+            
+            <div class="staff-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.03]">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                     alt="Mr. Rajesh Pillai" 
+                     class="w-full h-40 object-cover">
+                <div class="p-4 text-center">
+                    <h3 class="text-base md:text-lg font-bold text-blue-800 dark:text-blue-300 mb-1">Mr. Rajesh Pillai</h3>
+                    <p class="text-blue-600 dark:text-blue-400 text-xs md:text-sm mb-3">English Expert</p>
+                    <button @click="document.getElementById('staff-popup-2').__x.$data.open = true" 
+                            class="text-xs md:text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full transition">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+            
+            <div class="staff-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.03]">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                     alt="Dr. Anitha Menon" 
+                     class="w-full h-40 object-cover">
+                <div class="p-4 text-center">
+                    <h3 class="text-base md:text-lg font-bold text-blue-800 dark:text-blue-300 mb-1">Dr. Anitha Menon</h3>
+                    <p class="text-blue-600 dark:text-blue-400 text-xs md:text-sm mb-3">Science Instructor</p>
+                    <button @click="document.getElementById('staff-popup-3').__x.$data.open = true" 
+                            class="text-xs md:text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full transition">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+            
+            <div class="staff-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.03]">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                     alt="Mr. Vikram Sharma" 
+                     class="w-full h-40 object-cover">
+                <div class="p-4 text-center">
+                    <h3 class="text-base md:text-lg font-bold text-blue-800 dark:text-blue-300 mb-1">Mr. Vikram Sharma</h3>
+                    <p class="text-blue-600 dark:text-blue-400 text-xs md:text-sm mb-3">Hindi Teacher</p>
+                    <button @click="document.getElementById('staff-popup-4').__x.$data.open = true" 
+                            class="text-xs md:text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full transition">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+            
+            <div class="staff-card bg-white dark:bg-gray-700 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-[1.03]">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                     alt="Ms. Priya Joshi" 
+                     class="w-full h-40 object-cover">
+                <div class="p-4 text-center">
+                    <h3 class="text-base md:text-lg font-bold text-blue-800 dark:text-blue-300 mb-1">Ms. Priya Joshi</h3>
+                    <p class="text-blue-600 dark:text-blue-400 text-xs md:text-sm mb-3">Social Studies Teacher</p>
+                    <button @click="document.getElementById('staff-popup-5').__x.$data.open = true" 
+                            class="text-xs md:text-sm bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full transition">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-r from-blue-700 to-blue-900 text-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 relative">
+                <span class="section-title-light">Contact Us</span>
+            </h2>
+            
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                    <div class="flex flex-col items-center gap-4">
+                        <i class="fas fa-map-marker-alt text-2xl text-yellow-400"></i>
+                        <p class="text-lg">Kerala, India</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-4">
+                        <i class="fas fa-phone text-2xl text-yellow-400"></i>
+                        <p class="text-lg">+91 9526295899</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-4">
+                        <i class="fas fa-envelope text-2xl text-yellow-400"></i>
+                        <p class="text-lg">info@chacademy.com</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-4">
+                        <a href="https://instagram.com" target="_blank" class="text-2xl hover:text-yellow-400 transition"><i class="fab fa-instagram"></i></a>
+                        <p class="text-lg">Instagram</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-4">
+                        <a href="https://wa.me/919526295899" target="_blank" class="text-2xl hover:text-yellow-400 transition"><i class="fab fa-whatsapp"></i></a>
+                        <p class="text-lg">WhatsApp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div>
+                    <img src="https://placehold.co/150x50?text=CH+Academy" alt="CH Academy Logo" class="h-10 mb-4">
+                    <p class="text-blue-200">
+                        Igniting Potential, Crafting Futures with Excellence for Classes 5-10.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-blue-200 hover:text-yellow-400 transition">Home</a></li>
+                        <li><a href="#about" class="text-blue-200 hover:text-yellow-400 transition">About Us</a></li>
+                        <li><a href="#features" class="text-blue-200 hover:text-yellow-400 transition">Features</a></li>
+                        <li><a href="#success" class="text-blue-200 hover:text-yellow-400 transition">Success Rates</a></li>
+                        <li><a href="#contact" class="text-blue-200 hover:text-yellow-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Programs</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Class 5-7 Program</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Class 8-9 Program</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Class 10 SSLC Program</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Special Coaching</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Holiday Workshops</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-blue-200">
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt mt-1"></i>
+                            <span>Kerala, India</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-phone mt-1"></i>
+                            <span>+91 9526295899</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-envelope mt-1"></i>
+                            <span>info@chacademy.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-700 mt-12 pt-8 text-center">
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="#" class="text-blue-200 hover:text-yellow-400 text-xl transition">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-blue-200 hover:text-yellow-400 text-xl transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-blue-200 hover:text-yellow-400 text-xl transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://wa.me/919526295899" target="_blank" class="text-blue-200 hover:text-yellow-400 text-xl transition">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                
+                <p class="text-blue-300">
+                    © 2025 CH Academy For Education. All rights reserved.
+                </p>
+                
+                <p class="text-blue-400 mt-2 text-sm">
+                    Developed by Muhammed Anas M A
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Popup -->
+    <div id="image-popup" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center hidden" x-data="{ open: false }" x-show="open" x-transition>
+        <div class="relative max-w-4xl w-full p-4">
+            <button @click="open = false" class="absolute -top-12 right-0 text-white text-3xl hover:text-yellow-400 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <img src="" alt="Popup Image" class="w-full h-auto max-h-[80vh] object-contain rounded-lg" id="popup-image">
+            <div class="text-white text-center mt-4 text-xl" id="popup-caption"></div>
+        </div>
+    </div>
+
+    <!-- Staff Popups -->
+    <div id="staff-popup-1" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50" x-data="{ open: false }" x-show="open" x-transition>
+        <div class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 p-8 rounded-xl shadow-2xl max-w-sm w-11/12 text-center transform transition-all duration-300 scale-0" x-bind:class="{'scale-100': open}">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                 alt="Ms. Sneha Nair" 
+                 class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-400">
+            <h3 class="text-xl font-bold text-white mb-2">Ms. Sneha Nair</h3>
+            <p class="text-blue-200 font-medium mb-4">Maths Specialist</p>
+            <p class="text-blue-100 mb-6">
+                Maths Specialist with 15 years experience, specializing in algebra and geometry. Passionate about making mathematics accessible and enjoyable for all students.
+            </p>
+            <button @click="open = false" class="bg-yellow-400 text-blue-900 font-bold px-6 py-2 rounded-full hover:bg-yellow-300 transition">
+                Close
+            </button>
+        </div>
+    </div>
+    
+    <div id="staff-popup-2" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50" x-data="{ open: false }" x-show="open" x-transition>
+        <div class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 p-8 rounded-xl shadow-2xl max-w-sm w-11/12 text-center transform transition-all duration-300 scale-0" x-bind:class="{'scale-100': open}">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                 alt="Mr. Rajesh Pillai" 
+                 class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-400">
+            <h3 class="text-xl font-bold text-white mb-2">Mr. Rajesh Pillai</h3>
+            <p class="text-blue-200 font-medium mb-4">English Expert</p>
+            <p class="text-blue-100 mb-6">
+                English Expert with 12 years experience, focusing on literature and communication. Specializes in creative writing and critical analysis.
+            </p>
+            <button @click="open = false" class="bg-yellow-400 text-blue-900 font-bold px-6 py-2 rounded-full hover:bg-yellow-300 transition">
+                Close
+            </button>
+        </div>
+    </div>
+    
+    <div id="staff-popup-3" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50" x-data="{ open: false }" x-show="open" x-transition>
+        <div class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 p-8 rounded-xl shadow-2xl max-w-sm w-11/12 text-center transform transition-all duration-300 scale-0" x-bind:class="{'scale-100': open}">
+            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                 alt="Dr. Anitha Menon" 
+                 class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-400">
+            <h3 class="text-xl font-bold text-white mb-2">Dr. Anitha Menon</h3>
+            <p class="text-blue-200 font-medium mb-4">Science Instructor</p>
+            <p class="text-blue-100 mb-6">
+                Science Instructor with 18 years experience, expert in physics and chemistry. PhD in Chemistry with a passion for experimental learning.
+            </p>
+            <button @click="open = false" class="bg-yellow-400 text-blue-900 font-bold px-6 py-2 rounded-full hover:bg-yellow-300 transition">
+                Close
+            </button>
+        </div>
+    </div>
+    
+    <div id="staff-popup-4" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50" x-data="{ open: false }" x-show="open" x-transition>
+        <div class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 p-8 rounded-xl shadow-2xl max-w-sm w-11/12 text-center transform transition-all duration-300 scale-0" x-bind:class="{'scale-100': open}">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                 alt="Mr. Vikram Sharma" 
+                 class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-400">
+            <h3 class="text-xl font-bold text-white mb-2">Mr. Vikram Sharma</h3>
+            <p class="text-blue-200 font-medium mb-4">Hindi Teacher</p>
+            <p class="text-blue-100 mb-6">
+                Hindi Teacher with 10 years experience, teaching language and literature. Focuses on conversational Hindi and cultural context.
+            </p>
+            <button @click="open = false" class="bg-yellow-400 text-blue-900 font-bold px-6 py-2 rounded-full hover:bg-yellow-300 transition">
+                Close
+            </button>
+        </div>
+    </div>
+    
+    <div id="staff-popup-5" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50" x-data="{ open: false }" x-show="open" x-transition>
+        <div class="bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 p-8 rounded-xl shadow-2xl max-w-sm w-11/12 text-center transform transition-all duration-300 scale-0" x-bind:class="{'scale-100': open}">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                 alt="Ms. Priya Joshi" 
+                 class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-400">
+            <h3 class="text-xl font-bold text-white mb-2">Ms. Priya Joshi</h3>
+            <p class="text-blue-200 font-medium mb-4">Social Studies Teacher</p>
+            <p class="text-blue-100 mb-6">
+                Social Studies Teacher with 8 years experience, fostering critical thinking. Specializes in making history and civics engaging and relevant.
+            </p>
+            <button @click="open = false" class="bg-yellow-400 text-blue-900 font-bold px-6 py-2 rounded-full hover:bg-yellow-300 transition">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
