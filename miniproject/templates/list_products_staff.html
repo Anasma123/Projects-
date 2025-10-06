@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Discounts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        .back-btn {
+            margin-top: 20px;
+            display: inline-block;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .discount-info {
+            background: #e1f5fe;
+            color: #0288d1;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .stock-high { color: #28a745; font-weight: bold; }
+        .stock-medium { color: #fd7e14; font-weight: bold; }
+        .stock-low { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>💸 Product List</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Current Stock</th>
+                <th>MRP (₹)</th>
+                <th>Discount (%)</th>
+                <th>Final Price (₹)</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+            <tr>
+                <td>{{ purchase.product_name }}</td>
+                <td>{{ purchase.category.name }}</td>
+                <td>{{ purchase.subcategory.name|default:"-" }}</td>
+                <td class="{% if purchase.quantity > 100 %}stock-high{% elif purchase.quantity > 20 %}stock-medium{% else %}stock-low{% endif %}">
+                    {{ purchase.quantity }}
+                </td>
+                <td>₹{{ purchase.mrp|floatformat:2 }}</td>
+                <td>
+                    <span class="discount-info">{{ purchase.discount_percentage|floatformat:1 }}% OFF</span>
+                </td>
+                <td>₹{{ purchase.final_price|floatformat:2 }}</td>
+                <td>{{ purchase.date|date:"d M Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" style="text-align: center;">No discounts applied</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'list_products' %}" class="back-btn">🔙 Back to Product List</a>
+</body>
+</html>

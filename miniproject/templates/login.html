@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access Portal | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background Elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 25s infinite linear;
+        }
+        
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+        
+        .circle-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+            bottom: -250px;
+            right: -250px;
+            animation-delay: -5s;
+        }
+        
+        .circle-3 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            top: 50%;
+            left: 10%;
+            animation-delay: -10s;
+        }
+        
+        .circle-4 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(45deg, #84fab0, #8fd3f4);
+            bottom: 30%;
+            right: 10%;
+            animation-delay: -15s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, 40px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 80px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-20px, 40px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+        
+        /* Login Container */
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            perspective: 1000px;
+            z-index: 10;
+        }
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            transform-style: preserve-3d;
+            animation: cardAppear 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            opacity: 0;
+            transform: translateY(50px) rotateX(15deg);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+            transform: rotate(30deg);
+            z-index: -1;
+        }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+        
+        .logo i {
+            font-size: 50px;
+            color: #64ffda;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            }
+            to {
+                transform: scale(1.1);
+                text-shadow: 0 0 20px rgba(100, 255, 218, 0.8);
+            }
+        }
+        
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #fff, #64ffda);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo p {
+            font-size: 14px;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64ffda;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            outline: none;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+        
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .input-group input:focus {
+            border-color: #64ffda;
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .input-group input:focus + i {
+            color: #fff;
+            text-shadow: 0 0 8px rgba(100, 255, 218, 0.8);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #64ffda, #00bcd4);
+            border: none;
+            border-radius: 10px;
+            color: #0f2027;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.4s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .message-container {
+            margin: 20px 0;
+            min-height: 50px;
+        }
+        
+        .message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            animation: messageFade 0.5s ease-out;
+            background: rgba(255, 87, 87, 0.15);
+            border-left: 4px solid #ff5757;
+            color: #ffebee;
+            margin-bottom: 10px;
+        }
+        
+        @keyframes messageFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .security-notice {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.7;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+        
+        .security-notice i {
+            color: #64ffda;
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .logo h1 {
+                font-size: 26px;
+            }
+            
+            .logo i {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+        <div class="bg-circle circle-4"></div>
+    </div>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <i class="fas fa-lock"></i>
+                <h1>Secure Access Portal</h1>
+                <p>Enter your credentials to continue</p>
+            </div>
+            
+            <div class="message-container">
+                <!-- Messages will appear here -->
+            </div>
+            
+            <form method="post">
+                    {% csrf_token %}
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i> Secure authentication system
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create background particles
+        function createParticles() {
+            const particlesContainer = document.querySelector('.bg-animation');
+            const particleCount = 8;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('bg-circle');
+                
+                const size = Math.random() * 200 + 50;
+                const colors = [
+                    'linear-gradient(45deg, #ff9a9e, #fad0c4)',
+                    'linear-gradient(45deg, #a1c4fd, #c2e9fb)',
+                    'linear-gradient(45deg, #ffecd2, #fcb69f)',
+                    'linear-gradient(45deg, #84fab0, #8fd3f4)'
+                ];
+                
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.background = randomColor;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 20}s`;
+                particle.style.animationDuration = `${Math.random() * 30 + 20}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Simulate form submission and message display
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real application, this would be handled by your backend
+            const messageContainer = document.querySelector('.message-container');
+            
+            // Clear previous messages
+            messageContainer.innerHTML = '';
+            
+            // Simulate error message (replace with actual backend messages)
+            const errorMsg = document.createElement('div');
+            errorMsg.classList.add('message');
+            errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Invalid username or password';
+            
+            messageContainer.appendChild(errorMsg);
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                errorMsg.style.opacity = 0;
+                setTimeout(() => {
+                    messageContainer.removeChild(errorMsg);
+                }, 500);
+            }, 5000);
+        });
+        
+        // Initialize the page
+        window.addEventListener('load', function() {
+            createParticles();
+        });
+    </script>
+</body>
+</html>

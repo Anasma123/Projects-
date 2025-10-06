@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f5f7fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #ecf0f1;
+            height: 100vh;
+            position: fixed;
+            padding: 20px 0;
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h3 {
+            color: #ecf0f1;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .sidebar-header p {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 15px 20px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu li:hover,
+        .sidebar-menu li.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #3498db;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-menu li:hover a,
+        .sidebar-menu li.active a {
+            color: #3498db;
+        }
+
+        .sidebar-menu li a i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-menu li:hover a i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .quick-links {
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .quick-links h4 {
+            color: #ecf0f1;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+
+        .quick-links ul {
+            list-style: none;
+        }
+
+        .quick-links ul li {
+            padding: 10px 0;
+        }
+
+        .quick-links ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .quick-links ul li a:hover {
+            color: #3498db;
+        }
+
+        .alert-badge::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 12px;
+            height: 12px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .header h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 10px 15px;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .user-info:hover {
+            transform: translateY(-2px);
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+            border: 3px solid #3498db;
+            transition: transform 0.3s ease;
+        }
+
+        .user-info img:hover {
+            transform: rotate(360deg);
+        }
+
+        .user-info span {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .profile-image {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 25px;
+            color: #fff;
+            font-size: 2.2rem;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: rotate(15deg) scale(1.05);
+        }
+
+        .profile-details h1 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .profile-details p {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-details .role-badge {
+            display: inline-block;
+            background: #3498db;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .profile-details .role-badge:hover {
+            background: #2980b9;
+        }
+
+        /* Cards Section */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .income .card-icon {
+            background: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+
+        .expense .card-icon {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .profit .card-icon {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .card-change {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .card-change.positive {
+            color: #2ecc71;
+        }
+
+        .card-change.negative {
+            color: #e74c3c;
+        }
+
+        /* Charts Section */
+        .charts {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-header h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .chart-actions select {
+            padding: 8px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chart-actions select:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Expiring Products Section */
+        .expiring-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .expiring-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .expiring-header h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .expiring-header a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .expiring-header a:hover {
+            color: #2980b9;
+        }
+
+        .expiring-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .expiring-table th,
+        .expiring-table td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .expiring-table th {
+            background: #3498db;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .expiring-table th:hover {
+            background: #2980b9;
+        }
+
+        .expiring-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .expiring-table tr:hover {
+            background: #f0f0f0;
+            transform: scale(1.01);
+        }
+
+        .expiry-warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .expiry-danger {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .stock-high { color: #28a745; }
+        .stock-medium { color: #fd7e14; }
+        .stock-low { color: #dc3545; }
+
+        /* Recent Activity Section */
+        .recent-activity {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .activity-container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-header h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .activity-header a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .activity-header a:hover {
+            color: #2980b9;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f9f9f9;
+            transform: translateX(5px);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .activity-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .purchase .activity-icon {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .sale .activity-icon {
+            background: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+        }
+
+        .expense-item .activity-icon {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .activity-details h4 {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .activity-details p {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .activity-amount {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .positive {
+            color: #2ecc71;
+        }
+
+        .negative {
+            color: #e74c3c;
+        }
+
+        .logout-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #e74c3c;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .logout-link:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #bdc3c7;
+        }
+
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .cards, .charts, .recent-activity {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            .sidebar {
+                transform: translateX(-250px);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Business Manager</h3>
+            <p>Owner Dashboard</p>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="{% url 'owner_dashboard' %}">
+                    <i>📊</i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'list_purchases' %}">
+                    <i>🛒</i> Purchase Management
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'invoice_list' %}">
+                    <i>🧾</i> Billing Management
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'list_category' %}">
+                    <i>🗂️</i> Category Management
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'list_subcategory' %}">
+                    <i>📂</i> Subcategory Management
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'list_products' %}">
+                    <i class="alert-badge">📦</i> Product Management
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'shop_report' %}">
+                    <i>📈</i> Report Management
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'view_discount' %}">
+                    <i>🎁</i> Sales & Discounts
+                </a>
+            </li>
+            {% comment %} <li>
+                <a href="{% url 'stock_overview' %}">
+                    <i>⚙️</i> Settings
+                </a>
+            </li> {% endcomment %}
+        </ul>
+        {% comment %} <div class="quick-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="{% url 'add_purchase' %}">Add New Purchase</a></li>
+                <li><a href="{% url 'invoice_list' %}">Create New Invoice</a></li>
+                <li><a href="{% url 'list_products' %}">Add New Product</a></li>
+                <li><a href="{% url 'add_category' %}">Add New Category</a></li>
+                <li><a href="{% url 'add_subcategory' %}">Add New Subcategory</a></li>
+                <li><a href="{% url 'view_discount' %}">Add New Discount</a></li>
+            </ul>
+        </div> {% endcomment %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h2>Dashboard Overview</h2>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=3498db&color=fff" alt="User">
+                <span>{{ user.username }} ({{ user.role|title }})</span>
+            </div>
+        </div>
+
+        <!-- User Profile Section -->
+        <div class="user-profile">
+            <div class="profile-image">
+                {{ user.username|first|upper }}
+            </div>
+            <div class="profile-details">
+                <h1>Welcome, {{ user.username }}</h1>
+                <p>User ID: {{ user.id }}</p>
+                <p>Email: {{ user.email|default:"Not provided" }}</p>
+                <span class="role-badge">{{ user.role|title }}</span>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="cards">
+            <div class="card income">
+                <div class="card-header">
+                    <div>
+                        <p class="card-title">Total Income</p>
+                        <h3 class="card-value">{{ total_income|floatformat:2 }}</h3>
+                        <p class="card-change {% if income_change >= 0 %}positive{% else %}negative{% endif %}">
+                            {% if income_change >= 0 %}+{% endif %}{{ income_change|floatformat:2 }}% from last period
+                        </p>
+                    </div>
+                    <div class="card-icon">
+                        <i>💰</i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card expense">
+                <div class="card-header">
+                    <div>
+                        <p class="card-title">Total Expenses</p>
+                        <h3 class="card-value">{{ total_expenses|floatformat:2 }}</h3>
+                        <p class="card-change {% if expense_change >= 0 %}positive{% else %}negative{% endif %}">
+                            {% if expense_change >= 0 %}+{% endif %}{{ expense_change|floatformat:2 }}% from last period
+                        </p>
+                    </div>
+                    <div class="card-icon">
+                        <i>💸</i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card profit">
+                <div class="card-header">
+                    <div>
+                        <p class="card-title">Net Profit</p>
+                        <h3 class="card-value">{{ net_profit|floatformat:2 }}</h3>
+                        <p class="card-change {% if profit_change >= 0 %}positive{% else %}negative{% endif %}">
+                            {% if profit_change >= 0 %}+{% endif %}{{ profit_change|floatformat:2 }}% from last period
+                        </p>
+                    </div>
+                    <div class="card-icon">
+                        <i>📈</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expiring Products Section -->
+       
+
+        <!-- Charts Section -->
+        <div class="charts">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Income & Expenses Report</h3>
+                    <div class="chart-actions">
+                        <select id="chartPeriod">
+                            <option value="7days">Last 7 Days</option>
+                            <option value="30days">Last Month</option>
+                            <option value="6months" selected>Last 6 Months</option>
+                            <option value="1year">Last Year</option>
+                        </select>
+                    </div>
+                </div>
+                <canvas id="incomeExpenseChart" height="300"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Sales by Category</h3>
+                </div>
+                <canvas id="categoryChart" height="300"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Activity Section -->
+        <div class="recent-activity">
+            <div class="activity-container">
+                <div class="activity-header">
+                    <h3>Last 5 Transactions</h3>
+                    <a href="{% url 'invoice_list' %}">View All</a>
+                </div>
+                {% if recent_transactions %}
+                    <ul class="activity-list">
+                        {% for invoice in recent_transactions %}
+                            <li class="activity-item sale">
+                                <div class="activity-info">
+                                    <div class="activity-icon">
+                                        <i>🧾</i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <h4>Invoice #{{ invoice.bill_number }}</h4>
+                                        <p>{{ invoice.customer_name }} - {{ invoice.date }}</p>
+                                    </div>
+                                </div>
+                                <div class="activity-amount positive">
+                                    +${{ invoice.total|floatformat:2 }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="empty-state">
+                        <i>📊</i>
+                        <p>No transactions found</p>
+                        <p>Data will appear here when available</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="activity-container">
+                <div class="activity-header">
+                    <h3>Last 5 Purchases</h3>
+                    <a href="{% url 'list_purchases' %}">View All</a>
+                </div>
+                {% if recent_purchases %}
+                    <ul class="activity-list">
+                        {% for purchase in recent_purchases %}
+                            <li class="activity-item purchase">
+                                <div class="activity-info">
+                                    <div class="activity-icon">
+                                        <i>📦</i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <h4>{{ purchase.product_name }}</h4>
+                                        <p>{{ purchase.category.name }} - {{ purchase.date }}</p>
+                                    </div>
+                                </div>
+                                <div class="activity-amount negative">
+                                    -${{ purchase.total_rate|floatformat:2 }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="empty-state">
+                        <i>🛒</i>
+                        <p>No purchases found</p>
+                        <p>Data will appear here when available</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Logout Link -->
+        <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+
+        <!-- Alert Container -->
+        <div id="alertBox" class="alert"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Income & Expense Chart
+            const incomeExpenseCtx = document.getElementById('incomeExpenseChart').getContext('2d');
+            const incomeExpenseChart = new Chart(incomeExpenseCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ chart_labels|safe }},
+                    datasets: [
+                        {
+                            label: 'Income',
+                            data: {{ income_data|safe }},
+                            backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Expenses',
+                            data: {{ expense_data|safe }},
+                            backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                            borderColor: 'rgba(231, 76, 60, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    }
+                }
+            });
+
+            // Category Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            const categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: {{ category_labels|safe }},
+                    datasets: [{
+                        data: {{ category_data|safe }},
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.7)',
+                            'rgba(155, 89, 182, 0.7)',
+                            'rgba(46, 204, 113, 0.7)',
+                            'rgba(241, 196, 15, 0.7)',
+                            'rgba(149, 165, 166, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(52, 152, 219, 1)',
+                            'rgba(155, 89, 182, 1)',
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(241, 196, 15, 1)',
+                            'rgba(149, 165, 166, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    }
+                }
+            });
+
+            // Update chart on period change
+            document.getElementById('chartPeriod').addEventListener('change', function() {
+                const period = this.value;
+                fetch(`/api/dashboard-data/?period=${period}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        incomeExpenseChart.data.labels = data.chartLabels;
+                        incomeExpenseChart.data.datasets[0].data = data.incomeData;
+                        incomeExpenseChart.data.datasets[1].data = data.expenseData;
+                        incomeExpenseChart.update();
+
+                        categoryChart.data.labels = data.categoryLabels;
+                        categoryChart.data.datasets[0].data = data.categoryData;
+                        categoryChart.update();
+
+                        // Update cards
+                        document.querySelector('.income .card-value').textContent = '$' + data.totalIncome.toFixed(2);
+                        document.querySelector('.expense .card-value').textContent = '$' + data.totalExpenses.toFixed(2);
+                        document.querySelector('.profit .card-value').textContent = '$' + data.netProfit.toFixed(2);
+                        document.querySelector('.income .card-change').textContent = (data.incomeChange >= 0 ? '+' : '') + data.incomeChange.toFixed(2) + '% from last period';
+                        document.querySelector('.income .card-change').className = 'card-change ' + (data.incomeChange >= 0 ? 'positive' : 'negative');
+                        document.querySelector('.expense .card-change').textContent = (data.expenseChange >= 0 ? '+' : '') + data.expenseChange.toFixed(2) + '% from last period';
+                        document.querySelector('.expense .card-change').className = 'card-change ' + (data.expenseChange >= 0 ? 'positive' : 'negative');
+                        document.querySelector('.profit .card-change').textContent = (data.profitChange >= 0 ? '+' : '') + data.profitChange.toFixed(2) + '% from last period';
+                        document.querySelector('.profit .card-change').className = 'card-change ' + (data.profitChange >= 0 ? 'positive' : 'negative');
+                    });
+            });
+
+            // Expiry and Stock Alerts
+            function checkExpiryAndStockAlerts() {
+                const products = JSON.parse('{{ expiring_products|escapejs }}');
+                const today = new Date('2025-09-10T12:35:00+05:30'); // Updated to current date and time in IST
+                const thirtyDaysFromNow = new Date(today);
+                thirtyDaysFromNow.setDate(today.getDate() + 30);
+
+                let alertMessage = '';
+                let hasAlerts = false;
+
+                if (products && products.length > 0) {
+                    products.forEach(product => {
+                        const expiryDate = new Date(product.expiry_date);
+                        const quantity = product.quantity;
+
+                        if (expiryDate < today) {
+                            alertMessage += `Alert: Product "${product.product_name}" has expired on ${product.expiry_date}!\n`;
+                            hasAlerts = true;
+                        } else if (expiryDate <= thirtyDaysFromNow) {
+                            alertMessage += `Warning: Product "${product.product_name}" is expiring soon on ${product.expiry_date}!\n`;
+                            hasAlerts = true;
+                        }
+
+                        if (quantity <= 10) {
+                            alertMessage += `Low Stock Alert: Product "${product.product_name}" has only ${quantity} units left!\n`;
+                            hasAlerts = true;
+                        }
+                    });
+                }
+
+                if (hasAlerts) {
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.textContent = alertMessage.trim();
+                    alertBox.style.display = 'block';
+                    setTimeout(() => {
+                        alertBox.style.display = 'none';
+                    }, 10000); // Auto-hide after 10 seconds
+                }
+            }
+
+            checkExpiryAndStockAlerts();
+
+            // Table sorting function
+            function sortTable(columnIndex) {
+                const table = document.getElementById('expiringTable');
+                let switching = true;
+                let shouldSwitch, switchCount = 0;
+                let direction = 'asc';
+                let i, x, y;
+
+                // Check if the column already has a sort direction (simplified toggle)
+                const headers = table.getElementsByTagName('th');
+                const currentHeader = headers[columnIndex];
+                if (currentHeader.getAttribute('data-sort') === 'desc') {
+                    direction = 'asc';
+                } else {
+                    direction = 'desc';
+                }
+
+                // Update all headers to remove sort indicators, then set the current one
+                for (let j = 0; j < headers.length; j++) {
+                    headers[j].textContent = headers[j].textContent.replace(' ↑', '').replace(' ↓', '');
+                }
+                currentHeader.textContent += direction === 'asc' ? ' ↑' : ' ↓';
+                currentHeader.setAttribute('data-sort', direction);
+
+                while (switching) {
+                    switching = false;
+                    const rows = table.rows;
+
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName('TD')[columnIndex];
+                        y = rows[i + 1].getElementsByTagName('TD')[columnIndex];
+
+                        // Handle different data types (text or date)
+                        let xValue = x.innerHTML.toLowerCase();
+                        let yValue = y.innerHTML.toLowerCase();
+
+                        // Try to parse as date for date columns (e.g., Purchase Date, Expire Date)
+                        if (columnIndex === 4 || columnIndex === 5) {
+                            xValue = new Date(x.innerHTML);
+                            yValue = new Date(y.innerHTML);
+                            if (isNaN(xValue)) xValue = new Date(0); // Fallback for invalid dates
+                            if (isNaN(yValue)) yValue = new Date(0);
+                        } else if (!isNaN(xValue) && !isNaN(yValue)) {
+                            // Handle numeric values (e.g., Total Quantity)
+                            xValue = parseFloat(xValue);
+                            yValue = parseFloat(yValue);
+                        }
+
+                        // Compare based on direction
+                        if (direction === 'asc') {
+                            if (xValue > yValue) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (direction === 'desc') {
+                            if (xValue < yValue) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        switchCount++;
+                    } else {
+                        if (switchCount === 0 && direction === 'asc') {
+                            direction = 'desc';
+                            switching = true;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

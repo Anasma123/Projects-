@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Purchase | Inventory Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border: #dee2e6;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 700px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+
+        .form-container:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .form-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            animation: shimmer 8s infinite linear;
+        }
+
+        .form-header h2 {
+            font-weight: 600;
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header h2 i {
+            margin-right: 12px;
+            font-size: 28px;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            animation: slideUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.15s; }
+        .form-group:nth-child(3) { animation-delay: 0.2s; }
+        .form-group:nth-child(4) { animation-delay: 0.25s; }
+        .form-group:nth-child(5) { animation-delay: 0.3s; }
+        .form-group:nth-child(6) { animation-delay: 0.35s; }
+        .form-group:nth-child(7) { animation-delay: 0.4s; }
+        .form-group:nth-child(8) { animation-delay: 0.45s; }
+        .form-group:nth-child(9) { animation-delay: 0.5s; }
+        .form-group:nth-child(10) { animation-delay: 0.55s; }
+        .form-group:nth-child(11) { animation-delay: 0.6s; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .input-icon input,
+        .input-icon select,
+        .input-icon textarea {
+            padding-left: 40px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: var(--transition);
+            background-color: var(--light);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+            background-color: white;
+        }
+
+        input[readonly] {
+            background-color: #f0f4ff;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .optional {
+            color: var(--gray);
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .total-display {
+            background: linear-gradient(to right, #f0f4ff, #e6eeff);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 5px;
+            border: 1px dashed var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-save {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-save:hover {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            background: white;
+            color: var(--gray);
+            border: 1px solid var(--border);
+        }
+
+        .btn-back:hover {
+            background: #f8f9fa;
+            border-color: var(--gray);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(30deg) translateX(-100%); }
+            100% { transform: rotate(30deg) translateX(200%); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-header">
+        <h2><i class="fas fa-receipt"></i> Add New Purchase</h2>
+        <p>Fill in the product details below</p>
+    </div>
+
+    <div class="form-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="product_name">Product Name</label>
+                    <div class="input-icon">
+                        <i class="fas fa-box"></i>
+                        <input type="text" name="product_name" id="product_name" required placeholder="Enter product name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <div class="input-icon">
+                        <i class="fas fa-tag"></i>
+                        <select name="category" id="category" onchange="filterSubcategories()">
+                            <option value="">Select Category</option>
+                            {% for cat in categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subcategory">Subcategory</label>
+                    <div class="input-icon">
+                        <i class="fas fa-tags"></i>
+                        <select name="subcategory" id="subcategory">
+                            <option value="">Select Subcategory</option>
+                            {% for sub in subcategories %}
+                                <option value="{{ sub.id }}" data-category="{{ sub.category.id }}">{{ sub.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <div class="input-icon">
+                        <i class="fas fa-hashtag"></i>
+                        <input type="number" name="quantity" id="quantity" required oninput="updateTotal()" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="product_rate">Product Rate ($)</label>
+                    <div class="input-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                        <input type="number" name="product_rate" id="product_rate" required oninput="updateTotal()" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="total_rate">Total Purchase Rate</label>
+                    <div class="total-display" id="total_rate_display">$0.00</div>
+                    <input type="hidden" name="total_rate" id="total_rate">
+                </div>
+
+                <div class="form-group">
+                    <label for="sale_rate">Selling Rate ($)</label>
+                    <div class="input-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                        <input type="number" name="sale_rate" id="sale_rate" required step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mrp">MRP ($)</label>
+                    <div class="input-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                        <input type="number" name="mrp" id="mrp" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Purchase Date</label>
+                    <div class="input-icon">
+                        <i class="fas fa-calendar"></i>
+                        <input type="date" name="date" id="date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="expire_date">Expire Date <span class="optional">(Optional)</span></label>
+                    <div class="input-icon">
+                        <i class="fas fa-calendar-times"></i>
+                        <input type="date" name="expire_date" id="expire_date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes <span class="optional">(Optional)</span></label>
+                <div class="input-icon">
+                    <i class="fas fa-sticky-note"></i>
+                    <textarea name="notes" id="notes" rows="3" placeholder="Add any additional notes here..."></textarea>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-save" type="submit">
+                    <i class="fas fa-save"></i> Save Purchase
+                </button>
+                <a href="{% url 'list_purchases' %}" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function updateTotal() {
+        let qty = parseFloat(document.getElementById("quantity").value) || 0;
+        let rate = parseFloat(document.getElementById("product_rate").value) || 0;
+        let total = (qty * rate).toFixed(2);
+        document.getElementById("total_rate").value = total;
+        document.getElementById("total_rate_display").textContent = '$' + total;
+    }
+
+    function filterSubcategories() {
+        const catId = document.getElementById("category").value;
+        const subSelect = document.getElementById("subcategory");
+        const options = subSelect.options;
+        
+        // First, hide all options except the first one (Select Subcategory)
+        for (let i = 1; i < options.length; i++) {
+            options[i].style.display = 'none';
+            options[i].disabled = true;
+        }
+        
+        // Then show only the ones that match the selected category
+        if (catId) {
+            for (let i = 1; i < options.length; i++) {
+                if (options[i].getAttribute('data-category') === catId) {
+                    options[i].style.display = 'block';
+                    options[i].disabled = false;
+                }
+            }
+        }
+        
+        // Reset the selected value
+        subSelect.value = "";
+    }
+
+    // Initialize the form when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        filterSubcategories();
+        
+        // Set default date values
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').value = today;
+        
+        // Add animation to form elements
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach((group, index) => {
+            group.style.animationDelay = (index * 0.05) + 's';
+        });
+    });
+</script>
+
+</body>
+</html> 

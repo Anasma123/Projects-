@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Report - {{ today }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: none;
+            background: #ffffff;
+        }
+        .card-header {
+            background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+            color: #333;
+        }
+        .summary-card {
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+        .summary-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .table {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table th {
+            background: linear-gradient(90deg, #4e73df 0%, #36b9cc 100%);
+            color: white;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f9fa;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .low-stock {
+            background-color: #ffebee;
+        }
+        .medium-stock {
+            background-color: #fff8e1;
+        }
+        .high-stock {
+            background-color: #e8f5e9;
+        }
+        .expired-alert {
+            background-color: #ffcccb;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .profit-high {
+            background-color: #e8f5e9;
+        }
+        .profit-medium {
+            background-color: #fff8e1;
+        }
+        .profit-low {
+            background-color: #ffebee;
+        }
+        .profit-negative {
+            background-color: #ffcdd2;
+        }
+        .nav-tabs .nav-link {
+            color: #333;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(90deg, #4e73df 0%, #36b9cc 100%);
+            color: white;
+        }
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-container input, .search-container select {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            min-width: 150px;
+        }
+        .search-container button {
+            background: linear-gradient(90deg, #4e73df 0%, #36b9cc 100%);
+            border: none;
+            color: white;
+        }
+        .export-btn {
+            background: linear-gradient(90deg, #28a745 0%, #71dd8a 100%);
+            color: white;
+        }
+        .remaining-days {
+            font-weight: bold;
+        }
+        .remaining-days.positive {
+            color: #28a745;
+        }
+        .remaining-days.negative {
+            color: #dc3545;
+        }
+        @media print {
+            .print-btn, .search-container, .export-btn, [data-bs-toggle="modal"] {
+                display: none;
+            }
+            .card {
+                break-inside: avoid;
+            }
+            .nav-tabs {
+                display: none;
+            }
+            .tab-content > .tab-pane {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-4">
+        <!-- Header -->
+        <div class="report-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1><i class="fas fa-store me-2"></i>Shop Management System</h1>
+                    <p class="mb-0">Daily Sales Report - {{ today }}</p>
+                </div>
+                <div class="text-end">
+                    <img src="https://i.imgur.com/7C8pydO.png" alt="Logo" height="60" class="rounded-circle">
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4 justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#summary">Summary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#charts">Charts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#profit">Profit Analysis</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#stock">Stock</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#billing">Billing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#expired">Expired</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#all-in-one">All-in-One</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Summary Section -->
+            <div class="tab-pane fade show active" id="summary">
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card summary-card text-white bg-primary">
+                            <div class="card-body">
+                                <i class="fas fa-receipt fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Sales</h5>
+                                <p class="summary-value">₹{{ sales_summary.total_sales }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card summary-card text-white bg-info">
+                            <div class="card-body">
+                                <i class="fas fa-tags fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Discount</h5>
+                                <p class="summary-value">₹{{ sales_summary.total_discount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card summary-card text-white bg-success">
+                            <div class="card-body">
+                                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                <h5 class="card-title">Net Revenue</h5>
+                                <p class="summary-value">₹{{ sales_summary.net_revenue }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card summary-card text-white" style="background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);">
+                            <div class="card-body">
+                                <i class="fas fa-money-bill-wave fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Profit</h5>
+                                <p class="summary-value">₹{{ total_profit|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card summary-card text-white" style="background: linear-gradient(135deg, #c471f5 0%, #fa71cd 100%);">
+                            <div class="card-body">
+                                <i class="fas fa-money-bill-alt fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Cost</h5>
+                                <p class="summary-value">₹{{ total_cost|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+
+            
+<div class="tab-pane fade" id="charts">
+    <div class="row mb-4">
+        <!-- Sales by Category -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Sales by Category</span>
+                    <div class="d-flex align-items-center flex-wrap">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="fromDate_categoryChart">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="toDate_categoryChart">
+                        <button class="btn btn-sm btn-primary mb-2" onclick="handleDateRange('categoryChart')">Search</button>
+                        <i class="fas fa-chart-pie text-primary ms-2"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" id="chartContainer_categoryChart">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div id="noData_categoryChart" class="text-center text-muted" style="display:none;">
+                        <p>No Data Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profit by Category -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Profit by Category</span>
+                    <div class="d-flex align-items-center flex-wrap">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="fromDate_profitChart">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="toDate_profitChart">
+                        <button class="btn btn-sm btn-primary mb-2" onclick="handleDateRange('profitChart')">Search</button>
+                        <i class="fas fa-chart-bar text-success ms-2"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" id="chartContainer_profitChart">
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                    <div id="noData_profitChart" class="text-center text-muted" style="display:none;">
+                        <p>No Data Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row mb-4">
+        <!-- Top Selling Products -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Top Selling Products</span>
+                    <div class="d-flex align-items-center flex-wrap">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="fromDate_topSellingChart">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="toDate_topSellingChart">
+                        <button class="btn btn-sm btn-primary mb-2" onclick="handleDateRange('topSellingChart')">Search</button>
+                        <i class="fas fa-chart-bar text-info ms-2"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" id="chartContainer_topSellingChart">
+                        <canvas id="topSellingChart"></canvas>
+                    </div>
+                    <div id="noData_topSellingChart" class="text-center text-muted" style="display:none;">
+                        <p>No Data Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stock Status Distribution -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Stock Status Distribution</span>
+                    <div class="d-flex align-items-center flex-wrap">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="fromDate_stockStatusChart">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="toDate_stockStatusChart">
+                        <button class="btn btn-sm btn-primary mb-2" onclick="handleDateRange('stockStatusChart')">Search</button>
+                        <i class="fas fa-chart-pie text-warning ms-2"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" id="chartContainer_stockStatusChart">
+                        <canvas id="stockStatusChart"></canvas>
+                    </div>
+                    <div id="noData_stockStatusChart" class="text-center text-muted" style="display:none;">
+                        <p>No Data Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="row mb-4">
+        <!-- Profit Distribution -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Profit Distribution</span>
+                    <div class="d-flex align-items-center flex-wrap">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="fromDate_profitDistChart">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="toDate_profitDistChart">
+                        <button class="btn btn-sm btn-primary mb-2" onclick="handleDateRange('profitDistChart')">Search</button>
+                        <i class="fas fa-chart-doughnut text-danger ms-2"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" id="chartContainer_profitDistChart">
+                        <canvas id="profitDistChart"></canvas>
+                    </div>
+                    <div id="noData_profitDistChart" class="text-center text-muted" style="display:none;">
+                        <p>No Data Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Profit Comparison -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Category Profit Comparison</span>
+                    <div class="d-flex align-items-center flex-wrap">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="fromDate_categoryProfitLine">
+                        <input type="date" class="form-control form-control-sm me-2 mb-2" id="toDate_categoryProfitLine">
+                        <button class="btn btn-sm btn-primary mb-2" onclick="handleDateRange('categoryProfitLine')">Search</button>
+                        <i class="fas fa-chart-line text-secondary ms-2"></i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" id="chartContainer_categoryProfitLine">
+                        <canvas id="categoryProfitLine"></canvas>
+                    </div>
+                    <div id="noData_categoryProfitLine" class="text-center text-muted" style="display:none;">
+                        <p>No Data Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Profit Analysis Section -->
+             
+            <div class="tab-pane fade" id="profit">
+                <!-- High Profit Products -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line me-2"></i>Profit Analysis - Top Performing Products
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="highProfitSearch">
+                            <select class="form-control" id="highProfitDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('highProfitTable', 'highProfitSearch', 'highProfitDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('highProfitTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm" id="highProfitTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Profit</th>
+                                        {% comment %} <th>Date</th> {% endcomment %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in high_profit_products %}
+                                    <tr class="profit-high">
+                                        <td>{{ product.purchase__product_name }}</td>
+                                        <td>{{ product.purchase__category__name }}</td>
+                                        <td>{{ product.purchase__subcategory__name }}</td>
+                                        <td>₹{{ product.profit|floatformat:2 }}</td>
+                                        {% comment %} <td>{{ invoice.date }}</td> {% endcomment %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Low Profit Products -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line me-2"></i>Low Profit Products
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="lowProfitSearch">
+                            <select class="form-control" id="lowProfitDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('lowProfitTable', 'lowProfitSearch', 'lowProfitDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('lowProfitTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm" id="lowProfitTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Profit</th>
+                                        {% comment %} <th>Date</th> {% endcomment %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in low_profit_products %}
+                                    <tr class="profit-low">
+                                        <td>{{ product.purchase__product_name }}</td>
+                                        <td>{{ product.purchase__category__name }}</td>
+                                        <td>{{ product.purchase__subcategory__name }}</td>
+                                        <td>₹{{ product.profit|floatformat:2 }}</td>
+                                        {% comment %} <td>{{ today }}</td> {% endcomment %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product-wise Profit Report -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-shopping-bag me-2"></i>Product-wise Profit Report
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="productSalesSearch">
+                            <select class="form-control" id="productSalesDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('productSalesTable', 'productSalesSearch', 'productSalesDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('productSalesTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="productSalesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Qty Sold</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                        {% comment %} <th>Date</th> {% endcomment %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ps in product_sales|dictsort:"profit" reversed %}
+                                    <tr class="{% if ps.profit > 1000 %}profit-high{% elif ps.profit > 500 %}profit-medium{% elif ps.profit > 0 %}profit-low{% else %}profit-negative{% endif %}">
+                                        <td>{{ ps.purchase__product_name }}</td>
+                                        <td>{{ ps.purchase__category__name }}</td>
+                                        <td>{{ ps.purchase__subcategory__name }}</td>
+                                        <td>{{ ps.total_qty }}</td>
+                                        <td>₹{{ ps.total_amount|floatformat:2 }}</td>
+                                        <td>₹{{ ps.total_cost|floatformat:2 }}</td>
+                                        <td><strong>₹{{ ps.profit|floatformat:2 }}</strong></td>
+                                        {% comment %} <td>{{ today }}</td> {% endcomment %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Category-wise Profit Report -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-layer-group me-2"></i>Category-wise Profit Report
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by category" id="categorySalesSearch">
+                            <select class="form-control" id="categorySalesDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('categorySalesTable', 'categorySalesSearch', 'categorySalesDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('categorySalesTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="categorySalesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Quantity Sold</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                        <th>% of Total Sales</th>
+                                        {% comment %} <th>Date</th> {% endcomment %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cs in category_sales|dictsort:"profit" reversed %}
+                                    <tr class="{% if cs.profit > 1000 %}profit-high{% elif cs.profit > 500 %}profit-medium{% elif cs.profit > 0 %}profit-low{% else %}profit-negative{% endif %}">
+                                        <td>{{ cs.purchase__category__name }}</td>
+                                        <td>{{ cs.total_qty }}</td>
+                                        <td>₹{{ cs.total_amount|floatformat:2 }}</td>
+                                        <td>₹{{ cs.total_cost|floatformat:2 }}</td>
+                                        <td><strong>₹{{ cs.profit|floatformat:2 }}</strong></td>
+                                        <td>{{ cs.percentage|floatformat:2 }}%</td>
+                                        {% comment %} <td>{{ today }}</td> {% endcomment %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subcategory-wise Profit Report -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-layer-group me-2"></i>Subcategory-wise Profit Report
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by subcategory" id="subcategorySalesSearch">
+                            <select class="form-control" id="subcategorySalesDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('subcategorySalesTable', 'subcategorySalesSearch', 'subcategorySalesDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('subcategorySalesTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="subcategorySalesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Quantity Sold</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                        {% comment %} <th>Date</th> {% endcomment %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sc in subcategory_sales|dictsort:"profit" reversed %}
+                                    <tr class="{% if sc.profit > 1000 %}profit-high{% elif sc.profit > 500 %}profit-medium{% elif sc.profit > 0 %}profit-low{% else %}profit-negative{% endif %}">
+                                        <td>{{ sc.purchase__category__name }}</td>
+                                        <td>{{ sc.purchase__subcategory__name }}</td>
+                                        <td>{{ sc.total_qty }}</td>
+                                        <td>₹{{ sc.total_amount|floatformat:2 }}</td>
+                                        <td>₹{{ sc.total_cost|floatformat:2 }}</td>
+                                        <td><strong>₹{{ sc.profit|floatformat:2 }}</strong></td>
+                                        {% comment %} <td>{{ today }}</td> {% endcomment %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stock Section -->
+            <div class="tab-pane fade" id="stock">
+                <!-- Stock Report -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-boxes me-2"></i>Stock Report</span>
+                        <div>
+                            <button class="btn btn-sm export-btn" onclick="exportTable('stockTable')">
+                                <i class="fas fa-download me-1"></i>Export
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#stockModal">
+                                <i class="fas fa-filter me-1"></i>Filter
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="stockSearch">
+                            <select class="form-control" id="stockDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('stockTable', 'stockSearch', 'stockDateFilter')">Search</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="stockTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Balance</th>
+                                        <th>Sold</th>
+                                        {% comment %} <th>Total Purchase</th> {% endcomment %}
+                                        <th>Status</th>
+                                            {% comment %} <th>Date</th> {% endcomment %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in stock_data|dictsort:"balance" %}
+                                    
+                                    <tr class="{% if item.balance < 10 %}low-stock{% elif item.balance > 15 %}high-stock{% else %}medium-stock{% endif %}">
+                                        <td>{{ item.product_name }}</td>
+                                        <td>{{ item.category.name }}</td>
+                                        <td>{{ item.subcategory.name }}</td>
+                                            <td>{{ item.total_purchased }}</td>
+                                        <td>{{ item.total_sold }}</td>
+                                        {% comment %} <td><strong>{{ item.balance }}</strong></td> {% endcomment %}
+                                        <td>
+                                            <span class="status-badge 
+                                                {% if item.balance < 10 %}bg-danger{% elif item.balance > 15 %}bg-success{% else %}bg-warning{% endif %}">
+                                                {% if item.balance < 10 %}Low{% elif item.balance > 15 %}High{% else %}Medium{% endif %}
+                                            </span>
+                                        </td>                                        
+
+                                        {% comment %} <td>{{ invoice.date|date:"Y-m-d" }}</td>                                     {% endcomment %}
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Top Selling Products -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-clock me-2"></i>Top Selling Products
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="topSellingSearch">
+                            <select class="form-control" id="topSellingDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterListGroup('topSellingList', 'topSellingSearch', 'topSellingDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportListGroup('topSellingList')">Export</button>
+                        </div>
+                        <ol class="list-group list-group-numbered" id="topSellingList">
+                            {% for top in top_selling %}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{ top.purchase__product_name }}</div>
+                                    {{ top.purchase__category__name }} / {{ top.purchase__subcategory__name }}
+                                </div>
+                                <span class="badge bg-primary rounded-pill">{{ top.total_qty }} sold</span>
+                                <span class="d-none" data-date="{{ today|date:'Y-m-d' }}"></span>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                <!-- Low Stock Alert -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Low Stock Alert
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="lowStockSearch">
+                            <select class="form-control" id="lowStockDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterListGroup('lowStockList', 'lowStockSearch', 'lowStockDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportListGroup('lowStockList')">Export</button>
+                        </div>
+                        <div class="list-group" id="lowStockList">
+                            {% for low in low_stock %}
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-danger">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ low.product_name }}</h6>
+                                    <small>{{ low.balance }} left</small>
+                                </div>
+                                <small class="text-muted">{{ low.category.name }} / {{ low.subcategory.name }}</small>
+                                <span class="d-none" data-date="{{ today|date:'Y-m-d' }}"></span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Section -->
+            <div class="tab-pane fade" id="billing">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-file-invoice me-2"></i>Billing List
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by customer or invoice ID" id="billingSearch">
+                            <select class="form-control" id="billingDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('billingTable', 'billingSearch', 'billingDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('billingTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="billingTable">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice ID</th>
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Total Amount</th>
+                                        <th>Discount</th>
+                                        <th>Net Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for invoice in invoices|dictsort:"total" reversed %}
+                                    <tr>
+                                        <td>{{ invoice.id }}</td>
+                                        <td>{{ invoice.date|date:"Y-m-d" }}</td>
+                                        <td>{{ invoice.customer_name|default:"N/A" }}</td>
+                                        <td>₹{{ invoice.total|floatformat:2 }}</td>
+                                        <td>₹{{ invoice.discount_amount|floatformat:2 }}</td>
+                                        <td>₹{{ invoice.net_amount|floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expired Section -->
+            <div class="tab-pane fade" id="expired">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-exclamation-circle me-2"></i>Expired Purchase Report
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="expiredSearch">
+                            <select class="form-control" id="expiredDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('expiredTable', 'expiredSearch', 'expiredDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('expiredTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="expiredTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Purchase Date</th>
+                                        <th>Expiry Date</th>
+                                        <th>Days to Expiry</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for purchase in expired_purchases|dictsort:"days_to_expiry" %}
+                                    <tr class="{% if purchase.days_to_expiry <= 2 %}expired-alert{% endif %}">
+                                        <td>{{ purchase.product_name }}</td>
+                                        <td>{{ purchase.category.name }}</td>
+                                        <td>{{ purchase.subcategory.name }}</td>
+                                        <td>{{ purchase.date|date:"Y-m-d" }}</td>
+                                        <td>{{ purchase.expire_date|date:"Y-m-d" }}</td>
+                                        <td>{{ purchase.days_to_expiry }}</td>
+                                        <td>
+                                            <span class="status-badge 
+                                                {% if purchase.days_to_expiry <= 2 %}bg-danger{% else %}bg-warning{% endif %}">
+                                                {% if purchase.days_to_expiry <= 2 %}Expiring Soon{% else %}Expiring{% endif %}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All-in-One Table -->
+            <div class="tab-pane fade" id="all-in-one">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-2"></i>All-in-One Report
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product or category" id="allInOneSearch">
+                            <select class="form-control" id="allInOneDateFilter">
+                                <option value="">All Time</option>
+                                <option value="day">Today</option>
+                                <option value="month">This Month</option>
+                                <option value="year">This Year</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterTable('allInOneTable', 'allInOneSearch', 'allInOneDateFilter')">Search</button>
+                            <button class="btn export-btn" onclick="exportTable('allInOneTable')">Export</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="allInOneTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Qty Sold</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                        {% comment %} <th>Balance</th> {% endcomment %}
+                                        {% comment %} <th>Status</th> {% endcomment %}
+                                        <th>Expiry Date</th>
+                                        <th>Remaining Days</th>
+                                        {% comment %} <th>Date</th> {% endcomment %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ps in product_sales %}
+                                    {% for item in stock_data %}
+                                    {% if ps.purchase__product_name == item.product_name %}
+                                    <tr class="{% if ps.profit > 1000 %}profit-high{% elif ps.profit > 500 %}profit-medium{% elif ps.profit > 0 %}profit-low{% else %}profit-negative{% endif %} {% if item.balance < 10 %}low-stock{% elif item.balance > 15 %}high-stock{% else %}medium-stock{% endif %}">
+                                        <td>{{ ps.purchase__product_name }}</td>
+                                        <td>{{ ps.purchase__category__name }}</td>
+                                        <td>{{ ps.purchase__subcategory__name }}</td>
+                                        <td>{{ ps.total_qty }}</td>
+                                        <td>₹{{ ps.total_amount|floatformat:2 }}</td>
+                                        <td>₹{{ ps.total_cost|floatformat:2 }}</td>
+                                        <td><strong>₹{{ ps.profit|floatformat:2 }}</strong></td>
+                                        {% comment %} <td>{{ item.balance }}</td> {% endcomment %}
+                                        {% comment %} <td>
+                                            <span class="status-badge 
+                                                {% if item.balance < 10 %}bg-danger{% elif item.balance > 15 %}bg-success{% else %}bg-warning{% endif %}">
+                                                {% if item.balance < 10 %}Low{% elif item.balance > 15 %}High{% else %}Medium{% endif %}
+                                            </span>
+                                        </td> {% endcomment %}
+                                        <td data-expire-date="{{ item.expire_date|date:'Y-m-d' }}">{{ item.expire_date|date:"Y-m-d"|default:"N/A" }}</td>
+                                        <td class="remaining-days" data-expire="{{ item.expire_date|date:'Y-m-d' }}">Calculating...</td>
+                                        {% comment %} <td>{{ purchase.date}}</td> {% endcomment %}
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-muted mt-4 mb-5">
+            <p>Report generated on {{ today }} | Shop Management System v2.0</p>
+            <p>For any inquiries, please contact: support@shopmanagement.com</p>
+        </div>
+    </div>
+
+    <!-- Print Button -->
+    <button class="btn btn-primary print-btn rounded-circle" onclick="window.print()">
+        <i class="fas fa-print fa-lg"></i>
+    </button>
+
+    <!-- Stock Filter Modal -->
+    <div class="modal fade" id="stockModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Filter Stock Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select">
+                            <option selected>All Categories</option>
+                            <option>Electronics</option>
+                            <option>Clothing</option>
+                            <option>Groceries</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock Status</label>
+                        <select class="form-select">
+                            <option selected>All Status</option>
+                            <option>Low Stock</option>
+                            <option>Medium Stock</option>
+                            <option>High Stock</option>
+                        </select>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="outOfStockToggle">
+                        <label class="form-check-label" for="outOfStockToggle">Include out of stock items</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const todayStr = '{{ today|date:"Y-m-d" }}';
+            const today = new Date(todayStr);
+
+            // Category Sales Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            const categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        {% for category in category_sales %}
+                        '{{ category.purchase__category__name }}',
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        data: [
+                            {% for category in category_sales %}
+                            {{ category.total_amount }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Profit by Category Chart
+            const profitCtx = document.getElementById('profitChart').getContext('2d');
+            const profitChart = new Chart(profitCtx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        {% for category in category_sales %}
+                        '{{ category.purchase__category__name }}',
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        label: 'Profit (₹)',
+                        data: [
+                            {% for category in category_sales %}
+                            {{ category.profit }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: '#1cc88a',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Profit (₹)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Top Selling Products Chart
+            const topSellingCtx = document.getElementById('topSellingChart').getContext('2d');
+            const topSellingChart = new Chart(topSellingCtx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        {% for top in top_selling %}
+                        '{{ top.purchase__product_name }}',
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        label: 'Quantity Sold',
+                        data: [
+                            {% for top in top_selling %}
+                            {{ top.total_qty }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: '#36b9cc',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Stock Status Distribution Chart
+            let lowCount = 0, mediumCount = 0, highCount = 0;
+            {% for item in stock_data %}
+                {% if item.balance < 10 %}
+                    lowCount++;
+                {% elif item.balance > 15 %}
+                    highCount++;
+                {% else %}
+                    mediumCount++;
+                {% endif %}
+            {% endfor %}
+            const stockStatusCtx = document.getElementById('stockStatusChart').getContext('2d');
+            const stockStatusChart = new Chart(stockStatusCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Low Stock', 'Medium Stock', 'High Stock'],
+                    datasets: [{
+                        data: [lowCount, mediumCount, highCount],
+                        backgroundColor: ['#e74a3b', '#f6c23e', '#1cc88a'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Profit Distribution Chart (High, Medium, Low, Negative)
+            let highProfitCount = 0, mediumProfitCount = 0, lowProfitCount = 0, negativeProfitCount = 0;
+            {% for ps in product_sales %}
+                {% if ps.profit > 1000 %}
+                    highProfitCount++;
+                {% elif ps.profit > 500 %}
+                    mediumProfitCount++;
+                {% elif ps.profit > 0 %}
+                    lowProfitCount++;
+                {% else %}
+                    negativeProfitCount++;
+                {% endif %}
+            {% endfor %}
+            const profitDistCtx = document.getElementById('profitDistChart').getContext('2d');
+            const profitDistChart = new Chart(profitDistCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['High Profit', 'Medium Profit', 'Low Profit', 'Negative Profit'],
+                    datasets: [{
+                        data: [highProfitCount, mediumProfitCount, lowProfitCount, negativeProfitCount],
+                        backgroundColor: ['#1cc88a', '#f6c23e', '#e74a3b', '#dc3545'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Category Profit Line Chart
+            const categoryProfitLineCtx = document.getElementById('categoryProfitLine').getContext('2d');
+            const categoryProfitLineChart = new Chart(categoryProfitLineCtx, {
+                type: 'line',
+                data: {
+                    labels: [
+                        {% for cs in category_sales %}
+                        '{{ cs.purchase__category__name }}',
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        label: 'Profit (₹)',
+                        data: [
+                            {% for cs in category_sales %}
+                            {{ cs.profit }},
+                            {% endfor %}
+                        ],
+                        borderColor: '#4e73df',
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Calculate remaining days for all-in-one table
+            document.querySelectorAll('#allInOneTable .remaining-days').forEach(cell => {
+                const expireDateStr = cell.getAttribute('data-expire');
+                if (expireDateStr && expireDateStr !== 'N/A') {
+                    const expireDate = new Date(expireDateStr);
+                    const diffTime = expireDate - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    cell.textContent = diffDays;
+                    cell.className = `remaining-days ${diffDays >= 0 ? 'positive' : 'negative'}`;
+                } else {
+                    cell.textContent = 'N/A';
+                }
+            });
+
+            // Table filter function
+            window.filterTable = function(tableId, searchInputId, dateFilterId) {
+                const searchInput = document.getElementById(searchInputId).value.toLowerCase();
+                const dateFilter = document.getElementById(dateFilterId).value;
+                const table = document.getElementById(tableId);
+                const tbody = table.querySelector('tbody');
+                if (!tbody) return;
+                const rows = tbody.getElementsByTagName('tr');
+                
+                for (let row of rows) {
+                    let showRow = true;
+                    const cells = row.getElementsByTagName('td');
+                    let textContent = '';
+                    for (let cell of cells) {
+                        textContent += cell.textContent.toLowerCase() + ' ';
+                    }
+                    const dateCell = cells[cells.length - 1];
+                    const dateText = dateCell ? dateCell.textContent.trim() : '';
+
+                    // Search filter
+                    if (searchInput && !textContent.includes(searchInput)) {
+                        showRow = false;
+                    }
+
+                    // Date filter
+                    if (dateFilter && dateText) {
+                        const rowDate = new Date(dateText);
+                        if (isNaN(rowDate.getTime())) {
+                            showRow = false;
+                        } else if (dateFilter === 'day' && rowDate.toDateString() !== today.toDateString()) {
+                            showRow = false;
+                        } else if (dateFilter === 'month' && (rowDate.getMonth() !== today.getMonth() || rowDate.getFullYear() !== today.getFullYear())) {
+                            showRow = false;
+                        } else if (dateFilter === 'year' && rowDate.getFullYear() !== today.getFullYear()) {
+                            showRow = false;
+                        }
+                    }
+
+                    row.style.display = showRow ? '' : 'none';
+                }
+            };
+
+            // List group filter function
+            window.filterListGroup = function(listId, searchInputId, dateFilterId) {
+                const searchInput = document.getElementById(searchInputId).value.toLowerCase();
+                const dateFilter = document.getElementById(dateFilterId).value;
+                const list = document.getElementById(listId);
+                const items = list.getElementsByTagName('li') || list.getElementsByTagName('a');
+                
+                for (let item of items) {
+                    let showItem = true;
+                    const textContent = item.textContent.toLowerCase();
+                    const dateSpan = item.querySelector('[data-date]');
+                    const dateText = dateSpan ? dateSpan.getAttribute('data-date') : '';
+
+                    // Search filter
+                    if (searchInput && !textContent.includes(searchInput)) {
+                        showItem = false;
+                    }
+
+                    // Date filter
+                    if (dateFilter && dateText) {
+                        const rowDate = new Date(dateText);
+                        if (isNaN(rowDate.getTime())) {
+                            showItem = false;
+                        } else if (dateFilter === 'day' && rowDate.toDateString() !== today.toDateString()) {
+                            showItem = false;
+                        } else if (dateFilter === 'month' && (rowDate.getMonth() !== today.getMonth() || rowDate.getFullYear() !== today.getFullYear())) {
+                            showItem = false;
+                        } else if (dateFilter === 'year' && rowDate.getFullYear() !== today.getFullYear()) {
+                            showItem = false;
+                        }
+                    }
+
+                    item.style.display = showItem ? '' : 'none';
+                }
+            };
+
+            // Export table function
+            window.exportTable = function(tableId) {
+                const table = document.getElementById(tableId);
+                let csv = [];
+                const rows = table.getElementsByTagName('tr');
+                
+                for (let row of rows) {
+                    const cols = row.getElementsByTagName('td');
+                    const headers = row.getElementsByTagName('th');
+                    let rowData = [];
+                    
+                    if (headers.length > 0) {
+                        for (let header of headers) {
+                            rowData.push(`"${header.textContent.replace(/"/g, '""')}"`);
+                        }
+                    } else {
+                        for (let col of cols) {
+                            rowData.push(`"${col.textContent.replace(/"/g, '""')}"`);
+                        }
+                    }
+                    csv.push(rowData.join(','));
+                }
+                
+                const csvContent = csv.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${tableId}_export.csv`;
+                link.click();
+            };
+
+            // Export list group function
+            window.exportListGroup = function(listId) {
+                const list = document.getElementById(listId);
+                const items = list.getElementsByTagName('li') || list.getElementsByTagName('a');
+                let csv = ['Product,Category/Subcategory,Qty Sold'];
+                
+                for (let item of items) {
+                    const text = item.textContent;
+                    // Simple parsing - adjust based on structure
+                    const lines = text.split('\n');
+                    if (lines.length >= 2) {
+                        const product = lines[0].trim();
+                        const category = lines[1].trim();
+                        const qtyMatch = text.match(/(\d+) sold/);
+                        const qty = qtyMatch ? qtyMatch[1] : '0';
+                        csv.push(`"${product}","${category}","${qty}"`);
+                    }
+                }
+                
+                const csvContent = csv.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${listId}_export.csv`;
+                link.click();
+            };
+
+            // Auto-trigger search on input for tables
+            document.querySelectorAll('.search-container input').forEach(input => {
+                input.addEventListener('input', function() {
+                    const container = this.closest('.search-container');
+                    const tableId = container.nextElementSibling.querySelector('table') ? container.nextElementSibling.querySelector('table').id : container.nextElementSibling.id;
+                    const dateFilterId = container.querySelector('select').id;
+                    const isListGroup = container.nextElementSibling.tagName === 'OL' || container.nextElementSibling.tagName === 'DIV';
+                    if (isListGroup) {
+                        filterListGroup(tableId, this.id, dateFilterId);
+                    } else {
+                        filterTable(tableId, this.id, dateFilterId);
+                    }
+                });
+            });
+
+            // Button click also triggers
+            document.querySelectorAll('.search-container button.btn-primary').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const container = this.closest('.search-container');
+                    const inputId = container.querySelector('input').id;
+                    const dateFilterId = container.querySelector('select').id;
+                    const tableId = container.nextElementSibling.querySelector('table') ? container.nextElementSibling.querySelector('table').id : container.nextElementSibling.id;
+                    const isListGroup = container.nextElementSibling.tagName === 'OL' || container.nextElementSibling.tagName === 'DIV';
+                    if (isListGroup) {
+                        filterListGroup(tableId, inputId, dateFilterId);
+                    } else {
+                        filterTable(tableId, inputId, dateFilterId);
+                    }
+                });
+            });
+        });
+
+
+// Dummy fetch function (replace with backend / API)
+function fetchDataForRange(chartId, from, to) {
+    // Example: Return empty to simulate "No Data"
+    if (from === "2025-09-01" && to === "2025-09-05") {
+        return [10, 20, 30]; // Example demo data
+    }
+    return []; // Default no data
+}
+
+function handleDateRange(chartId) {
+    const from = document.getElementById("fromDate_" + chartId).value;
+    const to = document.getElementById("toDate_" + chartId).value;
+
+    if (from && to) {
+        const data = fetchDataForRange(chartId, from, to);
+
+        if (data.length > 0) {
+            // Show chart, hide no data
+            document.getElementById("chartContainer_" + chartId).style.display = "block";
+            document.getElementById("noData_" + chartId).style.display = "none";
+
+            // TODO: update Chart.js with "data"
+            console.log("Updating chart:", chartId, "with data:", data);
+
+        } else {
+            // Hide chart, show no data
+            document.getElementById("chartContainer_" + chartId).style.display = "none";
+            document.getElementById("noData_" + chartId).style.display = "block";
+        }
+    } else {
+        alert("Please select both From and To dates.");
+    }
+}
+
+        
+    </script>
+</body>
+</html>
