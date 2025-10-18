@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - LMS Platform{% endblock %}
+
+{% block content %}
+<div class="user-container">
+    <nav class="user-nav">
+        <div class="nav-brand">
+            <h2><i class="fas fa-graduation-cap"></i> LMS Platform</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'users:home' %}" class="active">Home</a></li>
+            <li><a href="{% url 'users:course_list' %}">Courses</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'users:my_courses' %}">My Courses</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'users:login' %}">Login</a></li>
+            <li><a href="{% url 'users:register' %}">Register</a></li>
+            {% endif %}
+            <li><a href="{% url 'lms_admin:login' %}" class="admin-link"><i class="fas fa-user-shield"></i> Admin</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome to Our Learning Platform</h1>
+            <p>Discover thousands of courses and start learning today</p>
+            <a href="{% url 'users:course_list' %}" class="btn-hero">Browse Courses <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="featured-courses">
+        <h2>Featured Courses</h2>
+        <div class="courses-grid-user">
+            {% for course in courses|slice:":6" %}
+            <div class="course-card-user">
+                {% if course.image %}
+                <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                {% else %}
+                <div class="course-placeholder"><i class="fas fa-book"></i></div>
+                {% endif %}
+                <div class="course-content">
+                    <h3>{{ course.title }}</h3>
+                    <p>{{ course.description|truncatewords:15 }}</p>
+                    <div class="course-footer">
+                        <span class="price">
+                            {% if course.is_free %}
+                            <span class="badge badge-free">FREE</span>
+                            {% else %}
+                            ${{ course.price }}
+                            {% endif %}
+                        </span>
+                        <a href="{% url 'users:course_detail' course.id %}" class="btn-view-course">View Course</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="no-courses">No courses available yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

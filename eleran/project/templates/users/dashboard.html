@@ -1,0 +1,556 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - LMS Platform{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Navigation Bar -->
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <h2><i class="fas fa-graduation-cap"></i> LMS Platform</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'users:home' %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'users:dashboard' %}" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="{% url 'users:course_list' %}"><i class="fas fa-book"></i> Browse Courses</a></li>
+            <li><a href="{% url 'users:my_courses' %}"><i class="fas fa-bookmark"></i> My Learning</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fas fa-user-circle"></i> {{ user.username }}</a>
+                <div class="dropdown-menu">
+                    <a href="#"><i class="fas fa-user-edit"></i> Profile</a>
+                    <a href="{% url 'users:logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+        <div class="welcome-content">
+            <h1>Welcome back, {{ user.first_name|default:user.username }}! 👋</h1>
+            <p>Continue your learning journey</p>
+        </div>
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+                <div class="stat-info">
+                    <h3>{{ enrolled_count }}</h3>
+                    <p>Enrolled Courses</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-star"></i></div>
+                <div class="stat-info">
+                    <h3>{{ recommended_courses.count }}</h3>
+                    <p>Recommended</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Continue Learning Section -->
+    {% if enrolled_courses %}
+    <section class="dashboard-section">
+        <h2><i class="fas fa-play-circle"></i> Continue Learning</h2>
+        <div class="courses-grid">
+            {% for enrollment in enrolled_courses|slice:":3" %}
+            <div class="course-card">
+                {% if enrollment.course.image %}
+                <img src="{{ enrollment.course.image.url }}" alt="{{ enrollment.course.title }}" class="course-img">
+                {% else %}
+                <div class="course-placeholder"><i class="fas fa-book"></i></div>
+                {% endif %}
+                <div class="course-body">
+                    <h3>{{ enrollment.course.title }}</h3>
+                    <p>{{ enrollment.course.description|truncatewords:15 }}</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ enrollment.progress }}%"></div>
+                    </div>
+                    <p class="progress-text">{{ enrollment.progress }}% Complete</p>
+                    <a href="{% url 'users:course_detail' enrollment.course.id %}" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Continue
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Recommended Courses -->
+    <section class="dashboard-section">
+        <h2><i class="fas fa-lightbulb"></i> Recommended For You</h2>
+        <div class="courses-grid">
+            {% for course in recommended_courses %}
+            <div class="course-card">
+                {% if course.image %}
+                <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-img">
+                {% else %}
+                <div class="course-placeholder"><i class="fas fa-book"></i></div>
+                {% endif %}
+                <div class="course-body">
+                    <h3>{{ course.title }}</h3>
+                    <p>{{ course.description|truncatewords:15 }}</p>
+                    <div class="course-meta">
+                        <span class="course-price">
+                            {% if course.is_free %}
+                            <span class="badge badge-free">FREE</span>
+                            {% else %}
+                            <span class="badge badge-price">${{ course.price }}</span>
+                            {% endif %}
+                        </span>
+                        <span class="course-students">
+                            <i class="fas fa-users"></i> {{ course.enrollment_count }} enrolled
+                        </span>
+                    </div>
+                    <button class="btn btn-enroll" onclick="showEnrollModal({{ course.id }}, '{{ course.title }}', {{ course.price }}, {{ course.is_free|yesno:'true,false' }})">
+                        {% if course.is_free %}
+                        <i class="fas fa-check"></i> Enroll Now
+                        {% else %}
+                        <i class="fas fa-lock"></i> Pay Securely
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <p class="no-courses">No recommendations available at the moment.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- All Available Courses -->
+    <section class="dashboard-section">
+        <h2><i class="fas fa-th"></i> Browse All Courses</h2>
+        <div class="courses-grid">
+            {% for course in all_courses|slice:":6" %}
+            <div class="course-card">
+                {% if course.image %}
+                <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-img">
+                {% else %}
+                <div class="course-placeholder"><i class="fas fa-book"></i></div>
+                {% endif %}
+                <div class="course-body">
+                    <h3>{{ course.title }}</h3>
+                    <p>{{ course.description|truncatewords:15 }}</p>
+                    <div class="course-meta">
+                        <span class="course-price">
+                            {% if course.is_free %}
+                            <span class="badge badge-free">FREE</span>
+                            {% else %}
+                            <span class="badge badge-price">${{ course.price }}</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <a href="{% url 'users:course_detail' course.id %}" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'users:course_list' %}" class="btn btn-outline">View All Courses <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+</div>
+
+<!-- Enrollment Modal (Will be populated by JS) -->
+<div id="enrollModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEnrollModal()">&times;</span>
+        <h2 id="modalTitle">Course Enrollment</h2>
+        <div id="modalBody">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.dashboard-container {
+    min-height: 100vh;
+    background: #f5f7fa;
+}
+
+.dashboard-nav {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand h2 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #5a6c7d;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    background: #3498db;
+    color: white;
+}
+
+.welcome-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.welcome-content h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2.5rem;
+}
+
+.stats-cards {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.2);
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+}
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.stat-info p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.dashboard-section {
+    padding: 2rem;
+}
+
+.dashboard-section h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.course-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.course-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.course-placeholder {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: white;
+}
+
+.course-body {
+    padding: 1.5rem;
+}
+
+.course-body h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.course-body p {
+    color: #5a6c7d;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s;
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: #5a6c7d;
+    margin-bottom: 1rem;
+}
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.badge-free {
+    background: #2ecc71;
+    color: white;
+}
+
+.badge-price {
+    background: #3498db;
+    color: white;
+}
+
+.course-students {
+    color: #5a6c7d;
+    font-size: 0.875rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    text-align: center;
+    width: 100%;
+}
+
+.btn-primary {
+    background: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+.btn-enroll {
+    background: #2ecc71;
+    color: white;
+}
+
+.btn-enroll:hover {
+    background: #27ae60;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #3498db;
+    color: #3498db;
+    padding: 0.75rem 2rem;
+}
+
+.btn-outline:hover {
+    background: #3498db;
+    color: white;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 2rem;
+}
+
+.no-courses {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #95a5a6;
+    padding: 2rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #95a5a6;
+}
+
+.close:hover {
+    color: #2c3e50;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    min-width: 150px;
+    margin-top: 0.5rem;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #5a6c7d;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background: #f5f7fa;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function showEnrollModal(courseId, title, price, isFree) {
+    const modal = document.getElementById('enrollModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    
+    modalTitle.textContent = title;
+    
+    if (isFree) {
+        modalBody.innerHTML = `
+            <p>This is a free course. Click below to enroll!</p>
+            <form method="post" action="/users/course/${courseId}/enroll/">
+                <input type="hidden" name="csrfmiddlewaretoken" value="${getCookie('csrftoken')}">
+                <button type="submit" class="btn btn-enroll">Enroll Now</button>
+            </form>
+        `;
+    } else {
+        modalBody.innerHTML = `
+            <p><strong>Course Price:</strong> $${price}</p>
+            <p>Click below to proceed to secure payment</p>
+            <form method="get" action="/users/course/${courseId}/payment/">
+                <button type="submit" class="btn btn-enroll">Proceed to Payment</button>
+            </form>
+        `;
+    }
+    
+    modal.style.display = 'block';
+}
+
+function closeEnrollModal() {
+    document.getElementById('enrollModal').style.display = 'none';
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('enrollModal');
+    if (event.target == modal) {
+        closeEnrollModal();
+    }
+}
+</script>
+{% endblock %}

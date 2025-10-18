@@ -1,0 +1,16 @@
+{
+  "venvPath": ".",
+  "venv": "",
+  "extraPaths": [],
+  "reportMissingTypeStubs": false,
+  "reportAttributeAccessIssue": "warning",
+  "reportArgumentType": "warning",
+  "reportIncompatibleMethodOverride": "warning",
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "useLibraryCodeForTypes": true,
+  "stubPath": "typings",
+  "defineConstant": {
+    "DJANGO_SETTINGS_MODULE": "project.settings"
+  }
+}

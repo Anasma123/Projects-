@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment - {{ course.title }}{% endblock %}
+
+{% block content %}
+<div class="payment-container">
+    <div class="payment-box">
+        <h1><i class="fas fa-credit-card"></i> Complete Payment</h1>
+        <div class="course-summary">
+            {% if course.image %}
+            <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-image">
+            {% endif %}
+            <h2>{{ course.title }}</h2>
+            <p>{{ course.description|truncatewords:30 }}</p>
+        </div>
+        <div class="payment-details">
+            <div class="payment-row">
+                <span>Course Price:</span>
+                <span class="amount">${{ course.price }}</span>
+            </div>
+            <div class="payment-row total">
+                <span>Total Amount:</span>
+                <span class="amount">${{ course.price }}</span>
+            </div>
+        </div>
+        
+        {% if razorpay_enabled %}
+        <!-- Razorpay Payment Button -->
+        <button id="razorpay-button" class="btn-pay">
+            <i class="fas fa-lock"></i> Pay Securely with Razorpay
+        </button>
+        {% else %}
+        <!-- Demo Payment Form -->
+        <form method="post" class="payment-form">
+            {% csrf_token %}
+            <p class="payment-info">
+                <i class="fas fa-info-circle"></i> 
+                This is a demo payment. To enable Razorpay:
+                <br>1. Create account at <a href="https://razorpay.com/" target="_blank">razorpay.com</a>
+                <br>2. Get API keys from Dashboard
+                <br>3. Update settings.py with your keys
+            </p>
+            <button type="submit" class="btn-pay">
+                <i class="fas fa-check"></i> Complete Demo Payment
+            </button>
+        </form>
+        {% endif %}
+        
+        <div class="payment-security">
+            <i class="fas fa-shield-alt"></i>
+            <span>100% Secure Payment</span>
+        </div>
+        <div class="payment-footer">
+            <a href="{% url 'users:course_detail' course.id %}"><i class="fas fa-arrow-left"></i> Back to Course</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.payment-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.payment-box {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.payment-box h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+}
+
+.course-summary {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.course-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.course-summary h2 {
+    color: #2c3e50;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.course-summary p {
+    color: #5a6c7d;
+}
+
+.payment-details {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    color: #5a6c7d;
+}
+
+.payment-row.total {
+    border-top: 2px solid #dee2e6;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+.amount {
+    color: #3498db;
+    font-weight: 600;
+}
+
+.payment-form {
+    margin-bottom: 1rem;
+}
+
+.payment-info {
+    background: #e3f2fd;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+    margin-bottom: 1.5rem;
+    color: #1976d2;
+    line-height: 1.6;
+}
+
+.payment-info a {
+    color: #1976d2;
+    text-decoration: underline;
+}
+
+.btn-pay {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-pay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+}
+
+.payment-security {
+    text-align: center;
+    color: #95a5a6;
+    margin: 1.5rem 0;
+}
+
+.payment-security i {
+    color: #2ecc71;
+    margin-right: 0.5rem;
+}
+
+.payment-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.payment-footer a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.payment-footer a:hover {
+    text-decoration: underline;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+{% if razorpay_enabled %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById('razorpay-button').onclick = function(e) {
+    e.preventDefault();
+    
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": {{ course.price|floatformat:2 }} * 100, // Amount in paise
+        "currency": "USD",
+        "name": "LMS Platform",
+        "description": "{{ course.title }}",
+        "order_id": "{{ order_id }}",
+        "handler": function (response) {
+            // Payment successful
+            fetch('{% url "users:payment" course.id %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '{% url "users:my_courses" %}';
+                }
+            });
+        },
+        "prefill": {
+            "name": "{{ user.get_full_name }}",
+            "email": "{{ user.email }}"
+        },
+        "theme": {
+            "color": "#3498db"
+        }
+    };
+    
+    var rzp = new Razorpay(options);
+    rzp.open();
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endif %}
+{% endblock %}

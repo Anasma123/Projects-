@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}My Courses - LMS{% endblock %}
+
+{% block content %}
+<div class="user-container">
+    <nav class="user-nav">
+        <div class="nav-brand">
+            <h2><i class="fas fa-graduation-cap"></i> LMS Platform</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'users:home' %}">Home</a></li>
+            <li><a href="{% url 'users:course_list' %}">Courses</a></li>
+            <li><a href="{% url 'users:my_courses' %}" class="active">My Courses</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-header">
+        <h1>My Enrolled Courses</h1>
+        <p>Continue your learning journey</p>
+    </div>
+
+    <div class="courses-container">
+        <div class="courses-grid-user">
+            {% for enrollment in enrollments %}
+            <div class="course-card-user enrolled">
+                {% if enrollment.course.image %}
+                <img src="{{ enrollment.course.image.url }}" alt="{{ enrollment.course.title }}">
+                {% else %}
+                <div class="course-placeholder"><i class="fas fa-book"></i></div>
+                {% endif %}
+                <div class="course-content">
+                    <h3>{{ enrollment.course.title }}</h3>
+                    <p>{{ enrollment.course.description|truncatewords:15 }}</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ enrollment.progress }}%"></div>
+                    </div>
+                    <p class="progress-text">{{ enrollment.progress }}% Complete</p>
+                    <div class="course-footer">
+                        <span class="enrolled-date">
+                            <i class="fas fa-calendar"></i> Enrolled: {{ enrollment.enrolled_at|date:"M d, Y" }}
+                        </span>
+                        <a href="{% url 'users:course_detail' enrollment.course.id %}" class="btn-continue">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-enrollments">
+                <i class="fas fa-book-open"></i>
+                <h3>No Courses Yet</h3>
+                <p>You haven't enrolled in any courses yet.</p>
+                <a href="{% url 'users:course_list' %}" class="btn-browse">Browse Courses</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
