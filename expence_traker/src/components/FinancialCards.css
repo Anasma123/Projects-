@@ -12,6 +12,7 @@
   color: white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
+  min-height: 140px;
 }
 
 .card:hover {
@@ -43,6 +44,7 @@
   font-size: 2.5em;
   font-weight: bold;
   margin-bottom: 10px;
+  word-break: break-word;
 }
 
 .card-subtitle {
@@ -50,8 +52,106 @@
   opacity: 0.8;
 }
 
-@media (max-width: 768px) {
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .financial-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+  
+  .card {
+    padding: 35px;
+  }
+}
+
+/* Tablet Landscape (769px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .financial-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  
+  .card {
+    padding: 25px;
+  }
+  
+  .card-amount {
+    font-size: 2.2em;
+  }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
+  .financial-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .card {
+    padding: 22px;
+    min-height: 120px;
+  }
+  
+  .card-title {
+    font-size: 0.85em;
+    margin-bottom: 12px;
+  }
+  
   .card-amount {
     font-size: 2em;
+    margin-bottom: 8px;
+  }
+  
+  .card-subtitle {
+    font-size: 0.8em;
+  }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .financial-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .card {
+    padding: 20px;
+    border-radius: 12px;
+    min-height: 110px;
+  }
+  
+  .card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .card-title {
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  
+  .card-amount {
+    font-size: 1.8em;
+    margin-bottom: 8px;
+  }
+  
+  .card-subtitle {
+    font-size: 0.75em;
+  }
+}
+
+/* Extra Small Mobile (max 375px) */
+@media (max-width: 375px) {
+  .card {
+    padding: 18px;
+  }
+  
+  .card-amount {
+    font-size: 1.6em;
+  }
+  
+  .card-title {
+    font-size: 0.75em;
   }
 }

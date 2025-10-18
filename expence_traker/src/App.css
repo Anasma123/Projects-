@@ -1,6 +1,7 @@
 .app {
   min-height: 100vh;
   padding-bottom: 40px;
+  width: 100%;
 }
 
 .container {
@@ -34,18 +35,90 @@
   margin-top: 30px;
 }
 
-@media (max-width: 1024px) {
+/* Tablet Landscape and Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .container {
+    padding: 30px 40px;
+  }
+  
   .dashboard-grid {
-    grid-template-columns: 1fr;
+    gap: 25px;
   }
 }
 
-@media (max-width: 768px) {
+/* Tablet Landscape (769px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .container {
+    padding: 20px 25px;
+  }
+  
   .header h1 {
-    font-size: 1.8em;
+    font-size: 2.2em;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
+  .container {
+    padding: 15px 20px;
+  }
+  
+  .header h1 {
+    font-size: 2em;
   }
 
   .month-display {
-    font-size: 1em;
+    font-size: 1.1em;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .app {
+    padding-bottom: 20px;
+  }
+  
+  .container {
+    padding: 10px 15px;
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    font-size: 1.6em;
+    margin-bottom: 8px;
+  }
+
+  .month-display {
+    font-size: 0.95em;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 20px;
+  }
+}
+
+/* Extra Small Mobile (max 375px) */
+@media (max-width: 375px) {
+  .header h1 {
+    font-size: 1.4em;
+  }
+  
+  .container {
+    padding: 8px 12px;
   }
 }

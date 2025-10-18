@@ -51,20 +51,155 @@
   font-size: 0.9em;
   color: #333;
   font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .legend-amount {
   font-weight: bold;
   color: #667eea;
   font-size: 0.85em;
+  white-space: nowrap;
 }
 
-@media (max-width: 768px) {
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .chart-section {
+    padding: 35px;
+  }
+  
+  .chart-container {
+    height: 350px;
+  }
+  
+  .legend {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+  }
+}
+
+/* Tablet Landscape (769px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .chart-section {
+    padding: 28px;
+  }
+  
+  .chart-container {
+    height: 280px;
+  }
+  
+  .legend {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
+  .chart-section {
+    padding: 25px;
+  }
+  
+  .chart-title {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+  }
+  
   .chart-container {
     height: 250px;
+    margin-bottom: 20px;
   }
 
   .legend {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .legend-item {
+    padding: 9px;
+  }
+  
+  .legend-text {
+    font-size: 0.85em;
+  }
+  
+  .legend-amount {
+    font-size: 0.8em;
+  }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .chart-section {
+    padding: 20px;
+    border-radius: 12px;
+  }
+  
+  .chart-title {
+    font-size: 1.2em;
+    margin-bottom: 18px;
+  }
+  
+  .chart-container {
+    height: 220px;
+    margin-bottom: 18px;
+  }
+
+  .legend {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .legend-item {
+    padding: 8px;
+    border-radius: 6px;
+  }
+  
+  .legend-item:hover {
+    transform: translateX(3px);
+  }
+  
+  .legend-color {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+  
+  .legend-text {
+    font-size: 0.8em;
+  }
+  
+  .legend-amount {
+    font-size: 0.75em;
+  }
+}
+
+/* Extra Small Mobile (max 375px) */
+@media (max-width: 375px) {
+  .chart-section {
+    padding: 18px;
+  }
+  
+  .chart-title {
+    font-size: 1.1em;
+  }
+  
+  .chart-container {
+    height: 200px;
+    margin-bottom: 15px;
+  }
+  
+  .legend-color {
+    width: 14px;
+    height: 14px;
+    margin-right: 7px;
+  }
+  
+  .legend-text {
+    font-size: 0.75em;
+  }
+  
+  .legend-amount {
+    font-size: 0.7em;
   }
 }

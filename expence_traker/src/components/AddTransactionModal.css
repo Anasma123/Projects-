@@ -11,6 +11,7 @@
   z-index: 1000;
   backdrop-filter: blur(4px);
   animation: fadeIn 0.2s ease;
+  padding: 15px;
 }
 
 @keyframes fadeIn {
@@ -71,6 +72,7 @@
   justify-content: center;
   border-radius: 50%;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .close-btn:hover {
@@ -197,16 +199,147 @@
   transform: translateY(0);
 }
 
-@media (max-width: 768px) {
+/* Tablet Landscape (769px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
   .modal-content {
-    padding: 20px;
+    max-width: 480px;
+    padding: 28px;
+  }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
+  .modal-overlay {
+    padding: 12px;
+  }
+  
+  .modal-content {
+    padding: 25px;
+    max-width: 450px;
   }
 
   .modal-header h2 {
-    font-size: 1.5em;
+    font-size: 1.6em;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 11px 14px;
+    font-size: 0.95em;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .type-btn {
+    padding: 13px;
+  }
+  
+  .modal-actions {
+    gap: 12px;
+  }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 30px;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+    max-height: 85vh;
+    border-radius: 15px;
+  }
+
+  .modal-header {
+    margin-bottom: 20px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.4em;
+  }
+  
+  .close-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.8em;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    font-size: 0.9em;
+    margin-bottom: 6px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 10px 12px;
+    font-size: 0.9em;
+    border-radius: 8px;
+  }
+  
+  .type-selector {
+    gap: 8px;
+  }
+  
+  .type-btn {
+    padding: 12px;
+    font-size: 0.9em;
+    border-radius: 8px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .modal-actions {
+    gap: 10px;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  
+  .btn-cancel,
+  .btn-submit {
+    padding: 12px;
+    font-size: 0.95em;
+    border-radius: 8px;
+  }
+  
+  .btn-submit:hover,
+  .btn-submit:active {
+    transform: none;
+  }
+}
+
+/* Extra Small Mobile (max 375px) */
+@media (max-width: 375px) {
+  .modal-content {
+    padding: 18px;
+    width: 98%;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.3em;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 9px 11px;
+    font-size: 0.85em;
+  }
+  
+  .type-btn {
+    padding: 11px;
+    font-size: 0.85em;
   }
 }

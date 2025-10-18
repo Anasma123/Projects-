@@ -5,6 +5,7 @@
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
+  width: 100%;
 }
 
 .navbar-container {
@@ -23,6 +24,7 @@
   font-size: 1.5em;
   font-weight: bold;
   color: #667eea;
+  flex-shrink: 0;
 }
 
 .navbar-icon {
@@ -34,6 +36,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  white-space: nowrap;
 }
 
 .navbar-menu {
@@ -49,6 +52,7 @@
   padding: 8px 15px;
   border-radius: 8px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .navbar-link:hover {
@@ -75,6 +79,7 @@
   gap: 8px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+  flex-shrink: 0;
 }
 
 .add-transaction-btn:hover {
@@ -91,21 +96,47 @@
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .navbar-container {
+    padding: 15px 40px;
+  }
+}
+
+/* Tablet Landscape (769px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .navbar-menu {
+    gap: 20px;
+  }
+  
+  .navbar-link {
+    padding: 8px 12px;
+    font-size: 0.95em;
+  }
+  
+  .add-transaction-btn {
+    padding: 10px 20px;
+    font-size: 0.95em;
+  }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
   .navbar-container {
     flex-wrap: wrap;
     gap: 15px;
+    padding: 12px 20px;
   }
 
   .navbar-menu {
     order: 3;
     width: 100%;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
   }
 
   .navbar-link {
-    padding: 6px 10px;
+    padding: 8px 12px;
     font-size: 0.9em;
   }
 
@@ -113,8 +144,66 @@
     padding: 10px 18px;
     font-size: 0.9em;
   }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .navbar-container {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+  
+  .navbar-brand {
+    font-size: 1.2em;
+    gap: 8px;
+  }
+  
+  .navbar-icon {
+    font-size: 1.2em;
+  }
+
+  .navbar-menu {
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
+    gap: 5px;
+    overflow-x: auto;
+    padding: 5px 0;
+  }
+
+  .navbar-link {
+    padding: 6px 10px;
+    font-size: 0.85em;
+  }
+
+  .add-transaction-btn {
+    padding: 8px 16px;
+    font-size: 0.85em;
+    gap: 6px;
+  }
 
   .btn-text {
     display: none;
+  }
+  
+  .btn-icon {
+    font-size: 1.2em;
+  }
+}
+
+/* Extra Small Mobile (max 375px) */
+@media (max-width: 375px) {
+  .navbar-brand {
+    font-size: 1.1em;
+  }
+  
+  .navbar-link {
+    padding: 6px 8px;
+    font-size: 0.8em;
+  }
+  
+  .add-transaction-btn {
+    padding: 8px 14px;
   }
 }
