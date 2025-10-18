@@ -1,0 +1,139 @@
+.transactions-section {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-title {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 550px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.transactions-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.transactions-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
+}
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.transaction-item:hover {
+  background: #e9ecef;
+  border-left-color: #667eea;
+  transform: translateX(5px);
+}
+
+.transaction-icon {
+  font-size: 2em;
+  flex-shrink: 0;
+}
+
+.transaction-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.transaction-description {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  font-size: 1em;
+}
+
+.transaction-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 0.85em;
+  color: #666;
+}
+
+.transaction-category {
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.9em;
+}
+
+.transaction-date {
+  color: #999;
+}
+
+.transaction-amount {
+  font-size: 1.1em;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.transaction-amount.income {
+  color: #11998e;
+}
+
+.transaction-amount.expense {
+  color: #eb3349;
+}
+
+.no-transactions {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.no-transactions p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.no-transactions-subtitle {
+  font-size: 0.9em !important;
+  color: #bbb;
+}
+
+@media (max-width: 768px) {
+  .transactions-list {
+    max-height: 400px;
+  }
+
+  .transaction-icon {
+    font-size: 1.5em;
+  }
+
+  .transaction-description {
+    font-size: 0.95em;
+  }
+
+  .transaction-amount {
+    font-size: 1em;
+  }
+}

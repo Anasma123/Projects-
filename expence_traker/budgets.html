@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack Budgets</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        .sidebar {
+            width: 200px;
+            background: linear-gradient(145deg, #34495e 0%, #2c3e50 100%);
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.4s ease;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar ul li {
+            color: #ecf0f1;
+            cursor: pointer;
+            font-size: 1.1em;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .sidebar ul li button {
+            background: linear-gradient(135deg, #4CAF50, #2E8B57);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .sidebar ul li button:hover {
+            background: linear-gradient(135deg, #45a049, #3e8e41);
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+        }
+        .content {
+            margin-left: 240px;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #3498db 0%, #8e44ad 100%);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .dashboard-header h2 {
+            font-size: 2em;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .budget-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .budget-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .budget-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .budget-card h3 {
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .budget-card .progress {
+            font-size: 1.1em;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        .budget-card .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .budget-card .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        .budget-card .remaining {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        .new-budget {
+            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .new-budget:hover {
+            background: linear-gradient(90deg, #219653 0%, #27ae60 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(33,150,83,0.4);
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            width: 300px;
+            color: #333;
+        }
+        .popup h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .popup label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .popup select, .popup input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .popup button {
+            background: #27ae60;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .popup button:hover {
+            background: #219653;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li><button onclick="window.location.href='daash.html'">Dashboard</button></li>
+            <li><button onclick="window.location.href='Budgets.html'">Budgets</button></li>
+            <li><button onclick="window.location.href='transactions.html'">Transactions</button></li>
+            <li><button onclick="window.location.href='reports.html'">Reports</button></li>
+
+        </ul>
+    </div>
+    <div class="content">
+        <div class="dashboard-header">
+            <h2>Budgets</h2>
+            <button class="new-budget" onclick="openPopup()">New Budget</button>
+        </div>
+        <p>Set and monitor your monthly spending goals.</p>
+        <div class="budget-cards" id="budgetCards"></div>
+    </div>
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+        <h3>Add New Budget</h3>
+        <label>Category:</label>
+        <select id="category">
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Housing">Housing</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Health">Health</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Gifts">Gifts</option>
+            <option value="Other">Other</option>
+        </select>
+        <label>Budget Limit ($):</label>
+        <input type="number" id="budgetLimit" step="0.01" placeholder="0.00">
+        <button onclick="saveBudget()">Save Changes</button>
+    </div>
+    <script>
+        // Load budgets from localStorage on page load
+        let budgets = JSON.parse(localStorage.getItem('budgets')) || {};
+
+        // Load and display budgets
+        function loadBudgets() {
+            const budgetCards = document.getElementById('budgetCards');
+            budgetCards.innerHTML = '';
+            for (const [category, data] of Object.entries(budgets)) {
+                const card = document.createElement('div');
+                card.className = 'budget-card';
+                const spent = data.spent || 0;
+                const limit = data.limit || 0;
+                const remaining = limit - spent;
+                const percentage = (spent / limit) * 100 || 0;
+
+                card.innerHTML = `
+                    <h3>${category}</h3>
+                    <div class="progress">$${spent.toFixed(2)} / $${limit.toFixed(2)}</div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: ${percentage > 100 ? 100 : percentage}%;"></div>
+                    </div>
+                    <div class="remaining">$${remaining.toFixed(2)} remaining</div>
+                `;
+                budgetCards.appendChild(card);
+            }
+        }
+
+        // Open popup
+        function openPopup() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('category').value = 'Food'; // Default to first option
+            document.getElementById('budgetLimit').value = '';
+        }
+
+        // Close popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Save budget
+        function saveBudget() {
+            const category = document.getElementById('category').value;
+            const limit = parseFloat(document.getElementById('budgetLimit').value) || 0;
+
+            if (category && limit > 0) {
+                budgets[category] = { limit, spent: budgets[category]?.spent || 0 };
+                localStorage.setItem('budgets', JSON.stringify(budgets));
+                loadBudgets();
+                closePopup();
+            }
+        }
+
+        // Initial load
+        loadBudgets();
+    </script>
+</body>
+</html>
