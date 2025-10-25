@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">Beautiful Mehndi Designs</h1>
+        <p class="lead fs-4">Book your favorite mehndi designs for weddings, parties, and special occasions</p>
+        <div class="mt-4">
+            <a href="{% url 'gallery' %}" class="btn btn-light btn-lg me-3"><i class="fas fa-images me-2"></i>Browse Gallery</a>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg"><i class="fas fa-user-plus me-2"></i>Register</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Session Info Banner -->
+    {% if user.is_authenticated and request.session.last_visited_gallery %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fas fa-images me-2"></i>
+        <strong>Gallery Session Active!</strong> 
+        {% if request.session.last_viewed_design %}
+            You last viewed: <strong>{{ request.session.last_viewed_design_name }}</strong> in the gallery.
+        {% else %}
+            You've recently visited our gallery. 
+        {% endif %}
+        <a href="{% url 'gallery' %}" class="alert-link">Continue browsing</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% elif request.session.last_visited_gallery %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fas fa-images me-2"></i>
+        <strong>Gallery Session Active!</strong> 
+        You've recently visited our gallery. 
+        <a href="{% url 'login' %}?next={% url 'gallery' %}" class="alert-link">Login to continue browsing</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    
+    <!-- Specific Design Detail Section -->
+    {% if specific_design %}
+    <section class="mb-5">
+        <h2 class="text-center section-title">Featured Design Details</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="fas fa-image me-2"></i>Main Photo</h3>
+                    </div>
+                    {% if specific_design.image %}
+                    <img src="{{ specific_design.image.url }}" class="card-img-top" alt="{{ specific_design.name }}" style="height: 400px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                        <i class="fas fa-image fa-5x text-muted"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if specific_design.optional_image %}
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="mb-0"><i class="fas fa-images me-2"></i>Photo 2</h3>
+                    </div>
+                    <img src="{{ specific_design.optional_image.url }}" class="card-img-top" alt="{{ specific_design.name }} - Optional" style="height: 300px; object-fit: cover;">
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ specific_design.name }}</h1>
+                        <div class="mb-3">
+                            <span class="badge bg-primary me-2">{{ specific_design.category.name }}</span>
+                            <span class="badge bg-secondary">{{ specific_design.sub_category.name }}</span>
+                        </div>
+                        <div class="mb-3">
+                            <h3 class="text-primary fw-bold">₹{{ specific_design.price }}</h3>
+                        </div>
+                        <p class="card-text">{{ specific_design.description }}</p>
+                        
+                        <div class="d-grid gap-2">
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'book_design' specific_design.id %}" class="btn btn-success btn-lg">
+                                <i class="fas fa-calendar-check me-2"></i>Book This Design
+                            </a>
+                            {% else %}
+                            <a href="{% url 'login' %}?next={{ request.get_full_path }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login to Book
+                            </a>
+                            {% endif %}
+                            
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+    <!-- Featured Designs Section -->
+    <section class="mb-5">
+        <h2 class="text-center section-title">Featured Designs</h2>
+        {% if featured_designs %}
+        <div class="row">
+            {% for design in featured_designs %}
+            <div class="col-md-4 mb-4">
+                <div class="card design-card shadow">
+                    {% if design.image %}
+                    <img src="{{ design.image.url }}" class="card-img-top design-img" alt="{{ design.name }}">
+                    {% else %}
+                    <div class="design-img bg-light d-flex align-items-center justify-content-center">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ design.name }}</h5>
+                        <p class="card-text">{{ design.description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-primary">₹{{ design.price }}</span>
+                            <div>
+                                <!-- Updated View Details link to show design on home page -->
+                                <a href="{% url 'home' %}?design={{ design.id }}" class="btn btn-outline-primary btn-sm">View Details</a>
+                                {% if user.is_authenticated %}
+                                <a href="{% url 'book_design' design.id %}" class="btn btn-success btn-sm">Book Now</a>
+                                {% else %}
+                                <a href="{% url 'login' %}?next={% url 'design_detail' design.id %}" class="btn btn-success btn-sm">Login to Book</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'gallery' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-images me-2"></i>View All Designs
+            </a>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle fa-3x mb-3"></i>
+                <h4>No designs available yet</h4>
+                <p>Check back later for new beautiful mehndi designs!</p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+    
+    <!-- Features Section -->
+    <section class="mb-5">
+        <h2 class="text-center section-title">Why Choose Us</h2>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="feature-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h4>Beautiful Designs</h4>
+                <p>Explore our extensive gallery of traditional and modern mehndi patterns</p>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h4>Expert Artists</h4>
+                <p>Professional artists with years of experience in mehndi application</p>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h4>Easy Booking</h4>
+                <p>Simple online booking system with flexible scheduling options</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="mb-5">
+        <h2 class="text-center section-title">How It Works</h2>
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-light mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <span class="fw-bold fs-3">1</span>
+                </div>
+                <h5 class="mt-3">Browse Designs</h5>
+                <p>Explore our gallery of beautiful mehndi patterns</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-light mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <span class="fw-bold fs-3">2</span>
+                </div>
+                <h5 class="mt-3">Login & Book</h5>
+                <p>Register or login to book your favorite design</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-light mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <span class="fw-bold fs-3">3</span>
+                </div>
+                <h5 class="mt-3">Confirmation</h5>
+                <p>Receive confirmation and preparation details</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="rounded-circle bg-light mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <span class="fw-bold fs-3">4</span>
+                </div>
+                <h5 class="mt-3">Enjoy!</h5>
+                <p>Experience beautiful mehndi art at your event</p>
+            </div>
+        </div>
+        
+        <!-- Gallery Session Info Behind How It Works -->
+        <div class="mt-4 p-3 bg-light rounded">
+            <h5 class="text-center"><i class="fas fa-images me-2"></i>Gallery Access Information</h5>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-history fa-2x text-primary mb-2"></i>
+                    <p>
+                        <strong>Browse Anytime</strong><br>
+                        <small class="text-muted">View designs without login</small>
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-lock fa-2x text-warning mb-2"></i>
+                    <p>
+                        <strong>Login Required</strong><br>
+                        <small class="text-muted">To book designs</small>
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-link fa-2x text-info mb-2"></i>
+                    <p>
+                        <a href="{% url 'gallery' %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-external-link-alt me-1"></i>Visit Gallery
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center mb-5">
+        <h3>Ready to explore beautiful mehndi designs?</h3>
+        <p class="lead">Browse our gallery and find the perfect design for your special occasion</p>
+        <a href="{% url 'gallery' %}" class="btn btn-primary btn-lg"><i class="fas fa-images me-2"></i>Browse Gallery</a>
+        {% if not user.is_authenticated %}
+        <div class="mt-3">
+            <a href="{% url 'login' %}?next={% url 'gallery' %}" class="btn btn-success btn-lg"><i class="fas fa-sign-in-alt me-2"></i>Login to Book Designs</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

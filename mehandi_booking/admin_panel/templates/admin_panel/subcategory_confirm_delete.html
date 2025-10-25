@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Sub-category - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin_subcategory_list' %}">Sub-categories</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete Sub-category</li>
+        </ol>
+    </nav>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Confirm Delete Sub-category
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h4 class="alert-heading"><i class="fas fa-exclamation-circle me-2"></i>Warning!</h4>
+                        <p>You are about to delete the sub-category <strong>"{{ subcategory.name }}"</strong> under category <strong>"{{ subcategory.category.name }}"</strong>.</p>
+                        <p>This action cannot be undone and will permanently remove this sub-category from the system.</p>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Sub-category Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Category:</th>
+                                    <td>{{ subcategory.category.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>{{ subcategory.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description:</th>
+                                    <td>{{ subcategory.description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Created At:</th>
+                                    <td>{{ subcategory.created_at|date:"M d, Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'admin_subcategory_list' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Sub-category
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

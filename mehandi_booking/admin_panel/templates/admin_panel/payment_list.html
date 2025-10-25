@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Management - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="fas fa-credit-card me-2"></i>Payment Management</h1>
+    </div>
+    
+    {% if payments %}
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer</th>
+                            <th>Design</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Transaction ID</th>
+                            <th>Status</th>
+                            <th>Payment Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                        <tr>
+                            <td>#{{ payment.booking.id }}</td>
+                            <td>{{ payment.booking.customer.username }}</td>
+                            <td>{{ payment.booking.design.name }}</td>
+                            <td>${{ payment.amount }}</td>
+                            <td>{{ payment.payment_method }}</td>
+                            <td>{{ payment.transaction_id }}</td>
+                            <td>
+                                {% if payment.status == 'completed' %}
+                                    <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Completed</span>
+                                {% elif payment.status == 'pending' %}
+                                    <span class="badge bg-warning"><i class="fas fa-clock me-1"></i>Pending</span>
+                                {% elif payment.status == 'failed' %}
+                                    <span class="badge bg-danger"><i class="fas fa-times-circle me-1"></i>Failed</span>
+                                {% elif payment.status == 'refunded' %}
+                                    <span class="badge bg-info"><i class="fas fa-undo me-1"></i>Refunded</span>
+                                {% else %}
+                                    <span class="badge bg-secondary"><i class="fas fa-info-circle me-1"></i>{{ payment.status|title }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ payment.created_at }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle fa-3x mb-3"></i>
+            <h4>No payments found</h4>
+            <p>There are currently no payments in the system.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

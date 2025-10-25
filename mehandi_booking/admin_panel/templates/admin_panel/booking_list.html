@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}All Bookings - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="fas fa-calendar-check me-2"></i>All Bookings</h1>
+    </div>
+    
+    {% if bookings %}
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Customer</th>
+                            <th>Type</th>
+                            <th>Design/Category</th>
+                            <th>Subcategory</th>
+                            <th>Booking Date</th>
+                            <th>Booking Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.customer.username }}</td>
+                            <td>
+                                {% if booking.design %}
+                                    <span class="badge bg-primary">Design</span>
+                                {% else %}
+                                    <span class="badge bg-success">Custom</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if booking.design %}
+                                    {{ booking.design.name }}
+                                    <br><small class="text-muted">{{ booking.design.category.name }}</small>
+                                {% else %}
+                                    Custom Booking
+                                    <br><small class="text-muted">
+                                        {% if booking.category %}{{ booking.category.name }}{% else %}No Category{% endif %}
+                                    </small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if booking.design %}
+                                    {{ booking.design.sub_category.name }}
+                                {% else %}
+                                    {% if booking.subcategory %}{{ booking.subcategory.name }}{% else %}No Subcategory{% endif %}
+                                {% endif %}
+                            </td>
+                            <td>{{ booking.booking_date }}</td>
+                            <td>{{ booking.booking_time }}</td>
+                            <td>
+                                {% if booking.status == 'confirmed' %}
+                                    <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i>Confirmed</span>
+                                {% elif booking.status == 'pending' %}
+                                    <span class="badge bg-warning"><i class="fas fa-clock me-1"></i>Pending</span>
+                                {% elif booking.status == 'cancelled' %}
+                                    <span class="badge bg-danger"><i class="fas fa-times-circle me-1"></i>Cancelled</span>
+                                {% else %}
+                                    <span class="badge bg-secondary"><i class="fas fa-info-circle me-1"></i>{{ booking.status|title }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'admin_booking_detail' booking.id %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye me-1"></i>View
+                                </a>
+                                {% if booking.status == 'pending' %}
+                                <form method="post" action="{% url 'admin_update_booking_status' booking.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="confirmed">
+                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Are you sure you want to confirm this booking?')">
+                                        <i class="fas fa-check me-1"></i>Accept
+                                    </button>
+                                </form>
+                                <form method="post" action="{% url 'admin_update_booking_status' booking.id %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                        <i class="fas fa-times me-1"></i>Reject
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle fa-3x mb-3"></i>
+            <h4>No bookings found</h4>
+            <p>There are currently no booking requests in the system.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

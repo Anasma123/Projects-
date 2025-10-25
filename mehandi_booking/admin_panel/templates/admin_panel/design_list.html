@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Designs - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="fas fa-paint-brush me-2"></i>Designs</h1>
+        <a href="{% url 'admin_design_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>Add Design
+        </a>
+    </div>
+    
+    {% if designs %}
+    <div class="row">
+        {% for design in designs %}
+        <div class="col-md-4 mb-4">
+            <div class="card design-card shadow">
+                {% if design.image %}
+                <img src="{{ design.image.url }}" class="card-img-top design-img" alt="{{ design.name }}">
+                {% else %}
+                <div class="design-img bg-light d-flex align-items-center justify-content-center">
+                    <i class="fas fa-image fa-3x text-muted"></i>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ design.name }}</h5>
+                    <p class="card-text"><strong>Category:</strong> {{ design.category.name }}</p>
+                    <p class="card-text"><strong>Sub-category:</strong> {{ design.sub_category.name }}</p>
+                    <p class="card-text">{{ design.description|truncatewords:15 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-primary">₹{{ design.price }}</span>
+                        <div>
+                            <a href="{% url 'admin_design_edit' design.id %}" class="btn btn-primary btn-sm me-1">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </a>
+                            <a href="{% url 'admin_design_delete' design.id %}" class="btn btn-danger btn-sm" 
+                               onclick="return confirm('Are you sure you want to delete the design \"{{ design.name }}\"? This action cannot be undone.')">
+                                <i class="fas fa-trash-alt me-1"></i>Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle fa-3x mb-3"></i>
+            <h4>No designs found</h4>
+            <p class="mb-4">Create your first mehndi design to showcase to your customers!</p>
+            <a href="{% url 'admin_design_create' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>Add Design
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

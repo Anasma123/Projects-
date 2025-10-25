@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Category - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin_category_list' %}">Categories</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete Category</li>
+        </ol>
+    </nav>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Confirm Delete Category
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h4 class="alert-heading"><i class="fas fa-exclamation-circle me-2"></i>Warning!</h4>
+                        <p>You are about to delete the category <strong>"{{ category.name }}"</strong>.</p>
+                        <p>This action cannot be undone and will permanently remove this category from the system.</p>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Category Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>{{ category.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description:</th>
+                                    <td>{{ category.description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Price:</th>
+                                    <td>₹{{ category.price }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Created At:</th>
+                                    <td>{{ category.created_at|date:"M d, Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'admin_category_list' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Category
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

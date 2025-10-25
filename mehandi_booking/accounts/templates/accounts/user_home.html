@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard - Mehndi Booking Service{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="fas fa-user-circle me-2"></i>User Dashboard</h1>
+        <div class="text-end">
+            <p class="mb-0">Welcome, {{ user.username }}!</p>
+            <p class="mb-0"><small>Customer Panel</small></p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">My Bookings</h5>
+                            <h2>{{ my_bookings_count|default:0 }}</h2>
+                        </div>
+                        <div class="fs-1">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">Active Bookings</h5>
+                            <h2>{{ active_bookings_count|default:0 }}</h2>
+                        </div>
+                        <div class="fs-1">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">Total Spent</h5>
+                            <h2>₹{{ total_spent|default:0 }}</h2>
+                        </div>
+                        <div class="fs-1">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-bookmark me-2"></i>My Bookings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'booking_list' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-list me-2"></i>View All Bookings
+                        </a>
+                        <a href="{% url 'custom_booking' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-plus-circle me-2"></i>Create Custom Booking
+                        </a>
+                        <a href="{% url 'booking_list' %}?status=pending" class="list-group-item list-group-item-action">
+                            <i class="fas fa-clock me-2"></i>Pending Bookings
+                        </a>
+                        <a href="{% url 'booking_list' %}?status=confirmed" class="list-group-item list-group-item-action">
+                            <i class="fas fa-check-circle me-2"></i>Confirmed Bookings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-paint-brush me-2"></i>Designs & Gallery</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'gallery' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-images me-2"></i>Browse Gallery
+                        </a>
+                        <a href="{% url 'gallery' %}?category=bridal" class="list-group-item list-group-item-action">
+                            <i class="fas fa-ring me-2"></i>Bridal Designs
+                        </a>
+                        <a href="{% url 'gallery' %}?category=party" class="list-group-item list-group-item-action">
+                            <i class="fas fa-glass-cheers me-2"></i>Party Designs
+                        </a>
+                        <a href="{% url 'gallery' %}?category=festival" class="list-group-item list-group-item-action">
+                            <i class="fas fa-festival me-2"></i>Festival Designs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-white">
+                    <h3 class="mb-0"><i class="fas fa-comments me-2"></i>Feedback & Support</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'user_feedback' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-comment-dots me-2"></i>Submit Feedback
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="fas fa-question-circle me-2"></i>Help & Support
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="fas fa-info-circle me-2"></i>FAQs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0"><i class="fas fa-user-cog me-2"></i>Account Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="fas fa-user-edit me-2"></i>Update Profile
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="fas fa-lock me-2"></i>Change Password
+                        </a>
+                        <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

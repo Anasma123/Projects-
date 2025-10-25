@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Design - Mehndi Booking Service{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'gallery' %}">Gallery</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'design_detail' design.id %}">{{ design.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Book Design</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-calendar-plus me-2"></i>Book Design: {{ design.name }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            {% if design.image %}
+                            <img src="{{ design.image.url }}" class="img-fluid rounded" alt="{{ design.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <h4>{{ design.name }}</h4>
+                            <p>{{ design.description }}</p>
+                            <p><strong>Category:</strong> {{ design.category.name }}</p>
+                            <p><strong>Sub-category:</strong> {{ design.sub_category.name }}</p>
+                            <h5 class="text-primary">Price: ₹{{ design.price }}</h5>
+                        </div>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ form.booking_date.id_for_label }}" class="form-label">Appointment Date *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                {{ form.booking_date }}
+                            </div>
+                            {% if form.booking_date.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.booking_date.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.time_slot.id_for_label }}" class="form-label">Select Time Slot *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                {{ form.time_slot }}
+                            </div>
+                            {% if form.time_slot.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.time_slot.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Payment Option *</label>
+                            <div class="border rounded p-3">
+                                {{ form.payment_option }}
+                            </div>
+                            {% if form.payment_option.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.payment_option.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'design_detail' design.id %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calendar-check me-2"></i>Book Design
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

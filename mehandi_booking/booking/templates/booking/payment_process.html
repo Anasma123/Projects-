@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment - Mehndi Booking Service{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'booking_list' %}">My Bookings</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'booking_detail' booking.id %}">Booking #{{ booking.id }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Payment</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-credit-card me-2"></i>Payment for Booking #{{ booking.id }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Booking Details</h5>
+                            <p><strong>Design:</strong> 
+                                {% if booking.design %}
+                                    {{ booking.design.name }}
+                                {% else %}
+                                    Custom Booking
+                                {% endif %}
+                            </p>
+                            <p><strong>Date:</strong> {{ booking.booking_date }}</p>
+                            <p><strong>Time Slot:</strong> {{ booking.time_slot.display_name }}</p>
+                            <p><strong>Status:</strong> 
+                                <span class="badge bg-warning">Pending</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Payment Details</h5>
+                            <p><strong>Total Amount:</strong> ₹{{ booking.total_amount }}</p>
+                            <p><strong>Payment Option:</strong> 
+                                {% if booking.payment_option == 'full' %}
+                                    <span class="badge bg-success">Full Payment</span>
+                                {% else %}
+                                    <span class="badge bg-info">Advance Payment (40%)</span>
+                                {% endif %}
+                            </p>
+                            <p><strong>Amount to Pay:</strong> 
+                                <span class="fw-bold text-primary">₹{{ booking.amount_to_pay }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle me-2"></i>Payment Information</h5>
+                        <p>Please complete the payment of <strong>₹{{ booking.amount_to_pay }}</strong> to confirm your booking.</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Select Payment Method</label>
+                            <div class="border rounded p-3">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="credit_card" value="credit_card" required>
+                                    <label class="form-check-label" for="credit_card">
+                                        <i class="fab fa-cc-visa me-2"></i><i class="fab fa-cc-mastercard me-2"></i>Credit Card
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="debit_card" value="debit_card">
+                                    <label class="form-check-label" for="debit_card">
+                                        <i class="fas fa-credit-card me-2"></i>Debit Card
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="upi" value="upi">
+                                    <label class="form-check-label" for="upi">
+                                        <i class="fas fa-mobile-alt me-2"></i>UPI
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="net_banking" value="net_banking">
+                                    <label class="form-check-label" for="net_banking">
+                                        <i class="fas fa-laptop me-2"></i>Net Banking
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
+                                    <label class="form-check-label" for="paypal">
+                                        <i class="fab fa-paypal me-2"></i>PayPal
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'payment_cancel' booking.id %}" class="btn btn-outline-danger btn-lg">
+                                <i class="fas fa-times me-2"></i>Cancel Booking
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-check-circle me-2"></i>Complete Payment (₹{{ booking.amount_to_pay }})
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

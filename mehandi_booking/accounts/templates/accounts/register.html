@@ -1,0 +1,573 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - Mehndi Booking Service{% endblock %}
+
+{% block content %}
+<style>
+    .register-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .register-card {
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        border: none;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .register-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px 20px 0 0 !important;
+        padding: 30px;
+        text-align: center;
+        color: white;
+    }
+    
+    .card-header h3 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-size: 28px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .card-header p {
+        opacity: 0.9;
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+    
+    .form-control {
+        border-radius: 12px;
+        border: 2px solid #e1e8ed;
+        padding: 15px 20px;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        font-size: 16px;
+        height: auto;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        background-color: #fff;
+        outline: none;
+    }
+    
+    .input-group {
+        border-radius: 12px;
+        border: 2px solid #e1e8ed;
+        transition: all 0.3s ease;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .input-group:focus-within {
+        border-color: #667eea;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    .input-group-text {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px 0 0 10px;
+        font-size: 18px;
+        width: 50px;
+        justify-content: center;
+    }
+    
+    .form-control:focus + .input-group-text,
+    .input-group:focus-within .input-group-text {
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    }
+    
+    .btn-register {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 15px;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        font-size: 18px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-register:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    }
+    
+    .btn-register:active {
+        transform: translateY(0);
+        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-register::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
+    
+    .btn-register:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+    }
+    
+    .login-link {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 25px;
+        border-top: 1px solid #e1e8ed;
+    }
+    
+    .login-link a {
+        color: #667eea;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .login-link a:hover {
+        color: #764ba2;
+        text-decoration: none;
+    }
+    
+    .login-link a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.3s ease;
+    }
+    
+    .login-link a:hover::after {
+        width: 100%;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .required::after {
+        content: " *";
+        color: #e74c3c;
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes ripple {
+        0% {
+            transform: scale(0, 0);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(50, 50);
+            opacity: 0;
+        }
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Alert box styles */
+    .alert-box {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        padding: 20px 25px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        animation: slideInRight 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), fadeOut 0.5s ease 4.5s forwards;
+        max-width: 400px;
+        border: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #28a745, #218838);
+        color: white;
+    }
+    
+    .alert-error {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+    }
+    
+    .alert-warning {
+        background: linear-gradient(135deg, #ffc107, #e0a800);
+        color: #212529;
+    }
+    
+    .alert-info {
+        background: linear-gradient(135deg, #17a2b8, #138496);
+        color: white;
+    }
+    
+    .alert-box .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        margin-left: 15px;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background 0.2s ease;
+    }
+    
+    .alert-box .close-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Field error highlighting */
+    .field-error {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+    }
+    
+    .error-icon {
+        color: #dc3545;
+        margin-right: 8px;
+        font-size: 16px;
+    }
+    
+    .row-eq-height {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .row-eq-height > [class*='col-'] {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .input-wrapper {
+        position: relative;
+    }
+    
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        color: #667eea;
+        font-size: 18px;
+    }
+    
+    .form-control-with-icon {
+        padding-left: 50px !important;
+    }
+    
+    /* Floating label effect */
+    .floating-label-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+    
+    .floating-label {
+        position: absolute;
+        pointer-events: none;
+        left: 55px;
+        top: 18px;
+        transition: 0.2s ease all;
+        color: #7f8c8d;
+        font-size: 16px;
+        z-index: 10;
+    }
+    
+    .form-control:focus ~ .floating-label,
+    .form-control:not(:placeholder-shown) ~ .floating-label {
+        top: -10px;
+        left: 50px;
+        font-size: 13px;
+        background: white;
+        padding: 0 5px;
+        color: #667eea;
+        font-weight: 600;
+    }
+</style>
+
+<script>
+    // Function to create and show alert boxes
+    function showAlert(message, type) {
+        // Remove any existing alerts
+        var existingAlert = document.getElementById('custom-alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        // Create alert element
+        var alertBox = document.createElement('div');
+        alertBox.id = 'custom-alert';
+        alertBox.className = 'alert-box alert-' + type;
+        alertBox.innerHTML = `
+            <div style="flex: 1;">
+                <strong>${type.charAt(0).toUpperCase() + type.slice(1)}:</strong> ${message}
+            </div>
+            <button class="close-btn" onclick="this.parentElement.remove()">&times;</button>
+        `;
+        
+        // Add to body
+        document.body.appendChild(alertBox);
+        
+        // Auto remove after 5 seconds
+        setTimeout(function() {
+            if (alertBox.parentElement) {
+                alertBox.style.animation = 'fadeOut 0.5s ease forwards';
+                setTimeout(function() {
+                    if (alertBox.parentElement) {
+                        alertBox.remove();
+                    }
+                }, 500);
+            }
+        }, 5000);
+    }
+    
+    // Show form errors as alerts
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check for form errors and display them as alerts
+        var formErrors = document.querySelectorAll('.text-danger');
+        if (formErrors.length > 0) {
+            var errorMessages = [];
+            formErrors.forEach(function(error) {
+                var text = error.textContent || error.innerText;
+                if (text && !errorMessages.includes(text)) {
+                    errorMessages.push(text);
+                }
+            });
+            
+            if (errorMessages.length > 0) {
+                showAlert('Please correct the following errors: ' + errorMessages.join(', '), 'error');
+            }
+        }
+        
+        // Highlight fields with errors
+        var errorFields = document.querySelectorAll('.text-danger');
+        errorFields.forEach(function(error) {
+            var inputGroup = error.closest('.input-group');
+            if (inputGroup) {
+                inputGroup.style.borderColor = '#dc3545';
+                inputGroup.style.boxShadow = '0 0 0 0.25rem rgba(220, 53, 69, 0.25)';
+            }
+        });
+    });
+</script>
+
+<div class="register-container">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="register-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user-plus me-2"></i>Create Your Account</h3>
+                        <p>Join our community of mehndi enthusiasts</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            
+                            <div class="row row-eq-height">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.username.id_for_label }}" class="form-label required">Username</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            {{ form.username }}
+                                        </div>
+                                        {% if form.username.errors %}
+                                            <div class="text-danger mt-2">
+                                                {% for error in form.username.errors %}
+                                                    <small><i class="fas fa-exclamation-circle error-icon"></i>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="{{ form.email.id_for_label }}" class="form-label required">Email Address</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            {{ form.email }}
+                                        </div>
+                                        {% if form.email.errors %}
+                                            <div class="text-danger mt-2">
+                                                {% for error in form.email.errors %}
+                                                    <small><i class="fas fa-exclamation-circle error-icon"></i>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="{{ form.password1.id_for_label }}" class="form-label required">Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            {{ form.password1 }}
+                                        </div>
+                                        {% if form.password1.errors %}
+                                            <div class="text-danger mt-2">
+                                                {% for error in form.password1.errors %}
+                                                    <small><i class="fas fa-exclamation-circle error-icon"></i>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.full_name.id_for_label }}" class="form-label required">Full Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                            {{ form.full_name }}
+                                        </div>
+                                        {% if form.full_name.errors %}
+                                            <div class="text-danger mt-2">
+                                                {% for error in form.full_name.errors %}
+                                                    <small><i class="fas fa-exclamation-circle error-icon"></i>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="{{ form.phone.id_for_label }}" class="form-label required">Phone Number</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            {{ form.phone }}
+                                        </div>
+                                        {% if form.phone.errors %}
+                                            <div class="text-danger mt-2">
+                                                {% for error in form.phone.errors %}
+                                                    <small><i class="fas fa-exclamation-circle error-icon"></i>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="{{ form.password2.id_for_label }}" class="form-label required">Confirm Password</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            {{ form.password2 }}
+                                        </div>
+                                        {% if form.password2.errors %}
+                                            <div class="text-danger mt-2">
+                                                {% for error in form.password2.errors %}
+                                                    <small><i class="fas fa-exclamation-circle error-icon"></i>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                    {{ form.address }}
+                                </div>
+                                {% if form.address.errors %}
+                                    <div class="text-danger mt-2">
+                                        {% for error in form.address.errors %}
+                                            <small><i class="fas fa-exclamation-circle error-icon"></i>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-register btn-lg">
+                                    <i class="fas fa-user-plus me-2"></i>Register Account
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="login-link">
+                            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

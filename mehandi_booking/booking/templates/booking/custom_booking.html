@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+
+{% block title %}Custom Booking - Mehndi Booking Service{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'user_home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Custom Booking</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-paint-brush me-2"></i>Custom Booking Request</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Please provide your custom design details and preferred appointment time.</p>
+
+                    <form method="post" enctype="multipart/form-data" id="customBookingForm">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                                {{ form.category }}
+                            </div>
+                            {% if form.category.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.category.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.subcategory.id_for_label }}" class="form-label">Subcategory</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
+                                {{ form.subcategory }}
+                            </div>
+                            {% if form.subcategory.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.subcategory.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Price: <span id="priceDisplay" class="text-primary fw-bold">₹0.00</span></label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.booking_date.id_for_label }}" class="form-label">Appointment Date *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                {{ form.booking_date }}
+                            </div>
+                            {% if form.booking_date.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.booking_date.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.time_slot.id_for_label }}" class="form-label">Select Time Slot *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                {{ form.time_slot }}
+                            </div>
+                            {% if form.time_slot.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.time_slot.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Payment Option *</label>
+                            <div class="border rounded p-3">
+                                {{ form.payment_option }}
+                            </div>
+                            {% if form.payment_option.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.payment_option.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.phone_number.id_for_label }}" class="form-label">Phone Number *</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                {{ form.phone_number }}
+                            </div>
+                            {% if form.phone_number.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.phone_number.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.house_name.id_for_label }}" class="form-label">House Name *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                        {{ form.house_name }}
+                                    </div>
+                                    {% if form.house_name.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in form.house_name.errors %}
+                                                <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.place.id_for_label }}" class="form-label">Place *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                        {{ form.place }}
+                                    </div>
+                                    {% if form.place.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in form.place.errors %}
+                                                <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.district.id_for_label }}" class="form-label">District</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                        {{ form.district }}
+                                    </div>
+                                    {% if form.district.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in form.district.errors %}
+                                                <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.state.id_for_label }}" class="form-label">State</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                                        {{ form.state }}
+                                    </div>
+                                    {% if form.state.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in form.state.errors %}
+                                                <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="{{ form.pincode.id_for_label }}" class="form-label">Pincode</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
+                                        {{ form.pincode }}
+                                    </div>
+                                    {% if form.pincode.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in form.pincode.errors %}
+                                                <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.custom_design_image.id_for_label }}" class="form-label">Custom Design Image</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                {{ form.custom_design_image }}
+                            </div>
+                            {% if form.custom_design_image.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.custom_design_image.errors %}
+                                        <small><i class="fas fa-exclamation-circle me-1"></i>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Upload your custom design sketch (optional)</div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'user_home' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Request
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for dynamic filtering -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categorySelect = document.getElementById('id_category');
+    const subcategorySelect = document.getElementById('id_subcategory');
+    const priceDisplay = document.getElementById('priceDisplay');
+    
+    // Function to update subcategories based on selected category
+    function updateSubcategories() {
+        const categoryId = categorySelect.value;
+        
+        // Clear existing options
+        subcategorySelect.innerHTML = '<option value="">---------</option>';
+        
+        if (categoryId) {
+            // Make AJAX request to get subcategories
+            fetch(`/booking/get_subcategories/${categoryId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    data.subcategories.forEach(subcategory => {
+                        const option = document.createElement('option');
+                        option.value = subcategory.id;
+                        option.textContent = subcategory.name;
+                        subcategorySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching subcategories:', error));
+                
+            // Get category price
+            fetch(`/booking/get_category_price/${categoryId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    priceDisplay.textContent = '₹' + data.price.toFixed(2);
+                    // Update the total amount in the form if needed
+                    // This would require a hidden field or other mechanism
+                })
+                .catch(error => console.error('Error fetching category price:', error));
+        } else {
+            priceDisplay.textContent = '₹0.00';
+        }
+    }
+    
+    // Add event listener to category select
+    categorySelect.addEventListener('change', updateSubcategories);
+});
+</script>
+
+{% endblock %}

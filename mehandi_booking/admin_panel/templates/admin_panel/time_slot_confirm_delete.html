@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Time Slot - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin_time_slot_list' %}">Time Slots</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete Time Slot</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Confirm Delete Time Slot
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h4 class="alert-heading"><i class="fas fa-exclamation-circle me-2"></i>Warning!</h4>
+                        <p>You are about to delete the time slot <strong>"{{ time_slot.date|date:'M d, Y' }} from {{ time_slot.start_time|time:'H:i' }} to {{ time_slot.end_time|time:'H:i' }}"</strong>.</p>
+                        <p>This action cannot be undone and will permanently remove this time slot from the system.</p>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Time Slot Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Date:</th>
+                                    <td>{{ time_slot.date|date:"M d, Y" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Time Slot:</th>
+                                    <td>{{ time_slot.start_time|time:"H:i" }} - {{ time_slot.end_time|time:"H:i" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description:</th>
+                                    <td>{{ time_slot.description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>
+                                        {% if time_slot.is_active %}
+                                            <span class="badge bg-success">Active</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Created At:</th>
+                                    <td>{{ time_slot.created_at|date:"M d, Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'admin_time_slot_list' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Time Slot
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

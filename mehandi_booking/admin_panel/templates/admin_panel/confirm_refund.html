@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Refund - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin_booking_list' %}">All Bookings</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin_booking_detail' booking.id %}">Booking #{{ booking.id }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Confirm Refund</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0"><i class="fas fa-refund me-2"></i>Confirm Refund</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Refund Confirmation</h5>
+                        <p>Please confirm that you have processed the refund of ₹{{ payment.amount }} for booking #{{ booking.id }}.</p>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-receipt me-2"></i>Billing Receipt</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Booking ID:</th>
+                                    <td>#{{ booking.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Customer:</th>
+                                    <td>{{ booking.customer.get_full_name }} ({{ booking.customer.username }})</td>
+                                </tr>
+                                <tr>
+                                    <th>Design:</th>
+                                    <td>
+                                        {% if booking.design %}
+                                            {{ booking.design.name }}
+                                        {% else %}
+                                            Custom Booking
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Booking Date:</th>
+                                    <td>{{ booking.booking_date }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Time Slot:</th>
+                                    <td>
+                                        {% if booking.time_slot %}
+                                            {{ booking.time_slot.display_name }}
+                                        {% else %}
+                                            {{ booking.booking_time|time:"H:i" }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Payment Option:</th>
+                                    <td>
+                                        {% if booking.payment_option == 'full' %}
+                                            <span class="badge bg-success">Full Payment</span>
+                                        {% else %}
+                                            <span class="badge bg-info">Advance Payment (40%)</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Payment Method:</th>
+                                    <td>
+                                        {% if payment.payment_method == 'credit_card' %}
+                                            <i class="fab fa-cc-visa me-1"></i>Credit Card
+                                        {% elif payment.payment_method == 'debit_card' %}
+                                            <i class="fas fa-credit-card me-1"></i>Debit Card
+                                        {% elif payment.payment_method == 'upi' %}
+                                            <i class="fas fa-mobile-alt me-1"></i>UPI
+                                        {% elif payment.payment_method == 'net_banking' %}
+                                            <i class="fas fa-laptop me-1"></i>Net Banking
+                                        {% elif payment.payment_method == 'paypal' %}
+                                            <i class="fab fa-paypal me-1"></i>PayPal
+                                        {% else %}
+                                            Not specified
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Original Amount:</th>
+                                    <td>₹{{ booking.total_amount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Amount Paid:</th>
+                                    <td>₹{{ payment.amount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Transaction ID:</th>
+                                    <td>{{ payment.transaction_id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Payment Status:</th>
+                                    <td>
+                                        {% if payment.status == 'refunded' %}
+                                            <span class="badge bg-warning">Refund Initiated</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ payment.status|title }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Booking Created:</th>
+                                    <td>{{ booking.created_at|date:"M d, Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'admin_booking_detail' booking.id %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                <i class="fas fa-check-circle me-2"></i>Confirm Refund
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

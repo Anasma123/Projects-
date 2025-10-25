@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit Design{% else %}Add Design{% endif %} - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin_design_list' %}">Designs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Design</li>
+        </ol>
+    </nav>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-{% if form.instance.pk %}edit{% else %}plus{% endif %} me-2"></i>
+                        {% if form.instance.pk %}Edit Design{% else %}Add Design{% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                                <select name="{{ form.category.name }}" class="form-control" id="id_category">
+                                    <option value="">---------</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}" data-price="{{ category.price }}" {% if form.category.value == category.id|stringformat:"s" %}selected{% endif %}>
+                                            {{ category.name }} (₹{{ category.price }})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% if form.category.errors %}
+                                <div class="text-danger">{{ form.category.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.sub_category.id_for_label }}" class="form-label">Sub-category</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
+                                {{ form.sub_category }}
+                            </div>
+                            {% if form.sub_category.errors %}
+                                <div class="text-danger">{{ form.sub_category.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-paint-brush"></i></span>
+                                {{ form.name }}
+                            </div>
+                            {% if form.name.errors %}
+                                <div class="text-danger">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.image.id_for_label }}" class="form-label">Main Image</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                {{ form.image }}
+                            </div>
+                            {% if form.image.errors %}
+                                <div class="text-danger">{{ form.image.errors }}</div>
+                            {% endif %}
+                            {% if form.instance.image %}
+                                <div class="mt-2">
+                                    <p>Current image:</p>
+                                    <img src="{{ form.instance.image.url }}" alt="Current image" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.optional_image.id_for_label }}" class="form-label">Optional Image</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-images"></i></span>
+                                {{ form.optional_image }}
+                            </div>
+                            {% if form.optional_image.errors %}
+                                <div class="text-danger">{{ form.optional_image.errors }}</div>
+                            {% endif %}
+                            {% if form.instance.optional_image %}
+                                <div class="mt-2">
+                                    <p>Current optional image:</p>
+                                    <img src="{{ form.instance.optional_image.url }}" alt="Current optional image" class="img-thumbnail" style="max-height: 150px;">
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+                                {{ form.description }}
+                            </div>
+                            {% if form.description.errors %}
+                                <div class="text-danger">{{ form.description.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                {{ form.price }}
+                            </div>
+                            {% if form.price.errors %}
+                                <div class="text-danger">{{ form.price.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Save
+                            </button>
+                            <a href="{% url 'admin_design_list' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categorySelect = document.getElementById('id_category');
+    const priceInput = document.getElementById('id_price');
+    
+    // Function to update price based on selected category
+    function updatePrice() {
+        const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+        
+        if (price && priceInput) {
+            priceInput.value = parseFloat(price).toFixed(2);
+        }
+    }
+    
+    // Add event listener for category change
+    if (categorySelect && priceInput) {
+        categorySelect.addEventListener('change', updatePrice);
+        
+        // Also update price on initial load if editing and no price is set
+        if (!priceInput.value && categorySelect.value) {
+            updatePrice();
+        }
+    }
+});
+</script>
+{% endblock %}
