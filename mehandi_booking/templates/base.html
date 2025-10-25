@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mehndi Booking Service{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --light-color: #f8f9fa;
+            --dark-color: #2c3e50;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1602002418110-0f895ab1f8b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            opacity: 0.2;
+        }
+        
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: none;
+            margin-bottom: 25px;
+            background: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #218838);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .design-card {
+            height: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .design-img {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .design-card:hover .design-img {
+            transform: scale(1.05);
+        }
+        
+        /* Alert box styles */
+        .alert-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            animation: slideInRight 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), fadeOut 0.5s ease 4.5s forwards;
+            max-width: 400px;
+            border: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+        }
+        
+        .alert-error {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+        
+        .alert-warning {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: #212529;
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            color: white;
+        }
+        
+        .alert-box .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            margin-left: 15px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s ease;
+        }
+        
+        .alert-box .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .alert-box {
+                max-width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-paint-brush me-2"></i>Mehndi Art
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home me-1"></i>Home</a>
+                    </li>
+                    
+                    {% if user.is_authenticated %}
+                        <!-- Session indicator -->
+                        <li class="nav-item">
+                            <span class="nav-link text-warning">
+                                <i class="fas fa-user me-1"></i>Welcome, {{ user.username }}
+                            </span>
+                        </li>
+                        
+                        <!-- Gallery Session Info -->
+                        {% if request.session.last_visited_gallery %}
+                        <li class="nav-item">
+                            <span class="nav-link text-info">
+                                <i class="fas fa-images me-1"></i>
+                                {% if request.session.last_viewed_design %}
+                                    {{ request.session.last_viewed_design_name }}
+                                {% else %}
+                                    Gallery visited
+                                {% endif %}
+                            </span>
+                        </li>
+                        {% endif %}
+                        
+                        {% if user.user_type == 'admin' %}
+                            <!-- Admin Navigation -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admin_home' %}"><i class="fas fa-tachometer-alt me-1"></i>Dashboard</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="contentDropdown" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-tasks me-1"></i>Content
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'admin_category_list' %}">Categories</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin_subcategory_list' %}">Sub-categories</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin_design_list' %}">Designs</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin_time_slot_list' %}">Time Slots</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="businessDropdown" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-cogs me-1"></i>Business
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{% url 'admin_booking_list' %}">Bookings</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin_payment_list' %}">Payments</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin_feedback_list' %}">Feedback</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin_user_list' %}">Customers</a></li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <!-- User Navigation -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'user_home' %}"><i class="fas fa-tachometer-alt me-1"></i>Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'gallery' %}"><i class="fas fa-images me-1"></i>Gallery</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'booking_list' %}"><i class="fas fa-calendar-check me-1"></i>My Bookings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'custom_booking' %}"><i class="fas fa-plus-circle me-1"></i>Custom Booking</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user_feedback' %}"><i class="fas fa-comments me-1"></i>Feedback</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus me-1"></i>Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Gallery Session Banner (Below Navigation) -->
+    {% if user.is_authenticated and request.session.last_visited_gallery %}
+    <div class="container-fluid bg-info text-white py-2">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-images me-2"></i>
+                    <strong>Gallery Session:</strong>
+                    {% if request.session.last_viewed_design %}
+                        You last viewed <strong>{{ request.session.last_viewed_design_name }}</strong> in the gallery
+                    {% else %}
+                        You've visited the gallery recently
+                    {% endif %}
+                </div>
+                <div>
+                    <a href="{% url 'gallery' %}" class="btn btn-sm btn-light">
+                        <i class="fas fa-external-link-alt me-1"></i>Continue Browsing
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Messages as Alert Boxes -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-box alert-{{ message.tags }}" id="django-message-{{ forloop.counter }}">
+                    <div style="flex: 1;">
+                        <strong>{{ message.tags|title }}:</strong> {{ message }}
+                    </div>
+                    <button class="close-btn" onclick="this.parentElement.remove()">&times;</button>
+                </div>
+                
+                <script>
+                    // Auto-remove after 5 seconds
+                    setTimeout(function() {
+                        var alertBox = document.getElementById('django-message-{{ forloop.counter }}');
+                        if (alertBox) {
+                            alertBox.style.animation = 'fadeOut 0.5s ease forwards';
+                            setTimeout(function() {
+                                if (alertBox.parentElement) {
+                                    alertBox.remove();
+                                }
+                            }, 500);
+                        }
+                    }, 5000);
+                </script>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5><i class="fas fa-paint-brush me-2"></i>Mehndi Art Booking</h5>
+                    <p>Your premier destination for beautiful mehndi designs and professional artists.</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li><a href="{% url 'gallery' %}" class="text-white">Gallery</a></li>
+                        {% if user.is_authenticated %}
+                            {% if user.user_type == 'admin' %}
+                                <li><a href="{% url 'admin_home' %}" class="text-white">Admin Dashboard</a></li>
+                            {% else %}
+                                <li><a href="{% url 'user_home' %}" class="text-white">User Dashboard</a></li>
+                                <li><a href="{% url 'booking_list' %}" class="text-white">My Bookings</a></li>
+                            {% endif %}
+                        {% endif %}
+                        <li><a href="{% url 'user_feedback' %}" class="text-white">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@mehndiart.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p>&copy; 2025 Mehndi Art Booking. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

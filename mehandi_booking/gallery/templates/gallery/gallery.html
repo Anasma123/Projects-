@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Design Gallery - Mehndi Booking Service{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Mehndi Design Gallery</h1>
+        <p class="lead">Explore our collection of beautiful mehndi designs for all occasions</p>
+    </div>
+    
+    <!-- Session Info Banner -->
+    {% if request.session.last_visited_gallery %}
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>Welcome back!</strong> 
+        {% if request.session.last_viewed_design %}
+            You last viewed the design: <strong>{{ request.session.last_viewed_design_name }}</strong>
+        {% else %}
+            You've visited the gallery. Browse our latest designs!
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    
+    <!-- Filter Section -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Filter Designs</h5>
+        </div>
+        <div class="card-body">
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="category" id="category" class="form-select">
+                            <option value="">All Categories</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"i" %}selected{% endif %}>{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="search" class="form-label">Search</label>
+                        <input type="text" name="search" id="search" class="form-control" placeholder="Search designs..." value="{{ request.GET.search }}">
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search me-1"></i>Filter</button>
+                            <a href="{% url 'gallery' %}" class="btn btn-outline-secondary"><i class="fas fa-times me-1"></i>Clear</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    {% if categories %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="section-title">Categories</h3>
+            <div class="d-flex flex-wrap justify-content-center">
+                {% for category in categories %}
+                    <span class="badge bg-primary me-2 mb-2 fs-6 px-3 py-2">{{ category.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="row">
+        {% for design in designs %}
+        <div class="col-md-4 mb-4">
+            <div class="card design-card shadow">
+                {% if design.image %}
+                <img src="{{ design.image.url }}" class="card-img-top design-img" alt="{{ design.name }}">
+                {% else %}
+                <div class="design-img bg-light d-flex align-items-center justify-content-center">
+                    <i class="fas fa-image fa-3x text-muted"></i>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ design.name }}</h5>
+                    <p class="card-text">{{ design.description|truncatewords:15 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-primary">₹{{ design.price }}</span>
+                        <div>
+                            <a href="{% url 'design_detail' design.id %}" class="btn btn-outline-primary btn-sm">View Details</a>
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'book_design' design.id %}" class="btn btn-success btn-sm">Book Now</a>
+                            {% else %}
+                            <a href="{% url 'login' %}?next={% url 'design_detail' design.id %}" class="btn btn-success btn-sm">Login to Book</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle fa-2x mb-3"></i>
+                <h4>No designs available yet</h4>
+                <p>Check back later for new beautiful mehndi designs!</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
