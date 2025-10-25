@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Purchase Price</title>
+    <!-- Include same CSS as list_purchase.html -->
+</head>
+<body>
+    <h2>💸 Update Price for {{ purchase.product_name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>Sale Rate (₹):</label>
+        <input type="number" step="0.01" name="sale_rate" value="{{ purchase.sale_rate|default:'' }}">
+        <button type="submit" class="btn update-btn">Save</button>
+        <a href="{% url 'list_products' %}" class="btn back-btn">Cancel</a>
+    </form>
+</body>
+</html>

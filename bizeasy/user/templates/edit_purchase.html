@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Purchase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .form-container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #4CAF50, #2196F3, #FF9800);
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1e3a8a;
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 10px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #4CAF50, #2196F3);
+            border-radius: 3px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        label i {
+            margin-right: 8px;
+            color: #2196F3;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1.5px solid #ddd;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+            background: #fff;
+            transform: translateY(-2px);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            grid-column: span 2;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn.save {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .btn.save:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn.back {
+            background: linear-gradient(to right, #607D8B, #455A64);
+            margin-right: 10px;
+        }
+        
+        .btn.back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(96, 125, 139, 0.3);
+        }
+        
+        .btn.delete {
+            background: linear-gradient(to right, #f44336, #c62828);
+        }
+        
+        .btn.delete:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(244, 67, 54, 0.3);
+        }
+        
+        .calculation-box {
+            background: linear-gradient(to right, #E3F2FD, #BBDEFB);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            grid-column: span 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: pulse 2s infinite;
+        }
+        
+        .calculation-box span {
+            font-weight: bold;
+            color: #1e3a8a;
+            font-size: 18px;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.2);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(33, 150, 243, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(33, 150, 243, 0);
+            }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            .btn.save {
+                margin-right: 0;
+                order: 1;
+            }
+            
+            .btn.back {
+                order: 2;
+            }
+            
+            .btn.delete {
+                order: 3;
+            }
+        }
+        
+        /* Animation for form elements */
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .form-group:nth-child(7) { animation-delay: 0.7s; }
+        .form-group:nth-child(8) { animation-delay: 0.8s; }
+        .form-group:nth-child(9) { animation-delay: 0.9s; }
+        .form-group:nth-child(10) { animation-delay: 1.0s; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2><i class="fas fa-edit"></i> Edit Purchase</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><i class="fas fa-box"></i> Product Name</label>
+                    <input type="text" name="product_name" value="{{ form.product_name.value }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-tags"></i> Category</label>
+                    <select name="category" id="category" onchange="filterSubcategories()">
+                        <option value="">Select Category</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if cat.id == form.category.value %}selected{% endif %}>
+                                {{ cat.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Subcategory</label>
+                    <select name="subcategory" id="subcategory">
+                        <option value="">Select Subcategory</option>
+                        {% for sub in subcategories %}
+                            <option value="{{ sub.id }}" 
+                                    data-category="{{ sub.category.id }}"
+                                    {% if sub.id == form.subcategory.value %}selected{% endif %}>
+                                {{ sub.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calculator"></i> Quantity</label>
+                    <input type="number" name="quantity" id="quantity" value="{{ form.quantity.value }}" required oninput="updateTotal()">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-money-bill-wave"></i> Product Rate</label>
+                    <input type="number" name="product_rate" id="product_rate" value="{{ form.product_rate.value }}" required oninput="updateTotal()" step="0.01">
+                </div>
+
+                <div class="calculation-box">
+                    <span>Total Purchase Rate:</span>
+                    <span id="total_rate_display">${{ form.total_rate.value }}</span>
+                </div>
+                <input type="hidden" name="total_rate" id="total_rate" value="{{ form.total_rate.value }}">
+
+                <div class="form-group">
+                    <label><i class="fas fa-dollar-sign"></i> Selling Rate</label>
+                    <input type="number" name="sale_rate" id="sale_rate" value="{{ form.sale_rate.value }}" required step="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> MRP</label>
+                    <input type="number" name="mrp" value="{{ form.mrp.value }}" step="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> Purchase Date</label>
+                    <input type="date" name="date" value="{{ form.date.value|date:'Y-m-d' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-times"></i> Expire Date</label>
+                    <input type="date" name="expire_date" value="{{ form.expire_date.value|date:'Y-m-d' }}">
+                </div>
+
+                <div class="form-group full-width">
+                    <label><i class="fas fa-sticky-note"></i> Notes</label>
+                    <textarea name="notes" rows="3">{{ form.notes.value|default_if_none:'' }}</textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn save" type="submit"><i class="fas fa-save"></i> Save Changes</button>
+                    <a href="{% url 'list_purchases' %}" class="btn back"><i class="fas fa-arrow-left"></i> Cancel</a>
+                    <a href="{% url 'delete_purchase' purchase.id %}" class="btn delete"><i class="fas fa-trash"></i> Delete</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function updateTotal() {
+            let qty = parseFloat(document.getElementById("quantity").value) || 0;
+            let rate = parseFloat(document.getElementById("product_rate").value) || 0;
+            let total = (qty * rate).toFixed(2);
+            document.getElementById("total_rate").value = total;
+            document.getElementById("total_rate_display").textContent = "$" + total;
+            
+            // Add animation to total display
+            const totalDisplay = document.getElementById("total_rate_display");
+            totalDisplay.style.transform = "scale(1.1)";
+            setTimeout(() => {
+                totalDisplay.style.transform = "scale(1)";
+            }, 300);
+        }
+
+        function filterSubcategories() {
+            const catId = document.getElementById("category").value;
+            const subSelect = document.getElementById("subcategory");
+            const options = subSelect.options;
+            
+            // First, hide all options except the first one (Select Subcategory)
+            for (let i = 1; i < options.length; i++) {
+                options[i].style.display = 'none';
+                options[i].disabled = true;
+            }
+            
+            // Then show only the ones that match the selected category
+            if (catId) {
+                for (let i = 1; i < options.length; i++) {
+                    if (options[i].getAttribute('data-category') === catId) {
+                        options[i].style.display = 'block';
+                        options[i].disabled = false;
+                    }
+                }
+            }
+        }
+
+        // Initialize the subcategories filter when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            filterSubcategories();
+            updateTotal(); // Calculate initial total
+            
+            // Add animations to form elements
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach(group => {
+                group.style.opacity = 0;
+                group.style.transform = 'translateY(20px)';
+            });
+            
+            // Animate form elements sequentially
+            setTimeout(() => {
+                formGroups.forEach((group, index) => {
+                    setTimeout(() => {
+                        group.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        group.style.opacity = 1;
+                        group.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>

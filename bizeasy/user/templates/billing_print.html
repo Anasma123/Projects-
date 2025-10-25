@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice #{{ billing.id }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .invoice-container { max-width: 800px; margin: 0 auto; }
+        .invoice-header { text-align: center; margin-bottom: 20px; }
+        .customer-details { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .totals { text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h2>Invoice #{{ billing.id }}</h2>
+            <p>Date: {{ billing.created_at|date:"Y-m-d H:i" }}</p>
+        </div>
+        <div class="customer-details">
+            <p><strong>Customer Name:</strong> {{ billing.customer_name|default:"N/A" }}</p>
+            <p><strong>Contact Number:</strong> {{ billing.customer_number|default:"N/A" }}</p>
+            <p><strong>Address:</strong> {{ billing.customer_address|default:"N/A" }}</p>
+        </div>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>MRP</th>
+                <th>Sale Price</th>
+                <th>Discount</th>
+                <th>Total</th>
+            </tr>
+            {% for item in billing.items.all %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.product.mrp|floatformat:2|default:"N/A" }}</td>
+                <td>₹{{ item.product.final_price|floatformat:2|default:"N/A" }}</td>
+                <td>{{ item.product.discount_percentage|default:"No discount" }}</td>
+                <td>₹{{ item.line_total|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="totals">
+            <p>Subtotal: ₹{{ billing.subtotal|floatformat:2 }}</p>
+            <p>GST ({{ billing.gst_percent }}%): ₹{{ billing.gst_amount|floatformat:2 }}</p>
+            <p>Round Off: ₹{{ billing.roundoff|floatformat:2 }}</p>
+            <p><strong>Total Amount: ₹{{ billing.final_amount|floatformat:2 }}</strong></p>
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            window.print();
+            setTimeout(() => window.close(), 1000);
+        };
+    </script>
+</body>
+</html>

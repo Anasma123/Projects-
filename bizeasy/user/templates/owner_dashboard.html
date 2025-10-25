@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles - New Modern Design */
+        .sidebar {
+            width: 80px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            height: 100vh;
+            position: fixed;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .sidebar:hover {
+            width: 260px;
+        }
+
+        .sidebar-header {
+            padding: 0 15px 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar-header p {
+            color: #bdc3c7;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-menu li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            padding: 15px 20px;
+            transition: all 0.3s ease;
+            border-radius: 0 30px 30px 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar-menu li:hover a,
+        .sidebar-menu li.active a {
+            color: #fff;
+            background: #3498db;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu li a i {
+            margin-right: 15px;
+            font-size: 1.3rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-menu li .tooltip {
+            position: absolute;
+            left: 80px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3498db;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-menu li .tooltip::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 8px solid transparent;
+            border-right: 8px solid #3498db;
+        }
+
+        .sidebar-menu li:hover .tooltip {
+            opacity: 1;
+            left: 85px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .header h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #1a2a6c, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .user-info:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .user-info img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 3px solid #3498db;
+            transition: all 0.4s ease;
+        }
+
+        .user-info img:hover {
+            transform: rotate(360deg);
+        }
+
+        .user-info span {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .user-info .role {
+            display: block;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            font-weight: 400;
+            margin-top: 3px;
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            color: white;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .user-profile::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff, #f1f1f1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 30px;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 700;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-details h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-details p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-details .role-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 15px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 12px;
+            color: #3498db;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #2c3e50;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(52, 152, 219, 0.3);
+            color: white;
+        }
+
+        .action-btn i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .action-btn span {
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        /* Cards Section */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .income.card::before {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+
+        .expense.card::before {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .profit.card::before {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            transition: all 0.4s ease;
+        }
+
+        .card-icon:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .income .card-icon {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .expense .card-icon {
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+        }
+
+        .profit .card-icon {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .card-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin: 15px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .card-change {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-change i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        .card-change.positive {
+            color: #2ecc71;
+        }
+
+        .card-change.negative {
+            color: #e74c3c;
+        }
+
+        /* Charts Section */
+        .charts {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .chart-header h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .chart-actions select {
+            padding: 10px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fff;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-actions select:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .date-filter {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .date-filter label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .date-filter input[type="date"] {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .date-filter input[type="date"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+            outline: none;
+        }
+        
+        .date-filter button {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .date-filter button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        #clearDateFilter {
+            background: #95a5a6;
+            box-shadow: 0 4px 10px rgba(149, 165, 166, 0.3);
+        }
+        
+        #clearDateFilter:hover {
+            background: #7f8c8d;
+            box-shadow: 0 6px 15px rgba(149, 165, 166, 0.4);
+        }
+
+        /* Recent Activity Section */
+        .recent-activity {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .activity-container {
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .activity-header {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-header h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .activity-header a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 8px;
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .activity-header a:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f9f9f9;
+            transform: translateX(8px);
+            border-radius: 10px;
+            padding: 20px 15px;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .activity-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .purchase .activity-icon {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+        }
+
+        .sale .activity-icon {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .expense-item .activity-icon {
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+        }
+
+        .activity-details h4 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .activity-details p {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+        }
+
+        .activity-amount {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .positive {
+            color: #2ecc71;
+        }
+
+        .negative {
+            color: #e74c3c;
+        }
+
+        .logout-link {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            margin-top: 30px;
+            transition: all 0.4s ease;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .logout-link:hover {
+            background: linear-gradient(135deg, #c0392b, #a5281b);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        .logout-link button {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 260px;
+            }
+            
+            .sidebar:hover {
+                width: 260px;
+            }
+            
+            .main-content {
+                margin-left: 260px;
+                width: calc(100% - 260px);
+            }
+            
+            .charts, .recent-activity {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-chart-line"></i> Biz</h3>
+            <p>Management</p>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="{% url 'owner_dashboard' %}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="{% url 'list_purchases' %}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Purchase Management</span>
+                </a>
+                <span class="tooltip">Purchase Management</span>
+            </li>
+            <li>
+                <a href="{% url 'invoice_list' %}">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Billing Management</span>
+                </a>
+                <span class="tooltip">Billing Management</span>
+            </li>
+            <li>
+                <a href="{% url 'list_category' %}">
+                    <i class="fas fa-tags"></i>
+                    <span>Category Management</span>
+                </a>
+                <span class="tooltip">Category Management</span>
+            </li>
+            <li>
+                <a href="{% url 'list_subcategory' %}">
+                    <i class="fas fa-folder"></i>
+                    <span>Subcategory Management</span>
+                </a>
+                <span class="tooltip">Subcategory Management</span>
+            </li>
+            <li>
+                <a href="{% url 'list_products' %}">
+                    <i class="fas fa-box-open"></i>
+                    <span>Product Management</span>
+                </a>
+                <span class="tooltip">Product Management</span>
+            </li>
+            <li>
+                <a href="{% url 'shop_report' %}">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Report Management</span>
+                </a>
+                <span class="tooltip">Report Management</span>
+            </li>
+            <li>
+                <a href="{% url 'view_discount' %}">
+                    <i class="fas fa-percent"></i>
+                    <span>Sales & Discounts</span>
+                </a>
+                <span class="tooltip">Sales & Discounts</span>
+            </li>
+            <li>
+                <a href="{% url 'staff_list' %}">
+                    <i class="fas fa-users"></i>
+                    <span>Staff Management</span>
+                </a>
+                <span class="tooltip">Staff Management</span>
+            </li>
+            <li>
+                <a href="{% url 'stock_report' %}">
+                    <i class="fas fa-warehouse"></i>
+                    <span>Stock Report</span>
+                </a>
+                <span class="tooltip">Stock Report</span>
+            </li>
+            <li>
+                <a href="{% url 'purchase_history' %}">
+                    <i class="fas fa-history"></i>
+                    <span>Purchase History</span>
+                </a>
+                <span class="tooltip">Purchase History</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h2><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=3498db&color=fff" alt="User">
+                <div>
+                    <span>{{ user.username }}</span>
+                    <span class="role">{{ user.role|title }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Profile Section -->
+        <div class="user-profile">
+            <div class="profile-image">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-details">
+                <h1>Welcome back, {{ user.username }}!</h1>
+                <p>User ID: {{ user.id }}</p>
+                <p>Email: {{ user.email|default:"Not provided" }}</p>
+                <p>Last Login: {{ user.last_login|date:"M d, Y H:i" }}</p>
+                <span class="role-badge"><i class="fas fa-shield-alt"></i> {{ user.role|title }}</span>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3 class="section-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+            <div class="action-buttons">
+                <a href="{% url 'add_billing' %}" class="action-btn">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Generate Bill</span>
+                </a>
+                <a href="{% url 'list_products' %}" class="action-btn">
+                    <i class="fas fa-box-open"></i>
+                    <span>View Products</span>
+                </a>
+                <a href="{% url 'view_discount' %}" class="action-btn">
+                    <i class="fas fa-percent"></i>
+                    <span>View Discounts</span>
+                </a>
+                <a href="{% url 'invoice_list' %}" class="action-btn">
+                    <i class="fas fa-receipt"></i>
+                    <span>List Invoices</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="cards">
+            <div class="card income">
+                <div class="card-header">
+                    <div>
+                        <p class="card-title"><i class="fas fa-arrow-down"></i> Total Income</p>
+                        <h3 class="card-value">${{ total_income|floatformat:2 }}</h3>
+                        <p class="card-change {% if income_change >= 0 %}positive{% else %}negative{% endif %}">
+                            <i class="fas fa-arrow-{% if income_change >= 0 %}up{% else %}down{% endif %}"></i>
+                            {% if income_change >= 0 %}+{% endif %}{{ income_change|floatformat:2 }}% from last period
+                        </p>
+                    </div>
+                    <div class="card-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card expense">
+                <div class="card-header">
+                    <div>
+                        <p class="card-title"><i class="fas fa-arrow-up"></i> Total Expenses</p>
+                        <h3 class="card-value">${{ total_expenses|floatformat:2 }}</h3>
+                        <p class="card-change {% if expense_change >= 0 %}positive{% else %}negative{% endif %}">
+                            <i class="fas fa-arrow-{% if expense_change >= 0 %}up{% else %}down{% endif %}"></i>
+                            {% if expense_change >= 0 %}+{% endif %}{{ expense_change|floatformat:2 }}% from last period
+                        </p>
+                    </div>
+                    <div class="card-icon">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card profit">
+                <div class="card-header">
+                    <div>
+                        <p class="card-title"><i class="fas fa-chart-line"></i> Net Profit</p>
+                        <h3 class="card-value">${{ net_profit|floatformat:2 }}</h3>
+                        <p class="card-change {% if profit_change >= 0 %}positive{% else %}negative{% endif %}">
+                            <i class="fas fa-arrow-{% if profit_change >= 0 %}up{% else %}down{% endif %}"></i>
+                            {% if profit_change >= 0 %}+{% endif %}{{ profit_change|floatformat:2 }}% from last period
+                        </p>
+                    </div>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expiring Products Section -->
+       
+
+        <!-- Charts Section -->
+        <div class="charts">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-area"></i> Income & Expenses Report</h3>
+                    <div class="chart-actions">
+                        <div class="date-filter">
+                            <label for="fromDate"><i class="fas fa-calendar-alt"></i> From:</label>
+                            <input type="date" id="fromDate" name="fromDate">
+                            <label for="toDate"><i class="fas fa-calendar-alt"></i> To:</label>
+                            <input type="date" id="toDate" name="toDate">
+                            <button id="applyDateFilter"><i class="fas fa-filter"></i> Apply</button>
+                            <button id="clearDateFilter"><i class="fas fa-times"></i> Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="incomeExpenseChart" height="300"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-pie"></i> Sales by Category</h3>
+                </div>
+                <canvas id="categoryChart" height="300"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Activity Section -->
+        <div class="recent-activity">
+            <div class="activity-container">
+                <div class="activity-header">
+                    <h3><i class="fas fa-exchange-alt"></i> Last 5 Transactions</h3>
+                    <a href="{% url 'invoice_list' %}"><i class="fas fa-eye"></i> View All</a>
+                </div>
+                {% if recent_transactions %}
+                    <ul class="activity-list">
+                        {% for invoice in recent_transactions %}
+                            <li class="activity-item sale">
+                                <div class="activity-info">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-file-invoice"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <h4>Invoice #{{ invoice.bill_number }}</h4>
+                                        <p>{{ invoice.customer_name }} - {{ invoice.date }}</p>
+                                    </div>
+                                </div>
+                                <div class="activity-amount positive">
+                                    +${{ invoice.total|floatformat:2 }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-file-invoice"></i>
+                        <h3>No transactions found</h3>
+                        <p>Data will appear here when available</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="activity-container">
+                <div class="activity-header">
+                    <h3><i class="fas fa-shopping-cart"></i> Last 5 Purchases</h3>
+                    <a href="{% url 'list_purchases' %}"><i class="fas fa-eye"></i> View All</a>
+                </div>
+                {% if recent_purchases %}
+                    <ul class="activity-list">
+                        {% for purchase in recent_purchases %}
+                            <li class="activity-item purchase">
+                                <div class="activity-info">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <h4>{{ purchase.product_name }}</h4>
+                                        <p>{{ purchase.category.name }} - {{ purchase.date }}</p>
+                                    </div>
+                                </div>
+                                <div class="activity-amount negative">
+                                    -${{ purchase.total_rate|floatformat:2 }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>No purchases found</h3>
+                        <p>Data will appear here when available</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Logout Link -->
+        <form method="post" class="logout-link" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </form>
+
+        <!-- CSRF Token for AJAX requests -->
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+        <!-- Alert Container -->
+        <div id="alertBox" class="alert"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Income & Expense Chart
+            const incomeExpenseCtx = document.getElementById('incomeExpenseChart').getContext('2d');
+            const incomeExpenseChart = new Chart(incomeExpenseCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ chart_labels|safe }},
+                    datasets: [
+                        {
+                            label: 'Income',
+                            data: {{ income_data|safe }},
+                            backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                            borderColor: 'rgba(46, 204, 113, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Expenses',
+                            data: {{ expense_data|safe }},
+                            backgroundColor: 'rgba(231, 76, 60, 0.7)',
+                            borderColor: 'rgba(231, 76, 60, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    }
+                }
+            });
+
+            // Category Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            const categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: {{ category_labels|safe }},
+                    datasets: [{
+                        data: {{ category_data|safe }},
+                        backgroundColor: [
+                            'rgba(52, 152, 219, 0.7)',
+                            'rgba(155, 89, 182, 0.7)',
+                            'rgba(46, 204, 113, 0.7)',
+                            'rgba(241, 196, 15, 0.7)',
+                            'rgba(149, 165, 166, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(52, 152, 219, 1)',
+                            'rgba(155, 89, 182, 1)',
+                            'rgba(46, 204, 113, 1)',
+                            'rgba(241, 196, 15, 1)',
+                            'rgba(149, 165, 166, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    }
+                }
+            });
+
+            // Update chart on period change
+            // This event listener should be removed since we're using date filters now
+
+            // Update chart on date filter apply
+            document.getElementById('applyDateFilter').addEventListener('click', function() {
+                console.log('Apply button clicked');
+                const fromDate = document.getElementById('fromDate').value;
+                const toDate = document.getElementById('toDate').value;
+                
+                console.log('From date:', fromDate);
+                console.log('To date:', toDate);
+                
+                // Validate that both dates are provided
+                if (!fromDate || !toDate) {
+                    alert('Please select both From and To dates.');
+                    return;
+                }
+                
+                // Validate that from date is not after to date
+                if (new Date(fromDate) > new Date(toDate)) {
+                    alert('From date cannot be after To date.');
+                    return;
+                }
+                
+                // Get CSRF token
+                const csrftoken = getCSRFToken();
+                
+                fetch(`/api/dashboard-data/?from_date=${fromDate}&to_date=${toDate}`, {
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        console.log('API response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('API response data:', data);
+                        incomeExpenseChart.data.labels = data.chartLabels;
+                        incomeExpenseChart.data.datasets[0].data = data.incomeData;
+                        incomeExpenseChart.data.datasets[1].data = data.expenseData;
+                        incomeExpenseChart.update();
+
+                        categoryChart.data.labels = data.categoryLabels;
+                        categoryChart.data.datasets[0].data = data.categoryData;
+                        categoryChart.update();
+
+                        // Update cards
+                        document.querySelector('.income .card-value').textContent = '$' + data.totalIncome.toFixed(2);
+                        document.querySelector('.expense .card-value').textContent = '$' + data.totalExpenses.toFixed(2);
+                        document.querySelector('.profit .card-value').textContent = '$' + data.netProfit.toFixed(2);
+                        document.querySelector('.income .card-change').textContent = (data.incomeChange >= 0 ? '+' : '') + data.incomeChange.toFixed(2) + '% from last period';
+                        document.querySelector('.income .card-change').className = 'card-change ' + (data.incomeChange >= 0 ? 'positive' : 'negative');
+                        document.querySelector('.expense .card-change').textContent = (data.expenseChange >= 0 ? '+' : '') + data.expenseChange.toFixed(2) + '% from last period';
+                        document.querySelector('.expense .card-change').className = 'card-change ' + (data.expenseChange >= 0 ? 'positive' : 'negative');
+                        document.querySelector('.profit .card-change').textContent = (data.profitChange >= 0 ? '+' : '') + data.profitChange.toFixed(2) + '% from last period';
+                        document.querySelector('.profit .card-change').className = 'card-change ' + (data.profitChange >= 0 ? 'positive' : 'negative');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching dashboard data:', error);
+                        // Optionally show an error message to the user
+                        alert('Error loading dashboard data. Please try again.');
+                    });
+            });
+
+            // Clear date filter and reset to default
+            document.getElementById('clearDateFilter').addEventListener('click', function() {
+                console.log('Clear button clicked');
+                
+                // Clear the date inputs
+                const fromDateInput = document.getElementById('fromDate');
+                const toDateInput = document.getElementById('toDate');
+                
+                if (fromDateInput) {
+                    fromDateInput.value = '';
+                }
+                if (toDateInput) {
+                    toDateInput.value = '';
+                }
+                
+                // Get CSRF token
+                const csrftoken = getCSRFToken();
+                
+                // Make API call with empty dates to get default data
+                fetch(`/api/dashboard-data/`, {
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        console.log('API response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('API response data:', data);
+                        incomeExpenseChart.data.labels = data.chartLabels;
+                        incomeExpenseChart.data.datasets[0].data = data.incomeData;
+                        incomeExpenseChart.data.datasets[1].data = data.expenseData;
+                        incomeExpenseChart.update();
+
+                        categoryChart.data.labels = data.categoryLabels;
+                        categoryChart.data.datasets[0].data = data.categoryData;
+                        categoryChart.update();
+
+                        // Update cards
+                        document.querySelector('.income .card-value').textContent = '$' + data.totalIncome.toFixed(2);
+                        document.querySelector('.expense .card-value').textContent = '$' + data.totalExpenses.toFixed(2);
+                        document.querySelector('.profit .card-value').textContent = '$' + data.netProfit.toFixed(2);
+                        document.querySelector('.income .card-change').textContent = (data.incomeChange >= 0 ? '+' : '') + data.incomeChange.toFixed(2) + '% from last period';
+                        document.querySelector('.income .card-change').className = 'card-change ' + (data.incomeChange >= 0 ? 'positive' : 'negative');
+                        document.querySelector('.expense .card-change').textContent = (data.expenseChange >= 0 ? '+' : '') + data.expenseChange.toFixed(2) + '% from last period';
+                        document.querySelector('.expense .card-change').className = 'card-change ' + (data.expenseChange >= 0 ? 'positive' : 'negative');
+                        document.querySelector('.profit .card-change').textContent = (data.profitChange >= 0 ? '+' : '') + data.profitChange.toFixed(2) + '% from last period';
+                        document.querySelector('.profit .card-change').className = 'card-change ' + (data.profitChange >= 0 ? 'positive' : 'negative');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching dashboard data:', error);
+                        // Optionally show an error message to the user
+                        alert('Error loading dashboard data. Please try again.');
+                    });
+            });
+
+            // Set default dates (last 6 months)
+            function setDefaultDates() {
+                const today = new Date();
+                // Calculate 6 months ago by subtracting 6 months
+                const sixMonthsAgo = new Date(today);
+                sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+                
+                // Handle edge case where setMonth might result in an invalid date
+                // (e.g., when today is Jan 31 and we subtract 1 month, there's no Dec 31)
+                if (sixMonthsAgo.getDate() !== today.getDate() && today.getDate() > 1) {
+                    sixMonthsAgo.setDate(0); // Set to last day of previous month
+                }
+                
+                // Format dates as YYYY-MM-DD
+                const formatDate = (date) => {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                };
+                
+                const fromDateValue = formatDate(sixMonthsAgo);
+                const toDateValue = formatDate(today);
+                
+                console.log('Setting default dates:');
+                console.log('From date:', fromDateValue);
+                console.log('To date:', toDateValue);
+                
+                const fromDateInput = document.getElementById('fromDate');
+                const toDateInput = document.getElementById('toDate');
+                
+                console.log('From date input element:', fromDateInput);
+                console.log('To date input element:', toDateInput);
+                
+                if (fromDateInput) {
+                    fromDateInput.value = fromDateValue;
+                } else {
+                    console.error('From date input element not found');
+                }
+                
+                if (toDateInput) {
+                    toDateInput.value = toDateValue;
+                } else {
+                    console.error('To date input element not found');
+                }
+            }
+            
+            // Get CSRF token from hidden input field
+            function getCSRFToken() {
+                const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+                return csrfInput ? csrfInput.value : '';
+            }
+            
+            // Initialize with default dates after charts are ready
+            console.log('Calling setDefaultDates');
+            // Add a small delay to ensure the date inputs are fully rendered
+            setTimeout(setDefaultDates, 100);
+            console.log('Finished calling setDefaultDates');
+
+            // Expiry and Stock Alerts
+            function checkExpiryAndStockAlerts() {
+                const products = JSON.parse('{{ expiring_products|escapejs }}');
+                const today = new Date('2025-09-10T12:35:00+05:30'); // Updated to current date and time in IST
+                const thirtyDaysFromNow = new Date(today);
+                thirtyDaysFromNow.setDate(today.getDate() + 30);
+
+                let alertMessage = '';
+                let hasAlerts = false;
+
+                if (products && products.length > 0) {
+                    products.forEach(product => {
+                        const expiryDate = new Date(product.expiry_date);
+                        const quantity = product.quantity;
+
+                        if (expiryDate < today) {
+                            alertMessage += `Alert: Product "${product.product_name}" has expired on ${product.expiry_date}!\n`;
+                            hasAlerts = true;
+                        } else if (expiryDate <= thirtyDaysFromNow) {
+                            alertMessage += `Warning: Product "${product.product_name}" is expiring soon on ${product.expiry_date}!\n`;
+                            hasAlerts = true;
+                        }
+
+                        if (quantity <= 10) {
+                            alertMessage += `Low Stock Alert: Product "${product.product_name}" has only ${quantity} units left!\n`;
+                            hasAlerts = true;
+                        }
+                    });
+                }
+
+                if (hasAlerts) {
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.textContent = alertMessage.trim();
+                    alertBox.style.display = 'block';
+                    setTimeout(() => {
+                        alertBox.style.display = 'none';
+                    }, 10000); // Auto-hide after 10 seconds
+                }
+            }
+
+            checkExpiryAndStockAlerts();
+
+            // Table sorting function
+            function sortTable(columnIndex) {
+                const table = document.getElementById('expiringTable');
+                let switching = true;
+                let shouldSwitch, switchCount = 0;
+                let direction = 'asc';
+                let i, x, y;
+
+                // Check if the column already has a sort direction (simplified toggle)
+                const headers = table.getElementsByTagName('th');
+                const currentHeader = headers[columnIndex];
+                if (currentHeader.getAttribute('data-sort') === 'desc') {
+                    direction = 'asc';
+                } else {
+                    direction = 'desc';
+                }
+
+                // Update all headers to remove sort indicators, then set the current one
+                for (let j = 0; j < headers.length; j++) {
+                    headers[j].textContent = headers[j].textContent.replace(' ↑', '').replace(' ↓', '');
+                }
+                currentHeader.textContent += direction === 'asc' ? ' ↑' : ' ↓';
+                currentHeader.setAttribute('data-sort', direction);
+
+                while (switching) {
+                    switching = false;
+                    const rows = table.rows;
+
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName('TD')[columnIndex];
+                        y = rows[i + 1].getElementsByTagName('TD')[columnIndex];
+
+                        // Handle different data types (text or date)
+                        let xValue = x.innerHTML.toLowerCase();
+                        let yValue = y.innerHTML.toLowerCase();
+
+                        // Try to parse as date for date columns (e.g., Purchase Date, Expire Date)
+                        if (columnIndex === 4 || columnIndex === 5) {
+                            xValue = new Date(x.innerHTML);
+                            yValue = new Date(y.innerHTML);
+                            if (isNaN(xValue)) xValue = new Date(0); // Fallback for invalid dates
+                            if (isNaN(yValue)) yValue = new Date(0);
+                        } else if (!isNaN(xValue) && !isNaN(yValue)) {
+                            // Handle numeric values (e.g., Total Quantity)
+                            xValue = parseFloat(xValue);
+                            yValue = parseFloat(yValue);
+                        }
+
+                        // Compare based on direction
+                        if (direction === 'asc') {
+                            if (xValue > yValue) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (direction === 'desc') {
+                            if (xValue < yValue) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                        switchCount++;
+                    } else {
+                        if (switchCount === 0 && direction === 'asc') {
+                            direction = 'desc';
+                            switching = true;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

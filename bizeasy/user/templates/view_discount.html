@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Discounts - Business Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #f72585;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --info: #118ab2;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .header h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header h2 i {
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--gray);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-danger:hover {
+            background-color: #d43a5f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(239, 71, 111, 0.2);
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .stat-card.discount {
+            border-left: 4px solid var(--success);
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--success);
+        }
+        
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .filter-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: end;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+        }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-filter {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-filter:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-reset {
+            background-color: var(--gray);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-reset:hover {
+            background-color: var(--dark);
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .price {
+            font-weight: 600;
+        }
+        
+        .discount-info {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .stock-high { 
+            color: var(--success);
+            font-weight: 700;
+        }
+        
+        .stock-medium { 
+            color: var(--warning);
+            font-weight: 700;
+        }
+        
+        .stock-low { 
+            color: var(--danger);
+            font-weight: 700;
+        }
+        
+        .btn-delete {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-delete:hover {
+            background: var(--danger);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-view {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-view:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .category-tag {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .subcategory-tag {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+        
+        .role-indicator {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .role-indicator.owner {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--secondary);
+        }
+        
+        .status-active {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-inactive {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--danger);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .status-upcoming {
+            background: rgba(255, 209, 102, 0.1);
+            color: #e6a700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h2><i class="fas fa-tags"></i> All Products</h2>
+                <div class="role-indicator {% if user_role == 'owner' %}owner{% endif %}">
+                    <i class="fas fa-user"></i>
+                    {% if user_role == 'owner' %}
+                        Owner Dashboard - Full Access
+                    {% else %}
+                        Staff Dashboard - View Only
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+                {% if can_edit %}
+                <a href="{% url 'remove_expired_discounts' %}" class="btn-danger" style="margin-right: 10px;" onclick="return confirm('Are you sure you want to remove all expired discounts?')">
+                    <i class="fas fa-trash-alt"></i> Remove Expired Discounts
+                </a>
+                {% endif %}
+                <a href="{% url 'list_products' %}" class="btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Products
+                </a>
+            </div>
+        </div>
+        
+        <!-- Filter Section -->
+        <div class="filter-container">
+            <form method="GET" id="filterForm">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="status">Status</label>
+                        <select name="status" id="status">
+                            <option value="">All Statuses</option>
+                            <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+                            <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Active</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="from_date">From Date</label>
+                        <input type="date" name="from_date" id="from_date" value="{{ from_date }}">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="to_date">To Date</label>
+                        <input type="date" name="to_date" id="to_date" value="{{ to_date }}">
+                    </div>
+                    
+                    <div class="filter-buttons">
+                        <button type="submit" class="btn-filter">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                        <button type="button" class="btn-reset" onclick="resetFilters()">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card discount">
+                <div class="label">Total Discounted Products</div>
+                <div class="value">{{ purchases|length }}</div>
+                <div class="label">Products with Active Discounts</div>
+            </div>
+            
+            <div class="stat-card discount">
+                <div class="label">Average Discount</div>
+                <div class="value">
+                    {% if purchases %}
+                        {{ average_discount|floatformat:1 }}%
+                    {% else %}
+                        0%
+                    {% endif %}
+                </div>
+                <div class="label">Across Discounted Products</div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Subcategory</th>
+                        <th>Current Stock</th>
+                        <th>MRP (₹)</th>
+                        <th>Discount</th>
+                        <th>Final Price (₹)</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        {% if can_edit %}
+                        <th>Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase in purchases %}
+                    <tr>
+                        <td><strong>{{ purchase.product_name }}</strong></td>
+                        <td><span class="category-tag">{{ purchase.category.name }}</span></td>
+                        <td><span class="subcategory-tag">{{ purchase.subcategory.name|default:"-" }}</span></td>
+                        <td class="{% if purchase.quantity > 15 %}stock-high{% elif purchase.quantity > 5 %}stock-medium{% else %}stock-low{% endif %}">
+                            {{ purchase.quantity }}
+                        </td>
+                        <td class="price">₹{{ purchase.mrp|floatformat:2 }}</td>
+                        <td>
+                            {% if purchase.discount_percentage > 0 %}
+                                <span class="discount-info">{{ purchase.discount_percentage|floatformat:1 }}% OFF</span>
+                            {% else %}
+                                <span>No Discount</span>
+                            {% endif %}
+                        </td>
+                        <td class="price">₹{{ purchase.final_price|floatformat:2 }}</td>
+                        <td>
+                            {% if purchase.discount_percentage > 0 and purchase.status %}
+                                {% now "Y-m-d" as today %}
+                                {% if purchase.status == 'active' %}
+                                    <span class="status-active">Active</span>
+                                {% elif purchase.status == 'pending' %}
+                                    <span class="status-upcoming">Pending</span>
+                                {% elif purchase.status == 'rejected' %}
+                                    <span class="status-inactive">Rejected</span>
+                                {% else %}
+                                    {% if purchase.start_date and purchase.start_date > today %}
+                                        <span class="status-upcoming">Upcoming</span>
+                                    {% elif purchase.end_date and purchase.end_date < today %}
+                                        <span class="status-inactive">Expired</span>
+                                    {% else %}
+                                        <span class="status-active">Active</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% elif purchase.discount_percentage > 0 %}
+                                <!-- For discounts without explicit status, determine based on dates -->
+                                {% now "Y-m-d" as today %}
+                                {% if purchase.start_date and purchase.end_date %}
+                                    {% if today < purchase.start_date %}
+                                        <span class="status-upcoming">Pending</span>
+                                    {% elif today > purchase.end_date %}
+                                        <span class="status-inactive">Finished</span>
+                                    {% else %}
+                                        <span class="status-active">Active</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="status-active">Active</span>
+                                {% endif %}
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if purchase.start_date %}
+                                {{ purchase.start_date|date:"d M Y" }}
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if purchase.end_date %}
+                                {{ purchase.end_date|date:"d M Y" }}
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </td>
+                        {% if can_edit %}
+                        <td>
+                            <a href="{% url 'add_discount' purchase.id %}" class="btn-view" style="margin-right: 10px;">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <button class="btn-delete" onclick="confirmDelete({{ purchase.id }}, '{{ purchase.product_name }}')">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="{% if can_edit %}11{% else %}10{% endif %}" class="empty-state">
+                            <i class="fas fa-tags"></i>
+                            <h3>No Discounted Products Found</h3>
+                            <p>There are currently no products with active discounts in the inventory.</p>
+                            {% if user_role == 'owner' %}
+                            <a href="{% url 'add_purchase' %}" class="btn-primary" style="margin-top: 20px;">
+                                <i class="fas fa-plus"></i> Add New Product
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if can_edit %}
+    <script>
+        function confirmDelete(purchaseId, productName) {
+            if (confirm(`Are you sure you want to remove the discount from "${productName}"?`)) {
+                // Create a form to submit the delete request
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `{% url 'delete_discount' 0 %}`.replace('0', purchaseId);
+                
+                // Add CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = 'csrfmiddlewaretoken';
+                csrfToken.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                form.appendChild(csrfToken);
+                
+                // Submit the form
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+        
+        function resetFilters() {
+            document.getElementById('status').value = '';
+            document.getElementById('from_date').value = '';
+            document.getElementById('to_date').value = '';
+            document.getElementById('filterForm').submit();
+        }
+    </script>
+    
+    <!-- CSRF token for AJAX requests -->
+    {% csrf_token %}
+    {% endif %}
+</body>
+</html>

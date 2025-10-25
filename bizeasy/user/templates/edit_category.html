@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Category - Business Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #f72585;
+            --success: #06d6a0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .form-header i {
+            font-size: 28px;
+            color: var(--primary);
+            margin-right: 15px;
+            background: rgba(67, 97, 238, 0.1);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        label i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--light);
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .errorlist {
+            color: var(--secondary);
+            margin-top: 8px;
+            list-style: none;
+            font-size: 0.9rem;
+            background: rgba(247, 37, 133, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            animation: shake 0.4s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--gray);
+            border: 2px solid var(--light-gray);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--light);
+            border-color: var(--gray);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-actions {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        .help-text {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .help-text i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .floating-label {
+            position: relative;
+        }
+        
+        .floating-label label {
+            position: absolute;
+            top: 18px;
+            left: 20px;
+            pointer-events: none;
+            transition: var(--transition);
+            background: white;
+            padding: 0 8px;
+            color: var(--gray);
+        }
+        
+        .floating-label input:focus + label,
+        .floating-label textarea:focus + label,
+        .floating-label input:not(:placeholder-shown) + label,
+        .floating-label textarea:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 15px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .character-count {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        /* Success message animation */
+        .success-message {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .success-message i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                padding: 25px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <i class="fas fa-edit"></i>
+            <h2>Edit Category</h2>
+        </div>
+        
+        <!-- Success message (example, would be conditionally shown) -->
+        <!-- <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            Category successfully updated!
+        </div> -->
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="errorlist">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            
+            <div class="form-group floating-label">
+                <input type="text" id="id_name" name="name" value="{{ form.name.value|default:'' }}" placeholder=" ">
+                <label for="{{ form.name.id_for_label }}"><i class="fas fa-tag"></i>Category Name</label>
+                {% if form.name.errors %}
+                    <div class="errorlist">{{ form.name.errors }}</div>
+                {% endif %}
+                {% if form.name.help_text %}
+                    <p class="help-text"><i class="fas fa-info-circle"></i>{{ form.name.help_text }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="form-group floating-label">
+                <textarea id="id_description" name="description" placeholder=" ">{{ form.description.value|default:'' }}</textarea>
+                <label for="{{ form.description.id_for_label }}"><i class="fas fa-align-left"></i>Description</label>
+                <div class="character-count">0/200 characters</div>
+                {% if form.description.errors %}
+                    <div class="errorlist">{{ form.description.errors }}</div>
+                {% endif %}
+                {% if form.description.help_text %}
+                    <p class="help-text"><i class="fas fa-info-circle"></i>{{ form.description.help_text }}</p>
+                {% endif %}
+            </div>
+            
+            
+            
+            <div class="form-actions">
+                <a href="{% url 'list_category' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>Cancel
+                </a>
+                <button type="submit" class="btn">
+                    <i class="fas fa-save"></i>Update Category
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Add animations and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add floating label functionality
+            const floatLabels = document.querySelectorAll('.floating-label input, .floating-label textarea');
+            floatLabels.forEach(input => {
+                // Check if input has value on page load
+                if (input.value) {
+                    input.parentElement.classList.add('focused');
+                }
+                
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', () => {
+                    if (!input.value) {
+                        input.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+            
+            // Character count for description
+            const descriptionTextarea = document.querySelector('textarea');
+            if (descriptionTextarea) {
+                const charCount = document.querySelector('.character-count');
+                charCount.textContent = `${descriptionTextarea.value.length}/200 characters`;
+                
+                descriptionTextarea.addEventListener('input', () => {
+                    const count = descriptionTextarea.value.length;
+                    charCount.textContent = `${count}/200 characters`;
+                    
+                    // Change color when approaching limit
+                    if (count > 180) {
+                        charCount.style.color = '#f72585';
+                    } else {
+                        charCount.style.color = '#6c757d';
+                    }
+                });
+            }
+            
+            // Add animation to form submission
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const btn = this.querySelector('button[type="submit"]');
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+                    btn.disabled = true;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

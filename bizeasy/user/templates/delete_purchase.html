@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if remove_action %}Remove Purchase{% else %}Delete Purchase{% endif %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 40px;
+            text-align: center;
+        }
+        .confirm-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            color: #c0392b;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-cancel {
+            background-color: #7f8c8d;
+            color: white;
+        }
+        .purchase-details {
+            text-align: left;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .detail-row {
+            margin: 5px 0;
+        }
+        .detail-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+        .warning {
+            color: #c0392b;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #fadbd8;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirm-box">
+        <h2>{% if remove_action %}Remove Purchase{% else %}Delete Purchase{% endif %}</h2>
+        <p>Are you sure you want to {% if remove_action %}completely remove{% else %}delete{% endif %} the following purchase?</p>
+        
+        {% if remove_action %}
+        <div class="warning">
+            WARNING: This action will completely remove the purchase from the system. This cannot be undone!
+        </div>
+        {% endif %}
+        
+        <div class="purchase-details">
+            <div class="detail-row">
+                <span class="detail-label">Product Name:</span>
+                <span>{{ purchase.product_name }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Category:</span>
+                <span>{{ purchase.category.name }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Subcategory:</span>
+                <span>{{ purchase.subcategory.name }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Quantity:</span>
+                <span>{{ purchase.quantity }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Date:</span>
+                <span>{{ purchase.date }}</span>
+            </div>
+            {% if purchase.notes %}
+            <div class="detail-row">
+                <span class="detail-label">Notes:</span>
+                <span>{{ purchase.notes }}</span>
+            </div>
+            {% endif %}
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-delete">{% if remove_action %}Yes, Remove Completely{% else %}Yes, Delete{% endif %}</button>
+            <a href="{% url 'purchase_history' %}" class="btn btn-cancel">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cancel Bill</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f4f9; padding: 30px; }
+        .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); max-width: 500px; margin: 0 auto; }
+        h1 { margin-bottom: 15px; color: #2c3e50; }
+        .btn { padding: 8px 14px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; text-decoration: none; }
+        .btn-confirm { background: #e74c3c; color: #fff; }
+        .btn-confirm:hover { background: #c0392b; }
+        .btn-cancel { background: #7f8c8d; color: #fff; }
+        .btn-cancel:hover { background: #6c7778; }
+        .actions { display: flex; gap: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Confirm Cancel Bill #{{ billing.id }}</h1>
+        <p>Are you sure you want to cancel this bill? This action will mark the bill as cancelled and restore stock for all items.</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="actions">
+                <button type="submit" class="btn btn-confirm">Confirm Cancel</button>
+                <a href="{% url 'billing_list' %}" class="btn btn-cancel">Back</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

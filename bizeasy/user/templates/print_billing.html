@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Print Bill #{{ bill.id }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .invoice-container { max-width: 800px; margin: auto; padding: 20px; border: 1px solid #ddd; }
+        h2 { text-align: center; color: #1a3c6d; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f3f4f6; text-align: left; }
+        .total-table { width: 300px; float: right; }
+        .total-table td { text-align: right; }
+        .signature { text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <h2>TAX INVOICE</h2>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <div>
+                <p><strong>Bill No:</strong> {{ bill.bill_number }}</p>
+                <p><strong>Date:</strong> {{ bill.created_at|date:"Y-m-d" }}</p>
+            </div>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h3>Bill To:</h3>
+            <p>{{ bill.customer_name|default:"N/A" }}</p>
+            <p>{{ bill.customer_address|default:"N/A" }}</p>
+            <p>Phone: {{ bill.customer_number|default:"N/A" }}</p>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in bill.items.all %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.final_price|floatformat:2 }}</td>
+                    <td>{{ item.line_total|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="total-table">
+            <table>
+                <tr>
+                    <td><strong>Subtotal:</strong></td>
+                    <td>{{ bill.subtotal|floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <td><strong>GST ({{ bill.gst_percent }}%):</strong></td>
+                    <td>{{ bill.gst_amount|floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Round Off:</strong></td>
+                    <td>{{ bill.roundoff|floatformat:2 }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Total:</strong></td>
+                    <td>{{ bill.final_amount|floatformat:2 }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div style="clear: both;"></div>
+        <div class="signature">
+            <p>Thank you for your business!</p>
+            <p style="border-top: 1px dashed #000; width: 200px; margin: 20px auto; padding-top: 10px;">Authorized Signature</p>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            window.print();
+        };
+    </script>
+</body>
+</html>

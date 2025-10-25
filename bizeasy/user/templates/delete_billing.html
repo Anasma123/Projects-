@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cancel Billing</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#f5f5f7; padding:40px; }
+        .box { max-width:500px; margin:auto; background:#fff; padding:30px; border-radius:8px; box-shadow:0 8px 25px rgba(0,0,0,0.08); }
+        h2 { margin-bottom:15px; }
+        .actions { display:flex; gap:10px; margin-top:20px; }
+        .btn { padding:10px 16px; border:none; border-radius:5px; cursor:pointer; font-weight:600; }
+        .confirm { background:#e74c3c; color:#fff; }
+        .cancel { background:#777; color:#fff; text-decoration:none; display:inline-block; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Cancel Billing</h2>
+        <p>Are you sure you want to cancel billing <strong>Bill #{{ billing.id }}</strong>?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="actions">
+                <button type="submit" class="btn confirm">Yes, Cancel</button>
+                <a href="{% url 'list_billing' %}" class="cancel btn">Go Back</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

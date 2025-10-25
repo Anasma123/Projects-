@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase List - Business Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #f72585;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --info: #118ab2;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .header h2 {
+            color: var(--dark);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header h2 i {
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--gray);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--light-gray);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+        
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+        
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .price {
+            font-weight: 600;
+        }
+        
+        .quantity {
+            font-weight: 700;
+        }
+        
+        .high-quantity {
+            color: var(--success);
+        }
+        
+        .medium-quantity {
+            color: var(--warning);
+        }
+        
+        .low-quantity {
+            color: var(--danger);
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .edit-btn {
+            background: rgba(22, 163, 74, 0.1);
+            color: #16a34a;
+        }
+        
+        .edit-btn:hover {
+            background: #16a34a;
+            color: white;
+        }
+        
+        .delete-btn {
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+        }
+        
+        .delete-btn:hover {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .action-cell {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .category-tag {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .subcategory-tag {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+        
+        .page-btn {
+            padding: 10px 16px;
+            border-radius: var(--border-radius);
+            background: white;
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .page-btn:hover {
+            background: var(--light);
+        }
+        
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2><i class="fas fa-receipt"></i> Purchase List</h2>
+            <a href="{% url 'add_purchase' %}" class="btn-primary">
+                <i class="fas fa-plus"></i> Add Purchase
+            </a>
+        </div>
+        
+        <div class="filter-bar">
+            <form method="GET" id="filterForm" style="display: flex; gap: 15px; width: 100%; flex-wrap: wrap;">
+                <div class="filter-group">
+                    <label for="category"><i class="fas fa-tags"></i> Category</label>
+                    <select name="category" id="category" onchange="document.getElementById('filterForm').submit()">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if category_filter == cat.id|stringformat:"s" %}selected{% endif %}>
+                                {{ cat.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="searchInput"><i class="fas fa-search"></i> Search</label>
+                    <input type="text" name="q" id="searchInput" value="{{ query|default_if_none:'' }}" 
+                           placeholder="Search by product, category, date...">
+                </div>
+                
+                <div class="filter-group" style="display: flex; align-items: flex-end;">
+                    <button type="submit" class="btn-primary" style="height: fit-content;">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="label">Total Purchases</div>
+                <div class="value">{{ purchases|length }}</div>
+                <div class="label">Records Found</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="label">Total Quantity</div>
+                <div class="value">
+                    <!-- Calculate total quantity in the view or use a custom template tag -->
+                    {{ total_quantity|default:0 }}
+                </div>
+                <div class="label">Items Purchased</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="label">Total Value</div>
+                <div class="value">
+                    ₹{{ total_value|floatformat:2|default:0 }}
+                </div>
+                <div class="label">Worth of Purchases</div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="purchaseTable">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Subcategory</th>
+                        <th>Quantity</th>
+                        <th>Rate (₹)</th>
+                        <th>Total (₹)</th>
+                        <th>MRP (₹)</th>
+                        <th>Sale Rate (₹)</th>
+                        <th>Expire Date</th>
+                        <th>Date</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase in purchases %}
+                    <tr>
+                        <td><strong>{{ purchase.product_name }}</strong></td>
+                        <td><span class="category-tag">{{ purchase.category.name }}</span></td>
+                        <td><span class="subcategory-tag">{{ purchase.subcategory.name }}</span></td>
+                        <td>
+                            <span class="quantity {% if purchase.quantity > 50 %}high-quantity{% elif purchase.quantity > 20 %}medium-quantity{% else %}low-quantity{% endif %}">
+                                {{ purchase.quantity }}
+                            </span>
+                        </td>
+                        <td class="price">₹{{ purchase.product_rate|floatformat:2 }}</td>
+                        <td class="price">₹{{ purchase.total_rate|floatformat:2 }}</td>
+                        <td class="price">₹{{ purchase.mrp|floatformat:2|default:"N/A" }}</td>
+                        <td class="price">₹{{ purchase.sale_rate|floatformat:2|default:"N/A" }}</td>
+                        <td>{{ purchase.expire_date|date:"d M Y"|default:"N/A" }}</td>
+                        <td>{{ purchase.date|date:"d M Y" }}</td>
+                        <td>{{ purchase.notes|default:"N/A"|truncatechars:30 }}</td>
+                        <td class="action-cell">
+                            <a href="{% url 'edit_purchase' purchase.id %}" class="action-btn edit-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a href="{% url 'delete_purchase' purchase.id %}" class="action-btn delete-btn" 
+                               onclick="return confirm('Are you sure you want to delete this purchase?')">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12" class="empty-state">
+                            <i class="fas fa-receipt"></i>
+                            <h3>No Purchases Found</h3>
+                            <p>There are no purchases matching your current filters.</p>
+                            <a href="{% url 'add_purchase' %}" class="btn-primary" style="margin-top: 20px;">
+                                <i class="fas fa-plus"></i> Add Your First Purchase
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="margin-top: 25px; text-align: center;">
+            <a href="{% url 'owner_dashboard' %}" class="btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#purchaseTable tbody tr');
+            
+            rows.forEach(row => {
+                // Skip the empty state row
+                if (row.querySelector('.empty-state')) return;
+                
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+        
+        // Initialize search on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus on search input for better UX
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput.value) {
+                searchInput.dispatchEvent(new Event('input'));
+            }
+        });
+    </script>
+</body>
+</html>

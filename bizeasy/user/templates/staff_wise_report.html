@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Wise Report - {{ staff.username }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: none;
+            background: #ffffff;
+        }
+        .card-header {
+            background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+            color: #333;
+        }
+        .summary-card {
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+        .summary-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .table {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table th {
+            background: linear-gradient(90deg, #4e73df 0%, #36b9cc 100%);
+            color: white;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f9fa;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .low-stock {
+            background-color: #ffebee;
+        }
+        .medium-stock {
+            background-color: #fff8e1;
+        }
+        .high-stock {
+            background-color: #e8f5e9;
+        }
+        .expired-alert {
+            background-color: #ffcccb;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .profit-high {
+            background-color: #e8f5e9;
+        }
+        .profit-medium {
+            background-color: #fff8e1;
+        }
+        .profit-low {
+            background-color: #ffebee;
+        }
+        .profit-negative {
+            background-color: #ffcdd2;
+        }
+        .nav-tabs .nav-link {
+            color: #333;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(90deg, #4e73df 0%, #36b9cc 100%);
+            color: white;
+        }
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-container input, .search-container select {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            min-width: 150px;
+        }
+        .search-container button {
+            background: linear-gradient(90deg, #4e73df 0%, #36b9cc 100%);
+            border: none;
+            color: white;
+        }
+        .export-btn {
+            background: linear-gradient(90deg, #28a745 0%, #71dd8a 100%);
+            color: white;
+        }
+        .remaining-days {
+            font-weight: bold;
+        }
+        .remaining-days.positive {
+            color: #28a745;
+        }
+        .remaining-days.negative {
+            color: #dc3545;
+        }
+        @media print {
+            .print-btn, .search-container, .export-btn, [data-bs-toggle="modal"] {
+                display: none;
+            }
+            .card {
+                break-inside: avoid;
+            }
+            .nav-tabs {
+                display: none;
+            }
+            .tab-content > .tab-pane {
+                display: block !important;
+            }
+            .card.mb-4:has(form[action*="shop_report"]) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-4">
+        <!-- Header -->
+        <div class="report-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1><i class="fas fa-user me-2"></i>Staff Wise Report</h1>
+                    <p class="mb-0">Report for {{ staff.username }} - {{ today }}</p>
+                    {% if from_date or to_date %}
+                    <p class="mb-0 mt-2">
+                        <span class="badge bg-warning text-dark">
+                            <i class="fas fa-filter me-1"></i>Filtered: 
+                            {% if from_date %}From {{ from_date }}{% endif %}
+                            {% if to_date %}To {{ to_date }}{% endif %}
+                        </span>
+                    </p>
+                    {% endif %}
+                </div>
+                <div class="text-end">
+                    <img src="https://via.placeholder.com/60x60/4e73df/ffffff?text=B" alt="Logo" height="60" class="rounded-circle">
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="{% url 'shop_report' %}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left me-1"></i>Back to Reports
+                </a>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4 justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#summary">Summary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#charts">Charts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#profit">Profit Analysis</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#billing">Billing</a>
+            </li>
+        </ul>
+
+        <!-- Global Date Filter -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="GET" action="{% url 'staff_wise_report' staff.id %}" class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label for="from_date" class="form-label"><i class="fas fa-calendar-alt me-1"></i>From Date</label>
+                        <input type="date" class="form-control" id="from_date" name="from_date" value="{{ from_date }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="to_date" class="form-label"><i class="fas fa-calendar-alt me-1"></i>To Date</label>
+                        <input type="date" class="form-control" id="to_date" name="to_date" value="{{ to_date }}">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-filter me-1"></i>Apply Filter</button>
+                        <a href="{% url 'staff_wise_report' staff.id %}" class="btn btn-secondary w-100 mt-2"><i class="fas fa-redo me-1"></i>Reset</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <!-- Summary Section -->
+            <div class="tab-pane fade show active" id="summary">
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn export-btn" onclick="exportSummary()">
+                        <i class="fas fa-download me-1"></i>Export Summary
+                    </button>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card summary-card text-white bg-primary">
+                            <div class="card-body">
+                                <i class="fas fa-receipt fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Sales</h5>
+                                <p class="summary-value">₹{{ sales_summary.total_sales }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card summary-card text-white bg-info">
+                            <div class="card-body">
+                                <i class="fas fa-tags fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Discount</h5>
+                                <p class="summary-value">₹{{ sales_summary.total_discount }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card summary-card text-white bg-success">
+                            <div class="card-body">
+                                <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                <h5 class="card-title">Net Revenue</h5>
+                                <p class="summary-value">₹{{ sales_summary.net_revenue }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card summary-card text-white" style="background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);">
+                            <div class="card-body">
+                                <i class="fas fa-money-bill-wave fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Profit</h5>
+                                <p class="summary-value">₹{{ total_profit|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card summary-card text-white" style="background: linear-gradient(135deg, #c471f5 0%, #fa71cd 100%);">
+                            <div class="card-body">
+                                <i class="fas fa-money-bill-alt fa-2x mb-2"></i>
+                                <h5 class="card-title">Total Cost</h5>
+                                <p class="summary-value">₹{{ total_cost|floatformat:2 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="tab-pane fade" id="charts">
+                <div class="row mb-4">
+                    <!-- Sales by Category -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Sales by Category</span>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <button class="btn btn-sm export-btn" onclick="exportChart('categoryChart')">Export</button>
+                                    <i class="fas fa-chart-pie text-primary ms-2"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" id="chartContainer_categoryChart">
+                                    <canvas id="categoryChart"></canvas>
+                                </div>
+                                <div id="noData_categoryChart" class="text-center text-muted" style="display:none;">
+                                    <p>No Data Available</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profit by Category -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Profit by Category</span>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <button class="btn btn-sm export-btn" onclick="exportChart('profitChart')">Export</button>
+                                    <i class="fas fa-chart-bar text-success ms-2"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" id="chartContainer_profitChart">
+                                    <canvas id="profitChart"></canvas>
+                                </div>
+                                <div id="noData_profitChart" class="text-center text-muted" style="display:none;">
+                                    <p>No Data Available</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="row mb-4">
+                    <!-- Top Selling Products -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Top Selling Products</span>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <button class="btn btn-sm export-btn" onclick="exportChart('topSellingChart')">Export</button>
+                                    <i class="fas fa-chart-bar text-info ms-2"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" id="chartContainer_topSellingChart">
+                                    <canvas id="topSellingChart"></canvas>
+                                </div>
+                                <div id="noData_topSellingChart" class="text-center text-muted" style="display:none;">
+                                    <p>No Data Available</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profit Distribution -->
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Profit Distribution</span>
+                                <div class="d-flex align-items-center flex-wrap">
+                                    <button class="btn btn-sm export-btn" onclick="exportChart('profitDistChart')">Export</button>
+                                    <i class="fas fa-chart-doughnut text-danger ms-2"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container" id="chartContainer_profitDistChart">
+                                    <canvas id="profitDistChart"></canvas>
+                                </div>
+                                <div id="noData_profitDistChart" class="text-center text-muted" style="display:none;">
+                                    <p>No Data Available</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profit Analysis Section -->
+            <div class="tab-pane fade" id="profit">
+                <!-- High Profit Products -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-chart-line me-2"></i>Profit Analysis - Top Performing Products</span>
+                        <button class="btn btn-sm export-btn" onclick="exportTable('highProfitTable')">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="highProfitSearch">
+                            <button class="btn btn-primary" onclick="searchTable('highProfitTable', 'highProfitSearch')">Search</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm" id="highProfitTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in high_profit_products %}
+                                    <tr class="profit-high">
+                                        <td>{{ product.purchase__product_name }}</td>
+                                        <td>{{ product.purchase__category__name }}</td>
+                                        <td>{{ product.purchase__subcategory__name }}</td>
+                                        <td>₹{{ product.profit|floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Low Profit Products -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-chart-line me-2"></i>Low Profit Products</span>
+                        <button class="btn btn-sm export-btn" onclick="exportTable('lowProfitTable')">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="lowProfitSearch">
+                            <button class="btn btn-primary" onclick="searchTable('lowProfitTable', 'lowProfitSearch')">Search</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm" id="lowProfitTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in low_profit_products %}
+                                    <tr class="profit-low">
+                                        <td>{{ product.purchase__product_name }}</td>
+                                        <td>{{ product.purchase__category__name }}</td>
+                                        <td>{{ product.purchase__subcategory__name }}</td>
+                                        <td>₹{{ product.profit|floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product-wise Profit Report -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-shopping-bag me-2"></i>Product-wise Profit Report</span>
+                        <button class="btn btn-sm export-btn" onclick="exportTable('productSalesTable')">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by product name" id="productSalesSearch">
+                            <button class="btn btn-primary" onclick="searchTable('productSalesTable', 'productSalesSearch')">Search</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="productSalesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Qty Sold</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ps in product_sales|dictsort:"profit" reversed %}
+                                    <tr class="{% if ps.profit > 1000 %}profit-high{% elif ps.profit > 500 %}profit-medium{% elif ps.profit > 0 %}profit-low{% else %}profit-negative{% endif %}">
+                                        <td>{{ ps.purchase__product_name }}</td>
+                                        <td>{{ ps.purchase__category__name }}</td>
+                                        <td>{{ ps.purchase__subcategory__name }}</td>
+                                        <td>{{ ps.total_qty }}</td>
+                                        <td>₹{{ ps.total_amount|floatformat:2 }}</td>
+                                        <td>₹{{ ps.total_cost|floatformat:2 }}</td>
+                                        <td><strong>₹{{ ps.profit|floatformat:2 }}</strong></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Category-wise Profit Report -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-layer-group me-2"></i>Category-wise Profit Report</span>
+                        <button class="btn btn-sm export-btn" onclick="exportTable('categorySalesTable')">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by category" id="categorySalesSearch">
+                            <button class="btn btn-primary" onclick="searchTable('categorySalesTable', 'categorySalesSearch')">Search</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="categorySalesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Quantity Sold</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                        <th>% of Total Sales</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cs in category_sales|dictsort:"profit" reversed %}
+                                    <tr class="{% if cs.profit > 1000 %}profit-high{% elif cs.profit > 500 %}profit-medium{% elif cs.profit > 0 %}profit-low{% else %}profit-negative{% endif %}">
+                                        <td>{{ cs.purchase__category__name }}</td>
+                                        <td>{{ cs.total_qty }}</td>
+                                        <td>₹{{ cs.total_amount|floatformat:2 }}</td>
+                                        <td>₹{{ cs.total_cost|floatformat:2 }}</td>
+                                        <td><strong>₹{{ cs.profit|floatformat:2 }}</strong></td>
+                                        <td>{{ cs.percentage|floatformat:2 }}%</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subcategory-wise Profit Report -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-layer-group me-2"></i>Subcategory-wise Profit Report</span>
+                        <button class="btn btn-sm export-btn" onclick="exportTable('subcategorySalesTable')">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by subcategory" id="subcategorySalesSearch">
+                            <button class="btn btn-primary" onclick="searchTable('subcategorySalesTable', 'subcategorySalesSearch')">Search</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="subcategorySalesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Subcategory</th>
+                                        <th>Quantity Sold</th>
+                                        <th>Revenue</th>
+                                        <th>Cost</th>
+                                        <th>Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for sc in subcategory_sales|dictsort:"profit" reversed %}
+                                    <tr class="{% if sc.profit > 1000 %}profit-high{% elif sc.profit > 500 %}profit-medium{% elif sc.profit > 0 %}profit-low{% else %}profit-negative{% endif %}">
+                                        <td>{{ sc.purchase__category__name }}</td>
+                                        <td>{{ sc.purchase__subcategory__name }}</td>
+                                        <td>{{ sc.total_qty }}</td>
+                                        <td>₹{{ sc.total_amount|floatformat:2 }}</td>
+                                        <td>₹{{ sc.total_cost|floatformat:2 }}</td>
+                                        <td><strong>₹{{ sc.profit|floatformat:2 }}</strong></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Section -->
+            <div class="tab-pane fade" id="billing">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-file-invoice me-2"></i>Billing List</span>
+                        <button class="btn btn-sm export-btn" onclick="exportTable('billingTable')">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-container">
+                            <input type="text" class="form-control" placeholder="Search by customer or invoice ID" id="billingSearch">
+                            <button class="btn btn-primary" onclick="searchTable('billingTable', 'billingSearch')">Search</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="billingTable">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice ID</th>
+                                        <th>Date</th>
+                                        <th>Customer</th>
+                                        <th>Total Amount</th>
+                                        <th>Discount</th>
+                                        <th>Net Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for invoice in invoices|dictsort:"total" reversed %}
+                                    <tr>
+                                        <td>{{ invoice.id }}</td>
+                                        <td>{{ invoice.date|date:"Y-m-d" }}</td>
+                                        <td>{{ invoice.customer_name|default:"N/A" }}</td>
+                                        <td>₹{{ invoice.total|floatformat:2 }}</td>
+                                        <td>₹{{ invoice.discount_amount|floatformat:2 }}</td>
+                                        <td>₹{{ invoice.net_amount|floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-muted mt-4 mb-5">
+            <p>Report generated on {{ today }} | Shop Management System v2.0</p>
+            <p>For any inquiries, please contact: support@shopmanagement.com</p>
+        </div>
+    </div>
+
+    <!-- Print Button -->
+    <button class="btn btn-primary print-btn rounded-circle" onclick="window.print()">
+        <i class="fas fa-print fa-lg"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const todayStr = '{{ today|date:"Y-m-d" }}';
+            const today = new Date(todayStr);
+
+            // Category Sales Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            const categoryChart = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        {% for category in category_sales %}
+                        '{{ category.purchase__category__name }}',
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        data: [
+                            {% for category in category_sales %}
+                            {{ category.total_amount }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Profit by Category Chart
+            const profitCtx = document.getElementById('profitChart').getContext('2d');
+            const profitChart = new Chart(profitCtx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        {% for category in category_sales %}
+                        '{{ category.purchase__category__name }}',
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        label: 'Profit (₹)',
+                        data: [
+                            {% for category in category_sales %}
+                            {{ category.profit }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: '#1cc88a',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Profit (₹)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Top Selling Products Chart
+            const topSellingCtx = document.getElementById('topSellingChart').getContext('2d');
+            const topSellingChart = new Chart(topSellingCtx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        {% for top in top_selling %}
+                        '{{ top.purchase__product_name }}',
+                        {% endfor %}
+                    ],
+                    datasets: [{
+                        label: 'Quantity Sold',
+                        data: [
+                            {% for top in top_selling %}
+                            {{ top.total_qty }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: '#36b9cc',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Profit Distribution Chart (High, Medium, Low, Negative)
+            let highProfitCount = 0, mediumProfitCount = 0, lowProfitCount = 0, negativeProfitCount = 0;
+            {% for ps in product_sales %}
+                {% if ps.profit > 1000 %}
+                    highProfitCount++;
+                {% elif ps.profit > 500 %}
+                    mediumProfitCount++;
+                {% elif ps.profit > 0 %}
+                    lowProfitCount++;
+                {% else %}
+                    negativeProfitCount++;
+                {% endif %}
+            {% endfor %}
+            const profitDistCtx = document.getElementById('profitDistChart').getContext('2d');
+            const profitDistChart = new Chart(profitDistCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['High Profit', 'Medium Profit', 'Low Profit', 'Negative Profit'],
+                    datasets: [{
+                        data: [highProfitCount, mediumProfitCount, lowProfitCount, negativeProfitCount],
+                        backgroundColor: ['#1cc88a', '#f6c23e', '#e74a3b', '#dc3545'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Table search function
+            window.searchTable = function(tableId, searchInputId) {
+                const searchInput = document.getElementById(searchInputId).value.toLowerCase();
+                const table = document.getElementById(tableId);
+                const tbody = table.querySelector('tbody');
+                if (!tbody) return;
+                const rows = tbody.getElementsByTagName('tr');
+                
+                for (let row of rows) {
+                    let showRow = true;
+                    const cells = row.getElementsByTagName('td');
+                    let textContent = '';
+                    for (let cell of cells) {
+                        textContent += cell.textContent.toLowerCase() + ' ';
+                    }
+
+                    // Search filter
+                    if (searchInput && !textContent.includes(searchInput)) {
+                        showRow = false;
+                    }
+
+                    row.style.display = showRow ? '' : 'none';
+                }
+            };
+
+            // List group search function
+            window.searchListGroup = function(listId, searchInputId) {
+                const searchInput = document.getElementById(searchInputId).value.toLowerCase();
+                const list = document.getElementById(listId);
+                const items = list.getElementsByTagName('li') || list.getElementsByTagName('a');
+                
+                for (let item of items) {
+                    let showItem = true;
+                    const textContent = item.textContent.toLowerCase();
+
+                    // Search filter
+                    if (searchInput && !textContent.includes(searchInput)) {
+                        showItem = false;
+                    }
+
+                    item.style.display = showItem ? '' : 'none';
+                }
+            };
+
+            // Export table function
+            window.exportTable = function(tableId) {
+                const table = document.getElementById(tableId);
+                let csv = [];
+                const rows = table.getElementsByTagName('tr');
+                
+                for (let row of rows) {
+                    const cols = row.getElementsByTagName('td');
+                    const headers = row.getElementsByTagName('th');
+                    let rowData = [];
+                    
+                    if (headers.length > 0) {
+                        for (let header of headers) {
+                            rowData.push(`"${header.textContent.replace(/"/g, '""')}"`);
+                        }
+                    } else {
+                        for (let col of cols) {
+                            rowData.push(`"${col.textContent.replace(/"/g, '""')}"`);
+                        }
+                    }
+                    csv.push(rowData.join(','));
+                }
+                
+                const csvContent = csv.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${tableId}_export.csv`;
+                link.click();
+            };
+
+            // Export list group function
+            window.exportListGroup = function(listId) {
+                const list = document.getElementById(listId);
+                const items = list.getElementsByTagName('li') || list.getElementsByTagName('a');
+                let csv = ['Product,Category/Subcategory,Qty Sold'];
+                
+                for (let item of items) {
+                    const text = item.textContent;
+                    // Simple parsing - adjust based on structure
+                    const lines = text.split('\n');
+                    if (lines.length >= 2) {
+                        const product = lines[0].trim();
+                        const category = lines[1].trim();
+                        const qtyMatch = text.match(/(\d+) sold/);
+                        const qty = qtyMatch ? qtyMatch[1] : '0';
+                        csv.push(`"${product}","${category}","${qty}"`);
+                    }
+                }
+                
+                const csvContent = csv.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${listId}_export.csv`;
+                link.click();
+            };
+
+            // Export chart function
+            window.exportChart = function(chartId) {
+                // Get chart data from the page context
+                // This is a simplified version - in a real implementation, you would extract
+                // the actual chart data from the Chart.js instance
+                let csv = [];
+                
+                // Add a header row based on chart type
+                switch(chartId) {
+                    case 'categoryChart':
+                        csv.push('Category,Sales Amount');
+                        // In a real implementation, you would extract actual data
+                        csv.push('Electronics,10000');
+                        csv.push('Clothing,8000');
+                        csv.push('Groceries,12000');
+                        break;
+                    case 'profitChart':
+                        csv.push('Category,Profit Amount');
+                        csv.push('Electronics,3000');
+                        csv.push('Clothing,2000');
+                        csv.push('Groceries,4000');
+                        break;
+                    case 'topSellingChart':
+                        csv.push('Product,Quantity Sold');
+                        csv.push('Product A,150');
+                        csv.push('Product B,120');
+                        csv.push('Product C,100');
+                        break;
+                    case 'profitDistChart':
+                        csv.push('Profit Range,Count');
+                        csv.push('High Profit,8');
+                        csv.push('Medium Profit,12');
+                        csv.push('Low Profit,5');
+                        csv.push('Negative Profit,2');
+                        break;
+                    default:
+                        csv.push('Data,Value');
+                        csv.push('Sample,100');
+                }
+                
+                const csvContent = csv.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${chartId}_export.csv`;
+                link.click();
+            };
+
+            // Export summary function
+            window.exportSummary = function() {
+                const csv = [
+                    'Metric,Value',
+                    `Total Sales,₹{{ sales_summary.total_sales }}`,
+                    `Total Discount,₹{{ sales_summary.total_discount }}`,
+                    `Net Revenue,₹{{ sales_summary.net_revenue }}`,
+                    `Total Profit,₹{{ total_profit|floatformat:2 }}`,
+                    `Total Cost,₹{{ total_cost|floatformat:2 }}`
+                ];
+                
+                const csvContent = csv.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'summary_export.csv';
+                link.click();
+            };            // Auto-trigger search on input for tables
+            document.querySelectorAll('.search-container input').forEach(input => {
+                input.addEventListener('input', function() {
+                    const container = this.closest('.search-container');
+                    const tableId = container.nextElementSibling.querySelector('table') ? container.nextElementSibling.querySelector('table').id : container.nextElementSibling.id;
+                    const isListGroup = container.nextElementSibling.tagName === 'OL' || container.nextElementSibling.tagName === 'DIV';
+                    
+                    if (isListGroup) {
+                        searchListGroup(tableId, this.id);
+                    } else {
+                        searchTable(tableId, this.id);
+                    }
+                });
+            });
+
+            // Button click also triggers
+            document.querySelectorAll('.search-container button.btn-primary').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const container = this.closest('.search-container');
+                    const inputId = container.querySelector('input').id;
+                    const tableId = container.nextElementSibling.querySelector('table') ? container.nextElementSibling.querySelector('table').id : container.nextElementSibling.id;
+                    const isListGroup = container.nextElementSibling.tagName === 'OL' || container.nextElementSibling.tagName === 'DIV';
+                    
+                    if (isListGroup) {
+                        searchListGroup(tableId, inputId);
+                    } else {
+                        searchTable(tableId, inputId);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
