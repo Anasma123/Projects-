@@ -1,0 +1,511 @@
+{% extends 'base.html' %}
+
+{% block title %}WebSocket Voice Assistant Interface{% endblock %}
+
+{% block content %}
+<style>
+    .assistant-display {
+        padding: 30px;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat-container {
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        max-height: 400px;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        padding: 12px 15px;
+        border-radius: 10px;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .user-message {
+        background: rgba(30, 144, 255, 0.3);
+        border-left: 4px solid #1e90ff;
+        margin-left: 20%;
+    }
+    
+    .assistant-message {
+        background: rgba(46, 204, 113, 0.3);
+        border-left: 4px solid #2ecc71;
+        margin-right: 20%;
+    }
+    
+    .system-message {
+        background: rgba(255, 165, 0, 0.3);
+        border-left: 4px solid #ffa500;
+        margin-right: 20%;
+        margin-left: 20%;
+    }
+    
+    .message-header {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .user-message .message-header {
+        color: #1e90ff;
+    }
+    
+    .assistant-message .message-header {
+        color: #2ecc71;
+    }
+    
+    .system-message .message-header {
+        color: #ffa500;
+    }
+    
+    .message-content {
+        color: white;
+    }
+    
+    .visualization {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 100px;
+        gap: 2px;
+        margin: 20px 0;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+    
+    .bar {
+        width: 10px;
+        background: linear-gradient(to top, #2193b0, #6dd5ed);
+        border-radius: 2px 2px 0 0;
+        transition: height 0.1s ease;
+    }
+    
+    .controls {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .mic-button {
+        flex: 1;
+        padding: 18px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-width: 200px;
+    }
+    
+    .mic-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 75, 43, 0.6);
+    }
+    
+    .mic-button:active {
+        transform: translateY(1px);
+    }
+    
+    .mic-button.listening {
+        background: linear-gradient(45deg, #00c9ff, #92fe9d);
+        box-shadow: 0 0 20px rgba(0, 201, 255, 0.7);
+        animation: pulse 1.5s infinite;
+    }
+    
+    .mic-button.processing {
+        background: linear-gradient(45deg, #ff9a00, #ffea00);
+        box-shadow: 0 0 20px rgba(255, 154, 0, 0.7);
+    }
+    
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(0, 201, 255, 0.7); }
+        70% { box-shadow: 0 0 0 15px rgba(0, 201, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 201, 255, 0); }
+    }
+    
+    .text-input {
+        flex: 3;
+        padding: 18px;
+        font-size: 1.1rem;
+        border-radius: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        min-width: 200px;
+    }
+    
+    .text-input:focus {
+        outline: none;
+        border-color: #1e90ff;
+    }
+    
+    .send-button {
+        padding: 18px 25px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        background: linear-gradient(45deg, #2193b0, #6dd5ed);
+        color: white;
+        transition: all 0.3s ease;
+        min-width: 120px;
+    }
+    
+    .send-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(33, 147, 176, 0.4);
+    }
+    
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    .feature i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: #6dd5ed;
+    }
+    
+    .feature h3 {
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    .feature p {
+        color: #ccc;
+        font-size: 0.9rem;
+    }
+    
+    .status {
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        text-align: center;
+        color: #ccc;
+        font-style: italic;
+    }
+    
+    .connection-status {
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    
+    .connection-connected {
+        background: rgba(46, 204, 113, 0.3);
+        border: 1px solid #2ecc71;
+        color: #2ecc71;
+    }
+    
+    .connection-disconnected {
+        background: rgba(255, 0, 0, 0.3);
+        border: 1px solid #ff0000;
+        color: #ff0000;
+    }
+</style>
+
+<div class="assistant-display">
+    <div class="header">
+        <h1>🎙️ WebSocket Voice Assistant</h1>
+        <p>Advanced Real-Time Voice Recognition with WebSocket Streaming</p>
+    </div>
+    
+    <div class="connection-status connection-disconnected" id="connectionStatus">
+        Disconnected
+    </div>
+    
+    <div class="visualization" id="visualization">
+        <!-- Audio visualization bars will be added here dynamically -->
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <!-- Messages will be added here dynamically -->
+    </div>
+    
+    <div class="controls">
+        <button class="mic-button" id="micButton" disabled>
+            <span>🎤</span> Start Listening
+        </button>
+        <input type="text" class="text-input" id="textInput" placeholder="Or type your command here..." disabled>
+        <button class="send-button" id="sendButton" disabled>Send</button>
+    </div>
+    
+    <div class="status" id="status">
+        Connect to the server to begin using the voice assistant.
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <div>⏰</div>
+        <h3>Time & Date</h3>
+        <p>Ask for current time and date</p>
+    </div>
+    <div class="feature">
+        <div>☀️</div>
+        <h3>Weather</h3>
+        <p>Check weather conditions</p>
+    </div>
+    <div class="feature">
+        <div>📰</div>
+        <h3>News</h3>
+        <p>Get latest headlines</p>
+    </div>
+    <div class="feature">
+        <div>🔔</div>
+        <h3>Reminders</h3>
+        <p>Set important reminders</p>
+    </div>
+</div>
+
+<script>
+    // DOM Elements
+    const chatContainer = document.getElementById('chatContainer');
+    const micButton = document.getElementById('micButton');
+    const textInput = document.getElementById('textInput');
+    const sendButton = document.getElementById('sendButton');
+    const statusDiv = document.getElementById('status');
+    const visualization = document.getElementById('visualization');
+    const connectionStatus = document.getElementById('connectionStatus');
+    
+    // WebSocket connection
+    let socket = null;
+    
+    // Create visualization bars
+    for (let i = 0; i < 32; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = '5px';
+        visualization.appendChild(bar);
+    }
+    
+    const bars = document.querySelectorAll('.bar');
+    
+    // Connect to WebSocket server
+    function connectWebSocket() {
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}/ws/voice/`;
+        
+        socket = new WebSocket(wsUrl);
+        
+        socket.onopen = function(event) {
+            console.log('WebSocket connection opened');
+            connectionStatus.textContent = 'Connected';
+            connectionStatus.className = 'connection-status connection-connected';
+            micButton.disabled = false;
+            textInput.disabled = false;
+            sendButton.disabled = false;
+            statusDiv.textContent = 'Ready to assist you. Click the microphone to start voice recognition.';
+            addSystemMessage("Connected to the voice assistant WebSocket server");
+        };
+        
+        socket.onmessage = function(event) {
+            try {
+                const data = JSON.parse(event.data);
+                handleMessage(data);
+            } catch (e) {
+                console.error('Error parsing WebSocket message:', e);
+                addSystemMessage("Error parsing server message");
+            }
+        };
+        
+        socket.onclose = function(event) {
+            console.log('WebSocket connection closed');
+            connectionStatus.textContent = 'Disconnected';
+            connectionStatus.className = 'connection-status connection-disconnected';
+            micButton.disabled = true;
+            textInput.disabled = true;
+            sendButton.disabled = true;
+            statusDiv.textContent = 'Connection lost. Reconnecting...';
+            addSystemMessage("Connection to server lost. Attempting to reconnect...");
+            
+            // Try to reconnect after a delay
+            setTimeout(connectWebSocket, 3000);
+        };
+        
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+            addSystemMessage("WebSocket connection error: " + error.message);
+        };
+    }
+    
+    // Handle incoming messages from server
+    function handleMessage(data) {
+        switch (data.type) {
+            case 'system_message':
+                addSystemMessage(data.message);
+                break;
+            case 'status_update':
+                statusDiv.textContent = data.status;
+                break;
+            case 'error':
+                addMessage('assistant', 'Error: ' + data.error);
+                statusDiv.textContent = "Ready to assist you";
+                micButton.classList.remove('processing');
+                micButton.innerHTML = '<span>🎤</span> Start Listening';
+                break;
+            case 'voice_response':
+                addMessage('assistant', data.response_text);
+                statusDiv.textContent = "Ready to assist you";
+                micButton.classList.remove('processing');
+                micButton.innerHTML = '<span>🎤</span> Start Listening';
+                break;
+            case 'text_response':
+                addMessage('assistant', data.response_text);
+                statusDiv.textContent = "Ready to assist you";
+                break;
+            default:
+                console.log('Unknown message type:', data.type);
+        }
+    }
+    
+    // Send message to server
+    function sendMessage(message) {
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(message));
+        } else {
+            addSystemMessage("Not connected to server. Please wait for reconnection.");
+        }
+    }
+    
+    // Add message to chat
+    function addMessage(sender, content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+        
+        const messageHeader = document.createElement('div');
+        messageHeader.className = 'message-header';
+        messageHeader.textContent = sender === 'user' ? 'You' : 'Assistant';
+        
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        messageContent.textContent = content;
+        
+        messageDiv.appendChild(messageHeader);
+        messageDiv.appendChild(messageContent);
+        chatContainer.appendChild(messageDiv);
+        
+        // Scroll to bottom
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    // Add system message
+    function addSystemMessage(content) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message system-message';
+        
+        const messageHeader = document.createElement('div');
+        messageHeader.className = 'message-header';
+        messageHeader.textContent = 'System';
+        
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        messageContent.textContent = content;
+        
+        messageDiv.appendChild(messageHeader);
+        messageDiv.appendChild(messageContent);
+        chatContainer.appendChild(messageDiv);
+        
+        // Scroll to bottom
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    // Update visualization
+    function updateVisualization() {
+        if (!micButton.classList.contains('listening')) return;
+        
+        // Generate random heights for bars to simulate audio input
+        bars.forEach(bar => {
+            const height = Math.floor(Math.random() * 80) + 5;
+            bar.style.height = height + 'px';
+        });
+        
+        // Continue animation
+        requestAnimationFrame(updateVisualization);
+    }
+    
+    // Microphone button event
+    micButton.addEventListener('click', () => {
+        if (micButton.classList.contains('listening')) {
+            // Stop listening
+            sendMessage({type: 'stop_listening'});
+            micButton.classList.remove('listening');
+            micButton.innerHTML = '<span>🎤</span> Start Listening';
+            statusDiv.textContent = "Ready to assist you";
+        } else {
+            // Start listening
+            sendMessage({type: 'start_listening'});
+            micButton.classList.add('listening');
+            micButton.innerHTML = '<span>🔴</span> Listening...';
+            statusDiv.textContent = "Listening... Speak now";
+            
+            // Start visualization
+            updateVisualization();
+        }
+    });
+    
+    // Send button event
+    sendButton.addEventListener('click', () => {
+        const command = textInput.value.trim();
+        if (command) {
+            addMessage('user', command);
+            sendMessage({type: 'text_command', command: command});
+            textInput.value = '';
+            statusDiv.textContent = "Processing your request...";
+            micButton.classList.add('processing');
+            micButton.innerHTML = '<span>⚙️</span> Processing';
+        }
+    });
+    
+    // Enter key in text input
+    textInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendButton.click();
+        }
+    });
+    
+    // Initial assistant message
+    setTimeout(() => {
+        addMessage('assistant', "Say 'help' to hear what I can do, or click the microphone to speak.");
+    }, 1000);
+    
+    // Connect to WebSocket when page loads
+    window.addEventListener('load', connectWebSocket);
+</script>
+{% endblock %}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Voice Assistant{% endblock %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .header p {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        
+        .nav {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: #6dd5ed;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        
+        .nav a:hover {
+            color: #fff;
+        }
+        
+        .user-info {
+            color: #ccc;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e90ff;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.4);
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(33, 147, 176, 0.6);
+        }
+        
+        .btn.secondary {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4);
+        }
+        
+        .btn.secondary:hover {
+            box-shadow: 0 8px 20px rgba(255, 75, 43, 0.6);
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .message.error {
+            background: rgba(255, 0, 0, 0.3);
+            border-left: 4px solid #ff0000;
+        }
+        
+        .message.success {
+            background: rgba(0, 255, 0, 0.3);
+            border-left: 4px solid #00ff00;
+        }
+        
+        .footer {
+            padding: 20px;
+            color: #aaa;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎙️ Voice Assistant</h1>
+            <p>Advanced AI-powered voice recognition system</p>
+        </div>
+        
+        <div class="nav">
+            <div>
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'web_interface' %}">Basic Interface</a>
+                <a href="{% url 'advanced_web_interface' %}">Advanced Interface</a>
+                <a href="{% url 'websocket_voice_interface' %}">WebSocket Interface</a>
+            </div>
+            <div class="user-info">
+                {% if user.is_authenticated %}
+                    Welcome, {{ user.username }}! 
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; color: #6dd5ed; cursor: pointer;">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a> | 
+                    <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="content">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            {% block content %}
+            {% endblock %}
+        </div>
+        
+        <div class="footer">
+            <p>Voice Assistant System | Professional AI Solution</p>
+        </div>
+    </div>
+</body>
+</html>

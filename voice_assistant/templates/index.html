@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Voice Assistant - Web Interface{% endblock %}
+
+{% block content %}
+<div class="interfaces">
+    <div class="interface-card">
+        <h2>Basic Interface</h2>
+        <p>A simple web interface with simulated voice recognition. Great for testing the UI without microphone access.</p>
+        <a href="{% url 'web_interface' %}" class="btn secondary">Launch Basic Interface</a>
+    </div>
+    
+    <div class="interface-card">
+        <h2>Advanced Interface</h2>
+        <p>Full-featured web interface with real browser-based speech recognition using the Web Speech API. Requires Chrome or Edge.</p>
+        <a href="{% url 'advanced_web_interface' %}" class="btn">Launch Advanced Interface</a>
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <div>⏰</div>
+        <h3>Time & Date</h3>
+        <p>Ask for current time and date</p>
+    </div>
+    <div class="feature">
+        <div>☀️</div>
+        <h3>Weather</h3>
+        <p>Check weather conditions</p>
+    </div>
+    <div class="feature">
+        <div>📰</div>
+        <h3>News</h3>
+        <p>Get latest headlines</p>
+    </div>
+    <div class="feature">
+        <div>🔔</div>
+        <h3>Reminders</h3>
+        <p>Set important reminders</p>
+    </div>
+</div>
+{% endblock %}

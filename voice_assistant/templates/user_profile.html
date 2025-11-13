@@ -1,0 +1,408 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile - AI Voice Assistant{% endblock %}
+
+{% block content %}
+<style>
+    .profile-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .profile-header h1 {
+        color: #6dd5ed;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .profile-header p {
+        color: #ccc;
+        font-size: 1.2rem;
+    }
+    
+    .profile-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+    
+    @media (max-width: 768px) {
+        .profile-container {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .profile-sidebar {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        padding: 25px;
+    }
+    
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #2193b0, #6dd5ed);
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: white;
+    }
+    
+    .profile-info {
+        text-align: center;
+    }
+    
+    .profile-info h2 {
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    .profile-info p {
+        color: #aaa;
+        margin-bottom: 5px;
+    }
+    
+    .profile-stats {
+        margin-top: 20px;
+    }
+    
+    .stat-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+    
+    .stat-label {
+        color: #ccc;
+    }
+    
+    .stat-value {
+        color: white;
+        font-weight: bold;
+    }
+    
+    .profile-main {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        padding: 25px;
+    }
+    
+    .profile-main h2 {
+        color: #6dd5ed;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #ccc;
+        font-weight: bold;
+    }
+    
+    .form-group input, .form-group select {
+        width: 100%;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(0, 0, 0, 0.3);
+        color: white;
+        font-size: 1.1rem;
+    }
+    
+    .form-group input:focus, .form-group select:focus {
+        outline: none;
+        border-color: #1e90ff;
+    }
+    
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    @media (max-width: 768px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .range-slider {
+        width: 100%;
+        height: 10px;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        outline: none;
+        -webkit-appearance: none;
+    }
+    
+    .range-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #6dd5ed;
+        cursor: pointer;
+    }
+    
+    .range-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #6dd5ed;
+        cursor: pointer;
+    }
+    
+    .slider-value {
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    
+    .btn {
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #2193b0, #6dd5ed);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(33, 147, 176, 0.4);
+        width: 100%;
+    }
+    
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(33, 147, 176, 0.6);
+    }
+    
+    .preferences-section {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .preferences-section h3 {
+        color: #6dd5ed;
+        margin-bottom: 15px;
+    }
+    
+    .preference-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .preference-item:last-child {
+        border-bottom: none;
+    }
+    
+    .preference-info h4 {
+        color: white;
+        margin-bottom: 5px;
+    }
+    
+    .preference-info p {
+        color: #aaa;
+        font-size: 0.9rem;
+    }
+    
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+    
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+    }
+    
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+    
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+</style>
+
+<div class="profile-header">
+    <h1>👤 User Profile</h1>
+    <p>Manage your account settings and preferences</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <div class="profile-avatar">
+                {{ user.username|first|upper }}
+            </div>
+            <div class="profile-info">
+                <h2>{{ user.username }}</h2>
+                <p>{{ user.email }}</p>
+                <p>Member since {{ user.date_joined|date:"F Y" }}</p>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Voice Commands</span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Last Active</span>
+                    <span class="stat-value">Today</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">AI Models</span>
+                    <span class="stat-value">8</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-main">
+            <h2>Profile Settings</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="language">Language</label>
+                    <select name="language" id="language">
+                        <option value="en" {% if profile.language == 'en' %}selected{% endif %}>English</option>
+                        <option value="es" {% if profile.language == 'es' %}selected{% endif %}>Spanish</option>
+                        <option value="fr" {% if profile.language == 'fr' %}selected{% endif %}>French</option>
+                        <option value="de" {% if profile.language == 'de' %}selected{% endif %}>German</option>
+                        <option value="it" {% if profile.language == 'it' %}selected{% endif %}>Italian</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="voice_speed">Voice Speed</label>
+                    <input type="range" name="voice_speed" id="voice_speed" class="range-slider" 
+                           min="50" max="300" value="{{ profile.voice_speed|default:150 }}" 
+                           oninput="updateVoiceSpeedValue(this.value)">
+                    <div class="slider-value">
+                        <span id="voice_speed_value">{{ profile.voice_speed|default:150 }}</span> WPM
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="voice_volume">Voice Volume</label>
+                <input type="range" name="voice_volume" id="voice_volume" class="range-slider" 
+                       min="0" max="100" value="{{ profile.voice_volume|floatformat:0|default:90 }}" 
+                       oninput="updateVoiceVolumeValue(this.value)">
+                <div class="slider-value">
+                    <span id="voice_volume_value">{{ profile.voice_volume|floatformat:0|default:90 }}</span>%
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Save Changes</button>
+            
+            <div class="preferences-section">
+                <h3>AI Preferences</h3>
+                
+                <div class="preference-item">
+                    <div class="preference-info">
+                        <h4>Context Awareness</h4>
+                        <p>Enable AI to remember conversation context</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="preference-item">
+                    <div class="preference-info">
+                        <h4>Personalized Responses</h4>
+                        <p>Allow AI to adapt responses to your preferences</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="preference-item">
+                    <div class="preference-info">
+                        <h4>Learning Mode</h4>
+                        <p>Enable AI to learn from your interactions</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="preference-item">
+                    <div class="preference-info">
+                        <h4>Voice Recognition</h4>
+                        <p>Improve voice recognition accuracy</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function updateVoiceSpeedValue(value) {
+        document.getElementById('voice_speed_value').textContent = value;
+    }
+    
+    function updateVoiceVolumeValue(value) {
+        document.getElementById('voice_volume_value').textContent = value;
+    }
+</script>
+{% endblock %}

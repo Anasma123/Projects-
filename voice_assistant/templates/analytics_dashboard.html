@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics Dashboard - AI Voice Assistant{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .dashboard-header h1 {
+        color: #6dd5ed;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .dashboard-header p {
+        color: #ccc;
+        font-size: 1.2rem;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .stat-card:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .stat-card h3 {
+        color: #6dd5ed;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+    }
+    
+    .stat-card .number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        margin-bottom: 10px;
+    }
+    
+    .stat-card .label {
+        color: #aaa;
+        font-size: 1rem;
+    }
+    
+    .chart-container {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+    
+    .chart-container h2 {
+        color: #6dd5ed;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+    
+    .chart-placeholder {
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #aaa;
+        border: 2px dashed rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+    
+    .report-section {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+    
+    .report-section h2 {
+        color: #6dd5ed;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+    
+    .report-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    
+    .report-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .report-card h3 {
+        color: #6dd5ed;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+    }
+    
+    .report-card ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .report-card li {
+        color: #ccc;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+    }
+    
+    .report-card li strong {
+        color: white;
+    }
+</style>
+
+<div class="dashboard-header">
+    <h1>📊 Analytics Dashboard</h1>
+    <p>Comprehensive insights into voice assistant usage and performance</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Commands</h3>
+        <div class="number">{{ command_stats.total_commands|default:0 }}</div>
+        <div class="label">Voice commands processed</div>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Avg Processing Time</h3>
+        <div class="number">{{ command_stats.avg_processing_time|floatformat:3|default:0 }}s</div>
+        <div class="label">Average response time</div>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <div class="number">{{ user_stats.total_users|default:0 }}</div>
+        <div class="label">Registered users</div>
+    </div>
+    
+    <div class="stat-card">
+        <h3>New Users Today</h3>
+        <div class="number">{{ user_stats.new_users_today|default:0 }}</div>
+        <div class="label">User registrations</div>
+    </div>
+</div>
+
+<div class="chart-container">
+    <h2>Usage Trends</h2>
+    {% if report.charts.usage_trends %}
+        <img src="data:image/png;base64,{{ report.charts.usage_trends }}" alt="Usage Trends Chart" style="max-width: 100%; height: auto;">
+    {% else %}
+        <div class="chart-placeholder">
+            <div>Usage Trends Chart<br><small>Chart data not available</small></div>
+        </div>
+    {% endif %}
+</div>
+
+<div class="chart-container">
+    <h2>Intent Distribution</h2>
+    {% if report.charts.intent_distribution %}
+        <img src="data:image/png;base64,{{ report.charts.intent_distribution }}" alt="Intent Distribution Chart" style="max-width: 100%; height: auto;">
+    {% else %}
+        <div class="chart-placeholder">
+            <div>Intent Distribution Chart<br><small>Chart data not available</small></div>
+        </div>
+    {% endif %}
+</div>
+
+<div class="report-section">
+    <h2>Usage Statistics</h2>
+    <div class="report-grid">
+        <div class="report-card">
+            <h3>Intent Distribution</h3>
+            <ul>
+                {% for intent, count in report.usage_statistics.intent_distribution.items %}
+                <li><strong>{{ intent }}:</strong> {{ count }} commands</li>
+                {% empty %}
+                <li>No intent data available</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="report-card">
+        </div>
+    </div>
+</div>
+
+<div class="report-section">
+    <h2>Performance Metrics</h2>
+    <div class="report-grid">
+        <div class="report-card">
+            <h3>System Performance</h3>
+            <ul>
+                <li><strong>Error Rate:</strong> {{ report.performance_metrics.error_rate|floatformat:2 }}%</li>
+                <li><strong>Warning Rate:</strong> {{ report.performance_metrics.warning_rate|floatformat:2 }}%</li>
+                <li><strong>Avg Processing Time:</strong> {{ report.performance_metrics.avg_processing_time|floatformat:3 }}s</li>
+                <li><strong>Max Processing Time:</strong> {{ report.performance_metrics.max_processing_time|floatformat:3 }}s</li>
+            </ul>
+        </div>
+        
+        <div class="report-card">
+            <h3>Common Errors</h3>
+            <ul>
+                {% for error, count in report.performance_metrics.common_errors.items %}
+                <li><strong>{{ error }}:</strong> {{ count }} occurrences</li>
+                {% empty %}
+                <li>No error data available</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
