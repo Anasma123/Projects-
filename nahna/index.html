@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday to My Best Friend!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+        <p>Loading Birthday Magic...</p>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="hidden">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="animated-title">Happy Birthday! <span class="friend-name">Nahna</span></h1>
+                <div class="cake-container">
+                    <div class="cake">
+                        <div class="layer layer-bottom"></div>
+                        <div class="layer layer-middle"></div>
+                        <div class="layer layer-top"></div>
+                        <div class="candle">
+                            <div class="flame"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="subtitle">November 20th - A Day Full of Love & Joy!</p>
+                <button id="wish-button" class="cta-button">See Your Birthday Wishes</button>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        <section class="photo-gallery">
+            <div class="container">
+                <h2 class="section-title"> Memories </h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="images/1.jpg" alt="Friendship Memory 1">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/2.jpg" alt="Friendship Memory 2">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/3.jpg" alt="Friendship Memory 3">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/4.jpg" alt="Friendship Memory 4">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Birthday Wishes -->
+        <section class="birthday-wishes">
+            <div class="container">
+                <h2 class="section-title">Special Birthday Wishes</h2>
+                <div class="wishes-container">
+                    <div class="wish-card">
+                        <i class="fas fa-heart"></i>
+                        <p>Dearest Nahna, on your special day, I wish you all the happiness, love, and joy you deserve. You're not just my best friend, you're family!</p>
+                    </div>
+                    <div class="wish-card">
+                        <i class="fas fa-star"></i>
+                        <p>Happy Birthday Nahna! May your day be as wonderful and amazing as you are! Thank you for being the incredible person and friend that you are.</p>
+                    </div>
+                    <div class="wish-card">
+                        <i class="fas fa-gift"></i>
+                        <p>Another year of your awesome friendship, Nahna! Hope this year brings you closer to all your dreams and goals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Animated Message -->
+        <section class="animated-message">
+            <div class="container">
+                <div class="message-container">
+                    <h2 class="message-title">A Very Special Message For Nahna</h2>
+                    <div class="message-content">
+                        <p>Dearest <span class="highlight">Nahna</span>,</p>
+                        <p>Today is your day! A day to celebrate the wonderful person you are and all the joy you bring to my life. Our friendship means the world to me, and I'm so grateful to have someone as amazing as you in my life.</p>
+                        <p>As you blow out the candles on your birthday cake, I hope all your wishes come true. May this new year of life bring you endless happiness, success, and adventures.</p>
+                        <p>You deserve all the love and happiness in the world. Have the most fantastic birthday, Nahna!</p>
+                        <p class="signature">With all my love,<br>Your Best Friend</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Timer -->
+        <section class="countdown">
+            <div class="container">
+                <h2 class="section-title">Countdown</h2>
+                <div class="timer">
+                    <div class="timer-item">
+                        <span id="days">00</span>
+                        <p>Days</p>
+                    </div>
+                    <div class="timer-item">
+                        <span id="hours">00</span>
+                        <p>Hours</p>
+                    </div>
+                    <div class="timer-item">
+                        <span id="minutes">00</span>
+                        <p>Minutes</p>
+                    </div>
+                    <div class="timer-item">
+                        <span id="seconds">00</span>
+                        <p>Seconds</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cut Cake Section -->
+        <section class="cut-cake">
+            <div class="container">
+                <h2 class="section-title">Special Moment for Anas</h2>
+                <p class="cake-subtitle">Click the cake to help Anas cut it!</p>
+                <!-- <div class="anas-image">
+                    <img src="images/anas.jpg" alt="Anas - My Best Friend" class="friend-photo">
+                </div> -->
+                <div class="interactive-cake" id="interactive-cake">
+                    <div class="cake">
+                        <div class="layer layer-bottom"></div>
+                        <div class="layer layer-middle"></div>
+                        <div class="layer layer-top"></div>
+                        <div class="candle">
+                            <div class="flame"></div>
+                        </div>
+                        <div class="knife" id="knife"></div>
+                    </div>
+                </div>
+                <div class="cake-message" id="cake-message">
+                    <p>Happy Birthday Wishes to Friend Anas!</p>
+                </div>
+                <button id="cut-cake-btn" class="cta-button">Cut the Cake!</button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>Made with <i class="fas fa-heart"></i> for my Best Friend</p>
+                <p>Happy Birthday! November 20th</p>
+            </div>
+        </footer>
+    </div>
+
+    <div id="surprise-message" class="surprise-message hidden">
+        <div class="surprise-content">
+            <h2>🎉 SPECIAL SURPRISE FOR NAHNA! 🎉</h2>
+            <p>This website was created with all my love just for you!</p>
+            <p>Every animation, every color, every detail was chosen to make your birthday extra special!</p>
+            <div class="surprise-cake">
+                <div class="cake">
+                    <div class="layer layer-bottom"></div>
+                    <div class="layer layer-middle"></div>
+                    <div class="layer layer-top"></div>
+                    <div class="candle">
+                        <div class="flame"></div>
+                    </div>
+                </div>
+            </div>
+            <button id="close-surprise" class="cta-button">Continue to Birthday Wishes</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
