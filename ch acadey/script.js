@@ -315,4 +315,151 @@ document.addEventListener('DOMContentLoaded', () => {
         stagger: 0.1,
         ease: "power2.out"
     });
+
+    // Exam Section Functionality
+    const timetableTab = document.getElementById('timetable-tab');
+    const resultTab = document.getElementById('result-tab');
+    const timetableContent = document.getElementById('timetable-content');
+    const resultContent = document.getElementById('result-content');
+    const classSelect = document.getElementById('class-select');
+    const timetableDisplay = document.getElementById('timetable-display');
+    const registerNumberInput = document.getElementById('register-number');
+    const checkResultBtn = document.getElementById('check-result-btn');
+    const resultDisplay = document.getElementById('result-display');
+
+    // Set initial active tab
+    timetableTab.classList.add('active');
+
+    // Exam timetable data
+    const examTimetable = {
+        "5": [
+            { date: "06/12/2025", day: "Saturday", subject: "English", time: "12:00–1:00 PM" },
+            { date: "07/12/2025", day: "Sunday", subject: "Hindi", time: "4:00–5:00 PM" },
+            { date: "09/12/2025", day: "Tuesday", subject: "Social", time: "5:30–6:30 PM" },
+            { date: "10/12/2025", day: "Wednesday", subject: "Basic", time: "5:30–6:30 PM" },
+            { date: "12/12/2025", day: "Friday", subject: "Maths", time: "5:30–6:30 PM" }
+        ],
+        "6": [
+            { date: "06/12/2025", day: "Saturday", subject: "Maths", time: "3:00–4:00 PM" },
+            { date: "07/12/2025", day: "Sunday", subject: "Basic", time: "11:00–12:00 PM" },
+            { date: "08/12/2025", day: "Tuesday", subject: "English", time: "5:30–6:30 PM" },
+            { date: "10/12/2025", day: "Wednesday", subject: "Social", time: "5:30–6:30 PM" },
+            { date: "12/12/2025", day: "Friday", subject: "Hindi", time: "5:30–6:30 PM" }
+        ],
+        "7": [
+            { date: "06/12/2025", day: "Saturday", subject: "Social", time: "4:00–5:00 PM" },
+            { date: "07/12/2025", day: "Sunday", subject: "English", time: "5:00–6:00 PM" },
+            { date: "09/12/2025", day: "Tuesday", subject: "Hindi", time: "5:30–6:30 PM" },
+            { date: "10/12/2025", day: "Wednesday", subject: "Basic", time: "5:30–6:30 PM" },
+            { date: "12/12/2025", day: "Friday", subject: "Maths", time: "5:30–6:30 PM" }
+        ],
+        "8": [
+            { date: "06/12/2025", day: "Saturday", subject: "Social", time: "4:00–5:00 PM" },
+            { date: "07/12/2025", day: "Sunday", subject: "English", time: "5:00–6:00 PM" },
+            { date: "09/12/2025", day: "Tuesday", subject: "Hindi", time: "5:30–6:30 PM" },
+            { date: "10/12/2025", day: "Wednesday", subject: "Basic", time: "5:30–6:30 PM" },
+            { date: "12/12/2025", day: "Friday", subject: "Maths", time: "5:30–6:30 PM" }
+        ],
+        "9": [
+            { date: "06/12/2025", day: "Saturday", subject: "Social", time: "4:00–5:00 PM" },
+            { date: "07/12/2025", day: "Sunday", subject: "English", time: "5:00–6:00 PM" },
+            { date: "09/12/2025", day: "Tuesday", subject: "Hindi", time: "5:30–6:30 PM" },
+            { date: "10/12/2025", day: "Wednesday", subject: "Basic", time: "5:30–6:30 PM" },
+            { date: "12/12/2025", day: "Friday", subject: "Maths", time: "5:30–6:30 PM" }
+        ],
+        "10": [
+            { date: "06/12/2025", day: "Saturday", subject: "Social", time: "4:00–5:00 PM" },
+            { date: "07/12/2025", day: "Sunday", subject: "English", time: "5:00–6:00 PM" },
+            { date: "09/12/2025", day: "Tuesday", subject: "Hindi", time: "5:30–6:30 PM" },
+            { date: "10/12/2025", day: "Wednesday", subject: "Basic", time: "5:30–6:30 PM" },
+            { date: "12/12/2025", day: "Friday", subject: "Maths", time: "5:30–6:30 PM" }
+        ]
+    };
+
+    // Tab switching functionality
+    timetableTab.addEventListener('click', () => {
+        timetableTab.classList.add('active');
+        resultTab.classList.remove('active');
+        timetableContent.classList.remove('hidden');
+        resultContent.classList.add('hidden');
+    });
+
+    resultTab.addEventListener('click', () => {
+        resultTab.classList.add('active');
+        timetableTab.classList.remove('active');
+        resultContent.classList.remove('hidden');
+        timetableContent.classList.add('hidden');
+    });
+
+    // Display timetable based on selected class
+    function displayTimetable(classId) {
+        const timetable = examTimetable[classId];
+        if (!timetable) {
+            timetableDisplay.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400">No timetable available for this class.</p>';
+            return;
+        }
+
+        let tableHTML = `
+            <table class="min-w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left">Date</th>
+                        <th class="text-left">Day</th>
+                        <th class="text-left">Subject</th>
+                        <th class="text-left">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        timetable.forEach(entry => {
+            tableHTML += `
+                <tr>
+                    <td>${entry.date}</td>
+                    <td>${entry.day}</td>
+                    <td>${entry.subject}</td>
+                    <td>${entry.time}</td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `
+                </tbody>
+            </table>
+        `;
+
+        timetableDisplay.innerHTML = tableHTML;
+    }
+
+    // Initial timetable display
+    displayTimetable(classSelect.value);
+
+    // Update timetable when class selection changes
+    classSelect.addEventListener('change', () => {
+        displayTimetable(classSelect.value);
+    });
+
+    // Result checking functionality
+    checkResultBtn.addEventListener('click', () => {
+        const registerNumber = registerNumberInput.value.trim();
+        
+        if (!registerNumber) {
+            resultDisplay.innerHTML = `
+                <div class="text-center py-4">
+                    <i class="fas fa-exclamation-circle text-yellow-500 text-3xl mb-2"></i>
+                    <p class="text-yellow-600 dark:text-yellow-400 font-medium">Please enter your register number</p>
+                </div>
+            `;
+        } else {
+            resultDisplay.innerHTML = `
+                <div class="text-center py-4">
+                    <i class="fas fa-info-circle text-blue-500 text-3xl mb-2"></i>
+                    <p class="text-blue-600 dark:text-blue-400 font-medium">Result not published yet</p>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Please check back later for updates</p>
+                </div>
+            `;
+        }
+        
+        resultDisplay.classList.remove('hidden');
+    });
 });

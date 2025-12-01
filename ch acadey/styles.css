@@ -348,3 +348,282 @@ h1, h2, h3, h4, h5, h6 {
 .staff-card {
     transition: all 0.2s ease-out;
 }
+
+/* Exam Section Styles */
+.tab-button {
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+    background-color: #dbeafe;
+}
+
+.dark .tab-button:hover {
+    background-color: #374151;
+}
+
+.tab-button.active {
+    color: #2563eb;
+    border-bottom: 2px solid #2563eb;
+    background-color: #dbeafe;
+}
+
+.dark .tab-button.active {
+    color: #60a5fa;
+    border-bottom: 2px solid #60a5fa;
+    background-color: #374151;
+}
+
+/* Update selectors for the new exam.html structure */
+#timetable-display table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#timetable-display th, #timetable-display td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark #timetable-display th, .dark #timetable-display td {
+    border-bottom: 1px solid #374151;
+}
+
+#timetable-display th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+}
+
+.dark #timetable-display th {
+    background-color: #1f2937;
+}
+
+#timetable-display tr:hover {
+    background-color: #f9fafb;
+}
+
+.dark #timetable-display tr:hover {
+    background-color: #111827;
+}
+
+/* Download buttons styling */
+#timetable-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#timetable-actions button i {
+    font-size: 1.2rem;
+}
+
+/* Enhanced timetable design */
+#timetable-display .bg-gradient-to-r {
+    background: linear-gradient(to right, #1f2937, #111827); /* Dark background */
+    color: white; /* White text */
+}
+
+.dark #timetable-display .bg-gradient-to-r {
+    background: linear-gradient(to right, #000000, #111827); /* Blacker background for dark mode */
+    color: white;
+}
+
+#timetable-display table th {
+    background-color: #1f2937; /* Dark header */
+    color: white; /* White text */
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+}
+
+.dark #timetable-display table th {
+    background-color: #000000; /* Black header for dark mode */
+    color: white;
+}
+
+#timetable-display .bg-white {
+    background-color: #ffffff; /* White background */
+}
+
+#timetable-display .text-gray-800 {
+    color: #1f2937; /* Dark text */
+}
+
+#timetable-display .bg-gray-50 {
+    background-color: #f9fafb; /* Light gray */
+}
+
+#timetable-display .bg-gray-100 {
+    background-color: #f3f4f6; /* Lighter gray */
+}
+
+.dark #timetable-display .bg-white {
+    background-color: #1f2937; /* Dark background in dark mode */
+    color: white;
+}
+
+.dark #timetable-display .text-gray-800 {
+    color: #f3f4f6; /* Light text in dark mode */
+}
+
+.dark #timetable-display .bg-gray-50 {
+    background-color: #111827; /* Darker background in dark mode */
+}
+
+.dark #timetable-display .bg-gray-100 {
+    background-color: #1f2937; /* Dark header in dark mode */
+}
+
+#timetable-display table th {
+    background-color: #1f2937;
+    color: white;
+}
+
+.dark #timetable-display table th {
+    background-color: #000000;
+    color: white;
+}
+
+#timetable-display .hover\:bg-blue-50:hover {
+    background-color: inherit; /* Remove hover effect */
+    color: inherit;
+}
+
+.dark #timetable-display .hover\:bg-gray-700:hover {
+    background-color: inherit; /* Remove hover effect */
+    color: inherit;
+}
+
+#timetable-display .border-b {
+    border-bottom-width: 1px;
+}
+
+#timetable-display .border-gray-200 {
+    border-color: #e5e7eb;
+}
+
+.dark #timetable-display .border-gray-700 {
+    border-color: #374151;
+}
+
+#timetable-display .text-gray-800 {
+    color: #1f2937;
+}
+
+.dark #timetable-display .text-gray-200 {
+    color: #f3f4f6;
+}
+
+#timetable-display .font-medium {
+    font-weight: 500;
+}
+
+#timetable-display .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+#timetable-display .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Additional styles for exam page */
+.exam-selector {
+    margin-bottom: 1rem;
+}
+
+.exam-selector label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.exam-selector select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background-color: white;
+}
+
+.dark .exam-selector select {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: white;
+}
+
+.show-btn, #check-result-btn {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    width: 100%;
+}
+
+.show-btn:hover, #check-result-btn:hover {
+    background-color: #2563eb;
+}
+
+.dark .show-btn, .dark #check-result-btn {
+    background-color: #3b82f6;
+}
+
+.dark .show-btn:hover, .dark #check-result-btn:hover {
+    background-color: #2563eb;
+}
+
+/* Result display styling */
+#result-display .bg-yellow-50 {
+    background-color: #fef3c7;
+}
+
+#result-display .border-yellow-200 {
+    border-color: #fcd34d;
+}
+
+#result-display .text-yellow-800 {
+    color: #92400e;
+}
+
+#result-display .bg-blue-50 {
+    background-color: #dbeafe;
+}
+
+#result-display .border-blue-200 {
+    border-color: #93c5fd;
+}
+
+#result-display .text-blue-800 {
+    color: #1e40af;
+}
+
+.dark #result-display .bg-yellow-50 {
+    background-color: #78350f;
+}
+
+.dark #result-display .border-yellow-800 {
+    border-color: #78350f;
+}
+
+.dark #result-display .text-yellow-200 {
+    color: #fef3c7;
+}
+
+.dark #result-display .bg-blue-50 {
+    background-color: #1e3a8a;
+}
+
+.dark #result-display .border-blue-800 {
+    border-color: #1e3a8a;
+}
+
+.dark #result-display .text-blue-200 {
+    color: #dbeafe;
+}

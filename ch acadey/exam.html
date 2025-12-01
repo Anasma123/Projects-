@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Schedule & Results - CH Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 font-sans">
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white sticky top-0 z-40 py-3 px-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo and Academy Name -->
+            <div class="flex items-center space-x-4">
+                <div class="animate__animated animate__fadeInDown">
+                    <img src="images/ch.png" alt="CH Academy Logo" 
+                         class="h-12 w-12 md:h-14 md:w-14 rounded-2xl object-cover border-2 border-white">
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-white">
+                        CH Academy
+                        <span class="block text-xs md:text-sm font-normal text-blue-200">
+                            For Education
+                        </span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex space-x-2">
+                <a href="index.html#home" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Home</a>
+                <a href="index.html#about" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">About</a>
+                <a href="index.html#vision" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Vision</a>
+                <a href="index.html#features" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Features</a>
+                <a href="index.html#leadership" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Leadership</a>
+                <a href="index.html#success" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Success</a>
+                <a href="index.html#gallery" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Gallery</a>
+                <a href="exam.html" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200 active">Exam</a>
+                <a href="index.html#contact" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Contact</a>
+            </nav>
+
+            <!-- Right-side Icons -->
+            <div class="flex items-center space-x-4">
+                <button id="darkModeToggle" class="text-xl focus:outline-none hover:text-blue-200 transition duration-200">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                </button>
+                <button id="menuToggle" class="lg:hidden text-2xl focus:outline-none hover:text-blue-200 transition duration-200">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobileMenu" class="lg:hidden hidden bg-blue-800 px-4 py-2 fixed inset-0 z-50 overflow-y-auto">
+            <!-- Close Button -->
+            <div class="flex justify-end p-2">
+                <button id="closeMobileMenu" class="text-white hover:text-gray-300 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Menu Links -->
+            <div class="flex flex-col space-y-2 mt-4">
+                <a href="index.html#home" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">Home</a>
+                <a href="index.html#about" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">About</a>
+                <a href="index.html#vision" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">Vision</a>
+                <a href="index.html#features" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">Features</a>
+                <a href="index.html#leadership" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">Leadership</a>
+                <a href="index.html#success" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">Success</a>
+                <a href="index.html#gallery" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">Gallery</a>
+                <a href="exam.html" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white active">Exam</a>
+                <a href="index.html#contact" class="nav-link px-3 py-2 rounded-lg hover:bg-blue-700 text-white">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Exam Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-blue-800 dark:text-blue-400 relative">
+                <span class="section-title">Exam Schedule & Results</span>
+            </h2>
+            
+            <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                <!-- Tabs -->
+                <div class="flex border-b border-gray-200 dark:border-gray-700">
+                    <button id="timetable-tab" class="tab-button flex-1 py-4 px-6 text-center font-medium text-blue-600 dark:text-blue-400 border-b-2 border-blue-500 bg-blue-50 dark:bg-gray-700">
+                        Time Table
+                    </button>
+                    <button id="result-tab" class="tab-button flex-1 py-4 px-6 text-center font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                        Result
+                    </button>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="p-6">
+                    <!-- Time Table Tab -->
+                    <div id="timetable-content" class="tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <div>
+                                <label for="year-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Year:</label>
+                                <select id="year-select" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="class-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Class:</label>
+                                <select id="class-select" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="5">5th Standard</option>
+                                    <option value="6">6th Standard</option>
+                                    <option value="7">7th Standard</option>
+                                    <option value="8">8th Standard</option>
+                                    <option value="9">9th Standard</option>
+                                    <option value="10">10th Standard</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="term-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Term:</label>
+                                <select id="term-select" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="1">Term 1</option>
+                                    <option value="2">Term 2</option>
+                                    <option value="3">Term 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button id="show-timetable-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 mb-6">
+                            Show Time Table
+                        </button>
+                        
+                        <div id="timetable-display" class="overflow-x-auto">
+                            <!-- Timetable will be displayed here -->
+                        </div>
+                        
+                        <div id="timetable-actions" class="mt-4 flex justify-center gap-4 hidden">
+                            <button id="download-pdf-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                                <i class="fas fa-file-pdf mr-2"></i>Download PDF
+                            </button>
+                            <button id="download-excel-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                                <i class="fas fa-file-excel mr-2"></i>Download Excel
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Result Tab -->
+                    <div id="result-content" class="tab-content hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <div>
+                                <label for="result-year-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Year:</label>
+                                <select id="result-year-select" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="2025">2025</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="result-class-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Class:</label>
+                                <select id="result-class-select" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="5">5th Standard</option>
+                                    <option value="6">6th Standard</option>
+                                    <option value="7">7th Standard</option>
+                                    <option value="8">8th Standard</option>
+                                    <option value="9">9th Standard</option>
+                                    <option value="10">10th Standard</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="result-term-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Term:</label>
+                                <select id="result-term-select" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="1">Term 1</option>
+                                    <option value="2">Term 2</option>
+                                    <option value="3">Term 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="register-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Register Number:</label>
+                            <input type="text" id="register-number" placeholder="Enter your register number" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <button id="check-result-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
+                            Check Result
+                        </button>
+                        
+                        <div id="result-display" class="mt-6 hidden">
+                            <!-- Result will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12 mt-20">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div>
+                    <div class="animate__animated animate__fadeInDown">
+                        <img src="images/logo.jpg" alt="Logo" class="mx-auto mb-8 h-16 md:h-20 rounded-2xl">
+                    </div>
+                    <p class="text-blue-200">
+                        Crafting Futures with Excellence for Classes 5-10.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#home" class="text-blue-200 hover:text-yellow-400 transition">Home</a></li>
+                        <li><a href="index.html#about" class="text-blue-200 hover:text-yellow-400 transition">About Us</a></li>
+                        <li><a href="index.html#features" class="text-blue-200 hover:text-yellow-400 transition">Features</a></li>
+                        <li><a href="index.html#success" class="text-blue-200 hover:text-yellow-400 transition">Success Rates</a></li>
+                        <li><a href="index.html#contact" class="text-blue-200 hover:text-yellow-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Programs</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Class 5-7 Program</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Class 8-9 Program</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Class 10 SSLC Program</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Special Coaching</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-yellow-400 transition">Holiday Workshops</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                    <ul class="space-y-2 text-blue-200">
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt mt-1"></i>
+                            <span>Kerala, India</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-phone mt-1"></i>
+                            <span>+91 9656934482</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-envelope mt-1"></i>
+                            <span>chacademyinfo@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-700 mt-12 pt-8 pb-6">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-col items-center">
+                        <!-- Copyright and developer info -->
+                        <div class="text-center mb-4">
+                            <p class="text-blue-300 text-sm md:text-base">
+                                © 2025 CH Academy For Education. All rights reserved.
+                            </p>
+                            <p class="text-blue-400 text-xs md:text-sm mt-1">
+                                Developed by Muhammed Anas M A
+                            </p>
+                        </div>
+                        
+                        <!-- Social links -->
+                        <div class="flex justify-center space-x-4 md:space-x-6">
+                            <a href="https://github.com/Anasma123" class="text-blue-200 hover:text-yellow-400 text-lg md:text-xl transition" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.instagram.com/muhammed_anas_ma" class="text-blue-200 hover:text-yellow-400 text-lg md:text-xl transition" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/Muhammedanasma" class="text-blue-200 hover:text-yellow-400 text-lg md:text-xl transition" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://anasma123.github.io/Portfolio/" target="_blank" class="text-blue-200 hover:text-yellow-400 text-lg md:text-xl transition" aria-label="Portfolio Website">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark');
+            } else if (localStorage.getItem('darkMode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark');
+                localStorage.setItem('darkMode', 'true');
+            }
+            
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                const isDark = document.body.classList.contains('dark');
+                localStorage.setItem('darkMode', isDark);
+            });
+
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+
+            // Exam Section Functionality
+            const timetableTab = document.getElementById('timetable-tab');
+            const resultTab = document.getElementById('result-tab');
+            const timetableContent = document.getElementById('timetable-content');
+            const resultContent = document.getElementById('result-content');
+            
+            // Timetable elements
+            const yearSelect = document.getElementById('year-select');
+            const classSelect = document.getElementById('class-select');
+            const termSelect = document.getElementById('term-select');
+            const showTimetableBtn = document.getElementById('show-timetable-btn');
+            const timetableDisplay = document.getElementById('timetable-display');
+            
+            // Result elements
+            const resultYearSelect = document.getElementById('result-year-select');
+            const resultClassSelect = document.getElementById('result-class-select');
+            const resultTermSelect = document.getElementById('result-term-select');
+            const registerNumberInput = document.getElementById('register-number');
+            const checkResultBtn = document.getElementById('check-result-btn');
+            const resultDisplay = document.getElementById('result-display');
+
+            // Set initial active tab
+            timetableTab.classList.add('active');
+
+            // Exam timetable data (only for classes 5, 6, 7 as specified)
+            const examTimetable = {
+                "2025": {
+                    "5": {
+                       
+                        "2": [
+                            { date: "06/12/2025", day: "Saturday", subject: "English", time: "12:00–1:00 PM" },
+                            { date: "07/12/2025", day: "Sunday", subject: "Hindi", time: "4:00–5:00 PM" },
+                            { date: "09/12/2025", day: "Tuesday", subject: "Social", time: "5:30–6:30 PM" },
+                            { date: "10/12/2025", day: "Wednesday", subject: "Basic", time: "5:30–6:30 PM" },
+                            { date: "12/12/2025", day: "Friday", subject: "Maths", time: "5:30–6:30 PM" }
+                        ],
+                      
+                    },
+                    "6": {
+                        
+                        "2": [
+                            { date: "06/12/2025", day: "Saturday", subject: "Maths", time: "3:00–4:00 PM" },
+                            { date: "07/12/2025", day: "Sunday", subject: "Basic", time: "11:00–12:00 PM" },
+                            { date: "08/12/2025", day: "Monday", subject: "English", time: "5:30–6:30 PM" },
+                            { date: "10/12/2025", day: "Wednesday", subject: "Social", time: "5:30–6:30 PM" },
+                            { date: "12/12/2025", day: "Friday", subject: "Hindi", time: "5:30–6:30 PM" }
+                        ],
+                        
+                    },
+                    "7": {
+                       
+                        "2": [
+                            { date: "06/12/2025", day: "Saturday", subject: "Social", time: "4:00–5:00 PM" },
+                            { date: "07/12/2025", day: "Sunday", subject: "English", time: "5:00–6:00 PM" },
+                            { date: "09/12/2025", day: "Tuesday", subject: "Hindi", time: "5:30–6:30 PM" },
+                            { date: "10/12/2025", day: "Wednesday", subject: "Basic", time: "5:30–6:30 PM" },
+                            { date: "12/12/2025", day: "Friday", subject: "Maths", time: "5:30–6:30 PM" }
+                        ],
+                       
+                    }
+                    // Classes 8, 9, and 10 intentionally left out to show "not available"
+                }
+            };
+
+            // Tab switching functionality
+            timetableTab.addEventListener('click', () => {
+                timetableTab.classList.add('active');
+                resultTab.classList.remove('active');
+                timetableContent.classList.remove('hidden');
+                resultContent.classList.add('hidden');
+            });
+
+            resultTab.addEventListener('click', () => {
+                resultTab.classList.add('active');
+                timetableTab.classList.remove('active');
+                resultContent.classList.remove('hidden');
+                timetableContent.classList.add('hidden');
+            });
+
+            // Display timetable based on selected year, class, and term
+            function displayTimetable() {
+                const year = yearSelect.value;
+                const classId = classSelect.value;
+                const term = termSelect.value;
+                
+                // ONLY display timetable for Term 2 as requested
+                if (term !== "2") {
+                    timetableDisplay.innerHTML = `
+                        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 text-center">
+                            <i class="fas fa-info-circle text-yellow-500 text-3xl mb-3"></i>
+                            <h3 class="text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Time Table Not Available</h3>
+                            <p class="text-yellow-700 dark:text-yellow-300">Time table is only available for Term 2.</p>
+                        </div>
+                    `;
+                    
+                    // Hide download buttons
+                    document.getElementById('timetable-actions').classList.add('hidden');
+                    return;
+                }
+                
+                // Check if timetable exists for this combination (only for Term 2)
+                // Classes 8, 9, and 10 are intentionally not included to show "not available"
+                if (examTimetable[year] && examTimetable[year][classId] && examTimetable[year][classId][term]) {
+                    const timetable = examTimetable[year][classId][term];
+                    
+                    // Get class name for display
+                    const classNames = {
+                        "5": "5th Standard",
+                        "6": "6th Standard", 
+                        "7": "7th Standard",
+                        "8": "8th Standard",
+                        "9": "9th Standard",
+                        "10": "10th Standard"
+                    };
+                    
+                    const terms = {
+                        "1": "Term 1",
+                        "2": "Term 2",
+                        "3": "Term 3"
+                    };
+                    
+                    // Enhanced timetable display with better design
+                    let tableHTML = `
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                            <div class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-800 dark:to-blue-900 p-4 text-white">
+                                <h3 class="text-xl font-bold text-center">${classNames[classId]} - ${terms[term]} Examination Schedule</h3>
+                                <p class="text-center text-blue-100">Academic Year ${year}</p>
+                            </div>
+                            <div class="p-4">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr class="bg-gray-100 dark:bg-gray-700">
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Date</th>
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Day</th>
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Subject</th>
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+                    
+                    timetable.forEach((entry, index) => {
+                        const rowClass = index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-750';
+                        tableHTML += `
+                            <tr class="${rowClass}">
+                                <td class="py-3 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">${entry.date}</td>
+                                <td class="py-3 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">${entry.day}</td>
+                                <td class="py-3 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-medium">${entry.subject}</td>
+                                <td class="py-3 px-4 border-b border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">${entry.time}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    tableHTML += `
+                                    </tbody>
+                                </table>
+                                <div class="mt-4 text-sm text-gray-600 dark:text-gray-400 italic">
+                                    <p>Note: Please arrive 15 minutes before the scheduled time.</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    timetableDisplay.innerHTML = tableHTML;
+                    
+                    // Show download buttons
+                    document.getElementById('timetable-actions').classList.remove('hidden');
+                } else {
+                    // Get class name for display
+                    const classNames = {
+                        "5": "5th Standard",
+                        "6": "6th Standard", 
+                        "7": "7th Standard",
+                        "8": "8th Standard",
+                        "9": "9th Standard",
+                        "10": "10th Standard"
+                    };
+                    
+                    const terms = {
+                        "1": "Term 1",
+                        "2": "Term 2",
+                        "3": "Term 3"
+                    };
+                    
+                    // Classes 8, 9, and 10 intentionally show "not available"
+                    timetableDisplay.innerHTML = `
+                        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 text-center">
+                            <i class="fas fa-info-circle text-yellow-500 text-3xl mb-3"></i>
+                            <h3 class="text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Time Table Not Available</h3>
+                            <p class="text-yellow-700 dark:text-yellow-300">Time table not published for ${classNames[classId]} - ${terms[term]} ${year}.</p>
+                            <p class="text-yellow-700 dark:text-yellow-300 mt-2">Note: Timetable is only available for classes 5, 6, and 7.</p>
+                        </div>
+                    `;
+                    
+                    // Hide download buttons
+                    document.getElementById('timetable-actions').classList.add('hidden');
+                }
+            }
+
+            // Download as PDF function
+            function downloadPDF() {
+                const year = yearSelect.value;
+                const classId = classSelect.value;
+                const term = termSelect.value;
+                
+                // Get class name for filename
+                const classNames = {
+                    "5": "5th_Standard",
+                    "6": "6th_Standard", 
+                    "7": "7th_Standard",
+                    "8": "8th_Standard",
+                    "9": "9th_Standard",
+                    "10": "10th_Standard"
+                };
+                
+                const terms = {
+                    "1": "Term_1",
+                    "2": "Term_2",
+                    "3": "Term_3"
+                };
+                
+                const filename = `Exam_Timetable_${classNames[classId]}_${terms[term]}_${year}.txt`;
+                
+                // Get the current timetable data
+                if (examTimetable[year] && examTimetable[year][classId] && examTimetable[year][classId][term]) {
+                    const timetable = examTimetable[year][classId][term];
+                    
+                    // Create text content for the file
+                    let content = `EXAM TIMETABLE\n`;
+                    content += `==============\n\n`;
+                    content += `Class: ${classNames[classId]}\n`;
+                    content += `Term: ${terms[term]}\n`;
+                    content += `Year: ${year}\n\n`;
+                    content += `Date\t\tDay\t\tSubject\t\tTime\n`;
+                    content += `----\t\t---\t\t-------\t\t----\n`;
+                    
+                    timetable.forEach(entry => {
+                        content += `${entry.date}\t${entry.day}\t${entry.subject}\t${entry.time}\n`;
+                    });
+                    
+                    content += `\nNote: Please arrive 15 minutes before the scheduled time.`;
+                    
+                    // Create and download the file
+                    const blob = new Blob([content], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                } else {
+                    alert('No timetable data available to download.');
+                }
+            }
+
+            // Download as Excel function (CSV format)
+            function downloadExcel() {
+                const year = yearSelect.value;
+                const classId = classSelect.value;
+                const term = termSelect.value;
+                
+                // Get class name for filename
+                const classNames = {
+                    "5": "5th_Standard",
+                    "6": "6th_Standard", 
+                    "7": "7th_Standard",
+                    "8": "8th_Standard",
+                    "9": "9th_Standard",
+                    "10": "10th_Standard"
+                };
+                
+                const terms = {
+                    "1": "Term_1",
+                    "2": "Term_2",
+                    "3": "Term_3"
+                };
+                
+                const filename = `Exam_Timetable_${classNames[classId]}_${terms[term]}_${year}.csv`;
+                
+                // Get the current timetable data
+                if (examTimetable[year] && examTimetable[year][classId] && examTimetable[year][classId][term]) {
+                    const timetable = examTimetable[year][classId][term];
+                    
+                    // Create CSV content
+                    let csvContent = 'Date,Day,Subject,Time\n';
+                    
+                    timetable.forEach(entry => {
+                        csvContent += `"${entry.date}","${entry.day}","${entry.subject}","${entry.time}"\n`;
+                    });
+                    
+                    // Create and download the file
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                } else {
+                    alert('No timetable data available to download.');
+                }
+            }
+
+            // Show timetable when button is clicked
+            showTimetableBtn.addEventListener('click', () => {
+                displayTimetable();
+            });
+
+            // Download button event listeners
+            document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
+            document.getElementById('download-excel-btn').addEventListener('click', downloadExcel);
+
+            // Result checking functionality
+            checkResultBtn.addEventListener('click', () => {
+                const year = resultYearSelect.value;
+                const classId = resultClassSelect.value;
+                const term = resultTermSelect.value;
+                const registerNumber = registerNumberInput.value.trim();
+                
+                if (!registerNumber) {
+                    resultDisplay.innerHTML = `
+                        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 text-center">
+                            <i class="fas fa-exclamation-circle text-yellow-500 text-3xl mb-3"></i>
+                            <h3 class="text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Missing Register Number</h3>
+                            <p class="text-yellow-700 dark:text-yellow-300">Please enter your register number to check results.</p>
+                        </div>
+                    `;
+                } else {
+                    // For now, always show "not published" as per requirements
+                    resultDisplay.innerHTML = `
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 text-center">
+                            <i class="fas fa-info-circle text-blue-500 text-3xl mb-3"></i>
+                            <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">Result Not Published</h3>
+                            <p class="text-blue-700 dark:text-blue-300">Result not published yet. Please check back later for updates.</p>
+                        </div>
+                    `;
+                }
+                
+                resultDisplay.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
