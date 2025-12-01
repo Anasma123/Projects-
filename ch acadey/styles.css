@@ -627,3 +627,77 @@ h1, h2, h3, h4, h5, h6 {
 .dark #result-display .text-blue-200 {
     color: #dbeafe;
 }
+
+/* Mobile responsive fixes for timetable */
+@media (max-width: 768px) {
+    #timetable-display {
+        overflow-x: auto;
+    }
+    
+    #timetable-display table {
+        min-width: 100%;
+        display: table;
+    }
+    
+    #timetable-display th, 
+    #timetable-display td {
+        padding: 10px 8px;
+        font-size: 0.875rem;
+        white-space: nowrap;
+    }
+    
+    #timetable-display .py-3 {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    
+    #timetable-display .px-4 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    #timetable-display .text-left {
+        text-align: left;
+    }
+    
+    /* Ensure the gradient header is responsive */
+    #timetable-display .bg-gradient-to-r {
+        padding: 1rem;
+    }
+    
+    #timetable-display .text-xl {
+        font-size: 1.125rem;
+    }
+    
+    #timetable-display .p-4 {
+        padding: 1rem;
+    }
+    
+    /* Make sure download buttons stack on mobile */
+    #timetable-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    #timetable-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    #timetable-display th, 
+    #timetable-display td {
+        padding: 8px 6px;
+        font-size: 0.75rem;
+    }
+    
+    #timetable-display .bg-gradient-to-r h3 {
+        font-size: 1rem;
+    }
+    
+    #timetable-display .bg-gradient-to-r p {
+        font-size: 0.75rem;
+    }
+}
