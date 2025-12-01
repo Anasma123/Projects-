@@ -634,6 +634,11 @@ h1, h2, h3, h4, h5, h6 {
         overflow-x: auto;
     }
     
+    #timetable-display .overflow-x-auto {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
     #timetable-display table {
         min-width: 100%;
         display: table;
@@ -700,4 +705,14 @@ h1, h2, h3, h4, h5, h6 {
     #timetable-display .bg-gradient-to-r p {
         font-size: 0.75rem;
     }
+}
+
+/* Ensure scrolling works on all devices */
+#timetable-display .overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#timetable-display table {
+    min-width: 600px; /* Ensure minimum width for scrolling */
 }
