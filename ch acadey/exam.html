@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="pdf-generator.js"></script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300 font-sans">
     <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white sticky top-0 z-40 py-3 px-4 shadow-lg">
@@ -530,51 +531,40 @@
                 
                 // Get class name for filename
                 const classNames = {
-                    "5": "5th_Standard",
-                    "6": "6th_Standard", 
-                    "7": "7th_Standard",
-                    "8": "8th_Standard",
-                    "9": "9th_Standard",
-                    "10": "10th_Standard"
+                    "5": "5th Standard",
+                    "6": "6th Standard", 
+                    "7": "7th Standard",
+                    "8": "8th Standard",
+                    "9": "9th Standard",
+                    "10": "10th Standard"
                 };
                 
                 const terms = {
-                    "1": "Term_1",
-                    "2": "Term_2",
-                    "3": "Term_3"
+                    "1": "Term 1",
+                    "2": "Term 2",
+                    "3": "Term 3"
                 };
-                
-                const filename = `Exam_Timetable_${classNames[classId]}_${terms[term]}_${year}.txt`;
                 
                 // Get the current timetable data
                 if (examTimetable[year] && examTimetable[year][classId] && examTimetable[year][classId][term]) {
                     const timetable = examTimetable[year][classId][term];
                     
-                    // Create text content for the file
-                    let content = `EXAM TIMETABLE\n`;
-                    content += `==============\n\n`;
-                    content += `Class: ${classNames[classId]}\n`;
-                    content += `Term: ${terms[term]}\n`;
-                    content += `Year: ${year}\n\n`;
-                    content += `Date\t\tDay\t\tSubject\t\tTime\n`;
-                    content += `----\t\t---\t\t-------\t\t----\n`;
+                    // Check if timetable has data
+                    if (timetable.length === 0) {
+                        alert('No timetable data available to download.');
+                        return;
+                    }
                     
-                    timetable.forEach(entry => {
-                        content += `${entry.date}\t${entry.day}\t${entry.subject}\t${entry.time}\n`;
+                    // Use the PDF Generator
+                    const pdfGenerator = new TimetablePDFGenerator();
+                    pdfGenerator.generatePDF({
+                        year: year,
+                        classId: classId,
+                        term: term,
+                        timetable: timetable,
+                        classNames: classNames,
+                        terms: terms
                     });
-                    
-                    content += `\nNote: Please arrive 15 minutes before the scheduled time.`;
-                    
-                    // Create and download the file
-                    const blob = new Blob([content], { type: 'text/plain' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
                 } else {
                     alert('No timetable data available to download.');
                 }
