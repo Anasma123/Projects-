@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine's Day Special</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     <style>
         /* Quotes banner at the top */
         .quotes-banner {
@@ -597,6 +601,120 @@
             object-fit: cover;
         }
 
+        /* Crop Tool Modal - Simplified */
+        .crop-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .crop-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .crop-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .crop-title {
+            font-size: 1.8rem;
+            color: #d74177;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .crop-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            margin: 0 auto 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        #cropCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .crop-canvas-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .crop-info {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .crop-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .crop-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .crop-submit {
+            background: linear-gradient(45deg, #ff6b9d, #d74177);
+            color: white;
+            grid-column: 1 / -1;
+        }
+
+        .crop-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(215, 65, 119, 0.3);
+        }
+
+        .crop-cancel {
+            background: #e8e8e8;
+            color: #666;
+        }
+
+        .crop-cancel:hover {
+            background: #d0d0d0;
+        }
+
         /* Live Preview Modal */
         .live-preview {
             position: fixed;
@@ -1126,6 +1244,30 @@
         </div>
     </div>
 
+    <!-- Crop Tool Modal - Simplified -->
+    <div class="crop-modal" id="cropModal">
+        <div class="crop-content">
+            <h3 class="crop-title"><i class="fas fa-crop-alt"></i> Crop Your Photo</h3>
+            
+            <div class="crop-info">
+                <p>Click and drag to select the area you want to crop</p>
+            </div>
+
+            <div class="crop-container">
+                <canvas id="cropCanvas"></canvas>
+            </div>
+
+            <div class="crop-buttons">
+                <button class="crop-btn crop-cancel" onclick="closeCropModal()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="crop-btn crop-submit" onclick="submitCrop()">
+                    <i class="fas fa-check"></i> Use This Photo
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Live Preview Modal -->
     <div class="live-preview" id="livePreview">
         <div class="live-content">
@@ -1265,6 +1407,18 @@
                 return;
             }
             
+            // Store user registration
+            const userData = {
+                from: fromName,
+                to: toName,
+                timestamp: new Date().toLocaleString(),
+                photo: 'No'
+            };
+            
+            let allUsers = JSON.parse(localStorage.getItem('valentineUsers') || '[]');
+            allUsers.push(userData);
+            localStorage.setItem('valentineUsers', JSON.stringify(allUsers));
+            
             const baseUrl = window.location.origin + window.location.pathname;
             const link = `${baseUrl}?from=${encodeURIComponent(fromName)}&to=${encodeURIComponent(toName)}`;
             
@@ -1395,35 +1549,372 @@
             });
         }
 
+        // Global crop tool variables - ULTRA SIMPLE
+        let cropState = {
+            originalImage: null,
+            canvasImg: null,
+            cropBox: {
+                x: 100,
+                y: 80,
+                width: 300,
+                height: 240
+            },
+            dragging: false,
+            dragHandle: null,
+            canvasX: 0,
+            canvasY: 0,
+            canvasWidth: 500,
+            canvasHeight: 400,
+            imgX: 0,
+            imgY: 0,
+            imgWidth: 0,
+            imgHeight: 0
+        };
+
         // Handle photo uploads
         function handlePhotoUpload() {
             const fileInput = document.getElementById('photoUpload');
-            const galleryGrid = document.getElementById('galleryGrid');
-            
-            // Remove empty state
-            const emptyState = galleryGrid.querySelector('div[style*="grid-column"]');
-            if (emptyState) {
-                emptyState.remove();
-            }
             
             for (let i = 0; i < fileInput.files.length; i++) {
                 const file = fileInput.files[i];
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        const card = document.createElement('div');
-                        card.className = 'photo-card';
-                        card.innerHTML = `
-                            <img src="${e.target.result}" alt="Photo" class="photo-img">
-                            <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 8px; border-radius: 10px; text-align: center; font-size: 0.8rem; cursor: pointer;" onclick="createValentinePoster('${e.target.result}')">
-                                <i class="fas fa-heart"></i> Create Poster
-                            </div>
-                        `;
-                        galleryGrid.appendChild(card);
+                        openCropModal(e.target.result);
                     };
                     reader.readAsDataURL(file);
                 }
             }
+        }
+
+        // Open crop modal
+        function openCropModal(imageSrc) {
+            cropState.originalImage = imageSrc;
+            cropState.dragging = false;
+            cropState.dragHandle = null;
+
+            const modal = document.getElementById('cropModal');
+            modal.classList.add('active');
+            
+            // Draw initial image with preset crop area
+            drawCropPreview();
+            
+            // Setup mouse/touch events
+            setupCropListeners();
+        }
+
+        function setupCropListeners() {
+            const canvas = document.getElementById('cropCanvas');
+            const rect = canvas.getBoundingClientRect();
+            cropState.canvasX = rect.left;
+            cropState.canvasY = rect.top;
+            
+            // Mouse events
+            canvas.addEventListener('mousedown', handleCropMouseDown);
+            canvas.addEventListener('mousemove', handleCropMouseMove);
+            canvas.addEventListener('mouseup', handleCropMouseUp);
+            canvas.addEventListener('mouseleave', handleCropMouseUp);
+
+            // Touch events for mobile
+            canvas.addEventListener('touchstart', handleCropTouchStart);
+            canvas.addEventListener('touchmove', handleCropTouchMove);
+            canvas.addEventListener('touchend', handleCropTouchEnd);
+        }
+
+        function getMousePos(e) {
+            const canvas = document.getElementById('cropCanvas');
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        function getTouchPos(e) {
+            const canvas = document.getElementById('cropCanvas');
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            return {
+                x: touch.clientX - rect.left,
+                y: touch.clientY - rect.top
+            };
+        }
+
+        function getHandleAtPos(x, y) {
+            const box = cropState.cropBox;
+            const handle = 10;
+
+            // Check corners first
+            if (x < box.x + handle && y < box.y + handle) return 'tl'; // top-left
+            if (x > box.x + box.width - handle && y < box.y + handle) return 'tr'; // top-right
+            if (x < box.x + handle && y > box.y + box.height - handle) return 'bl'; // bottom-left
+            if (x > box.x + box.width - handle && y > box.y + box.height - handle) return 'br'; // bottom-right
+
+            // Check edges
+            if (x > box.x && x < box.x + box.width && y < box.y + handle) return 't'; // top
+            if (x > box.x && x < box.x + box.width && y > box.y + box.height - handle) return 'b'; // bottom
+            if (x < box.x + handle && y > box.y && y < box.y + box.height) return 'l'; // left
+            if (x > box.x + box.width - handle && y > box.y && y < box.y + box.height) return 'r'; // right
+
+            // Check center (to move)
+            if (x > box.x && x < box.x + box.width && y > box.y && y < box.y + box.height) return 'move';
+
+            return null;
+        }
+
+        function handleCropMouseDown(e) {
+            const pos = getMousePos(e);
+            cropState.dragHandle = getHandleAtPos(pos.x, pos.y);
+            if (cropState.dragHandle) {
+                cropState.dragging = true;
+                cropState.startX = pos.x;
+                cropState.startY = pos.y;
+            }
+        }
+
+        function handleCropMouseMove(e) {
+            if (!cropState.dragging) return;
+
+            const pos = getMousePos(e);
+            const dx = pos.x - cropState.startX;
+            const dy = pos.y - cropState.startY;
+
+            const box = cropState.cropBox;
+            const minSize = 50;
+
+            if (cropState.dragHandle === 'move') {
+                box.x += dx;
+                box.y += dy;
+            } else if (cropState.dragHandle === 'tl') {
+                box.x += dx;
+                box.y += dy;
+                box.width -= dx;
+                box.height -= dy;
+            } else if (cropState.dragHandle === 'tr') {
+                box.y += dy;
+                box.width += dx;
+                box.height -= dy;
+            } else if (cropState.dragHandle === 'bl') {
+                box.x += dx;
+                box.width -= dx;
+                box.height += dy;
+            } else if (cropState.dragHandle === 'br') {
+                box.width += dx;
+                box.height += dy;
+            } else if (cropState.dragHandle === 't') {
+                box.y += dy;
+                box.height -= dy;
+            } else if (cropState.dragHandle === 'b') {
+                box.height += dy;
+            } else if (cropState.dragHandle === 'l') {
+                box.x += dx;
+                box.width -= dx;
+            } else if (cropState.dragHandle === 'r') {
+                box.width += dx;
+            }
+
+            // Enforce minimum size
+            if (box.width < minSize) box.width = minSize;
+            if (box.height < minSize) box.height = minSize;
+
+            // Clamp to canvas
+            if (box.x < 0) box.x = 0;
+            if (box.y < 0) box.y = 0;
+            if (box.x + box.width > cropState.canvasWidth) box.x = cropState.canvasWidth - box.width;
+            if (box.y + box.height > cropState.canvasHeight) box.y = cropState.canvasHeight - box.height;
+
+            cropState.startX = pos.x;
+            cropState.startY = pos.y;
+
+            drawCropPreview();
+        }
+
+        function handleCropMouseUp() {
+            cropState.dragging = false;
+        }
+
+        function handleCropTouchStart(e) {
+            const pos = getTouchPos(e);
+            cropState.dragHandle = getHandleAtPos(pos.x, pos.y);
+            if (cropState.dragHandle) {
+                cropState.dragging = true;
+                cropState.startX = pos.x;
+                cropState.startY = pos.y;
+                e.preventDefault();
+            }
+        }
+
+        function handleCropTouchMove(e) {
+            if (!cropState.dragging) return;
+
+            const pos = getTouchPos(e);
+            const dx = pos.x - cropState.startX;
+            const dy = pos.y - cropState.startY;
+
+            const box = cropState.cropBox;
+            const minSize = 50;
+
+            if (cropState.dragHandle === 'move') {
+                box.x += dx;
+                box.y += dy;
+            } else if (cropState.dragHandle === 'tl') {
+                box.x += dx; box.y += dy; box.width -= dx; box.height -= dy;
+            } else if (cropState.dragHandle === 'tr') {
+                box.y += dy; box.width += dx; box.height -= dy;
+            } else if (cropState.dragHandle === 'bl') {
+                box.x += dx; box.width -= dx; box.height += dy;
+            } else if (cropState.dragHandle === 'br') {
+                box.width += dx; box.height += dy;
+            } else if (cropState.dragHandle === 't') {
+                box.y += dy; box.height -= dy;
+            } else if (cropState.dragHandle === 'b') {
+                box.height += dy;
+            } else if (cropState.dragHandle === 'l') {
+                box.x += dx; box.width -= dx;
+            } else if (cropState.dragHandle === 'r') {
+                box.width += dx;
+            }
+
+            if (box.width < minSize) box.width = minSize;
+            if (box.height < minSize) box.height = minSize;
+            if (box.x < 0) box.x = 0;
+            if (box.y < 0) box.y = 0;
+            if (box.x + box.width > cropState.canvasWidth) box.x = cropState.canvasWidth - box.width;
+            if (box.y + box.height > cropState.canvasHeight) box.y = cropState.canvasHeight - box.height;
+
+            cropState.startX = pos.x;
+            cropState.startY = pos.y;
+
+            drawCropPreview();
+            e.preventDefault();
+        }
+
+        function handleCropTouchEnd() {
+            cropState.dragging = false;
+        }
+
+        function drawCropPreview() {
+            const canvas = document.getElementById('cropCanvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            img.onload = function() {
+                canvas.width = cropState.canvasWidth;
+                canvas.height = cropState.canvasHeight;
+
+                // Fit image to canvas
+                const imgAspect = img.width / img.height;
+                const canvasAspect = canvas.width / canvas.height;
+                
+                let drawWidth, drawHeight, drawX = 0, drawY = 0;
+                
+                if (imgAspect > canvasAspect) {
+                    drawHeight = canvas.height;
+                    drawWidth = canvas.height * imgAspect;
+                    drawX = -(drawWidth - canvas.width) / 2;
+                } else {
+                    drawWidth = canvas.width;
+                    drawHeight = canvas.width / imgAspect;
+                    drawY = -(drawHeight - canvas.height) / 2;
+                }
+
+                // Draw full image
+                ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+
+                // Draw darkened areas outside crop box
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.fillRect(0, 0, cropState.cropBox.x, canvas.height);
+                ctx.fillRect(cropState.cropBox.x + cropState.cropBox.width, 0, 
+                            canvas.width - cropState.cropBox.x - cropState.cropBox.width, canvas.height);
+                ctx.fillRect(cropState.cropBox.x, 0, cropState.cropBox.width, cropState.cropBox.y);
+                ctx.fillRect(cropState.cropBox.x, cropState.cropBox.y + cropState.cropBox.height, 
+                            cropState.cropBox.width, canvas.height - cropState.cropBox.y - cropState.cropBox.height);
+
+                // Draw crop frame
+                ctx.strokeStyle = '#ff6b9d';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(cropState.cropBox.x, cropState.cropBox.y, 
+                             cropState.cropBox.width, cropState.cropBox.height);
+
+                // Draw corner/edge handles
+                const handleSize = 12;
+                ctx.fillStyle = '#ff6b9d';
+                const box = cropState.cropBox;
+
+                // Corners
+                ctx.fillRect(box.x - handleSize/2, box.y - handleSize/2, handleSize, handleSize);
+                ctx.fillRect(box.x + box.width - handleSize/2, box.y - handleSize/2, handleSize, handleSize);
+                ctx.fillRect(box.x - handleSize/2, box.y + box.height - handleSize/2, handleSize, handleSize);
+                ctx.fillRect(box.x + box.width - handleSize/2, box.y + box.height - handleSize/2, handleSize, handleSize);
+
+                // Store image info for submitCrop
+                cropState.canvasImg = img;
+                cropState.imgX = drawX;
+                cropState.imgY = drawY;
+                cropState.imgWidth = drawWidth;
+                cropState.imgHeight = drawHeight;
+            };
+
+            img.src = cropState.originalImage;
+        }
+
+        function closeCropModal() {
+            document.getElementById('cropModal').classList.remove('active');
+            cropState.originalImage = null;
+        }
+
+        function submitCrop() {
+            const cropCanvas = document.createElement('canvas');
+            const box = cropState.cropBox;
+            
+            cropCanvas.width = box.width;
+            cropCanvas.height = box.height;
+            
+            const ctx = cropCanvas.getContext('2d');
+
+            // Calculate where to crop from the original image
+            const scaleX = cropState.canvasImg.width / cropState.imgWidth;
+            const scaleY = cropState.canvasImg.height / cropState.imgHeight;
+
+            ctx.drawImage(
+                cropState.canvasImg,
+                (box.x - cropState.imgX) * scaleX,
+                (box.y - cropState.imgY) * scaleY,
+                box.width * scaleX,
+                box.height * scaleY,
+                0, 0, box.width, box.height
+            );
+
+            const croppedImageUrl = cropCanvas.toDataURL('image/jpeg', 0.9);
+            
+            closeCropModal();
+            addPhotoToGallery(croppedImageUrl);
+            
+            // Store that user has uploaded a photo
+            storeUserPhoto(
+                document.getElementById('fromName').value || 'Anonymous',
+                document.getElementById('toName').value || 'Special'
+            );
+        }
+
+        function addPhotoToGallery(imageSrc) {
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            // Remove empty state if exists
+            const emptyState = galleryGrid.querySelector('div[style*="grid-column"]');
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            card.innerHTML = `
+                <img src="${imageSrc}" alt="Photo" class="photo-img">
+                <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 8px; border-radius: 10px; text-align: center; font-size: 0.8rem; cursor: pointer;" onclick="createValentinePoster('${imageSrc}')">
+                    <i class="fas fa-heart"></i> Create Poster
+                </div>
+            `;
+            galleryGrid.appendChild(card);
         }
 
         // Create professional Valentine's Day poster from photo
@@ -1719,7 +2210,38 @@
                 moveLiveNoButton();
             });
         }
+
+        // Firebase Integration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY_HERE",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com/",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        let firebaseDb = null;
+        let firebaseInitialized = false;
+
+        function initFirebase() {
+            if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY_HERE") {
+                try {
+                    firebase.initializeApp(firebaseConfig);
+                    firebaseDb = firebase.database();
+                    firebaseInitialized = true;
+                    console.log("Firebase initialized successfully");
+                } catch (error) {
+                    console.error("Firebase init error:", error);
+                }
+            }
+        }
+
+        // Initialize Firebase on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initFirebase();
+        });
     </script>
 </body>
 </html>
-

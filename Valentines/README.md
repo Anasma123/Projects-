@@ -11,6 +11,11 @@ A beautiful, interactive Valentine's Day website with photo gallery and romantic
 - **Kissing Animation**: Two teddy bears kiss when "Yes" is clicked
 - **Creator Credit**: Display your name and Instagram handle
 - **Photo Gallery**: Upload and display photos directly on main page
+- **✨ NEW - Photo Crop Tool**: Crop, zoom, rotate, and position photos before uploading
+  - Multiple aspect ratio presets (1:1, 4:3, 16:9, 9:16)
+  - Zoom and rotation controls
+  - Real-time preview
+  - Position adjustments
 - **Professional Poster Creation**: Transform photos into elegant Valentine's posters
 - **Name Integration**: Posters show "Name1 ❤️ Name2" format
 - **Dual Action Buttons**: Copy and Live Preview options
@@ -18,6 +23,63 @@ A beautiful, interactive Valentine's Day website with photo gallery and romantic
 - **Mobile-First Design**: Fully optimized for all mobile devices and screen sizes
 - **Touch-Friendly**: Perfect for smartphones and tablets
 - **GitHub Ready**: Optimized for hosting on GitHub Pages
+- **✨ NEW - Data Persistence**: User registration and photo uploads tracked via localStorage
+- **✨ NEW - Admin Dashboard**: View all user registrations and photo uploads
+- **✨ NEW - Data Import/Export**: Backup and restore user data
+
+## 📊 Admin Dashboard Features
+
+- **View User Statistics**: Total users, users with photos, users in last 24 hours
+- **User Registration Table**: See all registrations with dates and photo status
+- **Import Data**: Upload previously exported JSON files to restore data
+- **Export Data**: Download all user data as JSON for backup
+- **Clear Data**: Remove all data (password protected)
+- **Password Protected**: Access code required: `valentine2026`
+
+## 📸 Photo Crop Tool
+
+The new crop tool allows users to customize their photos before uploading:
+
+1. Click "Add Photos" button
+2. Select one or more photos
+3. Use the crop interface to:
+   - Choose aspect ratio (Square, 4:3, 16:9, 9:16)
+   - Zoom in/out
+   - Rotate the image
+   - Adjust X and Y position
+4. Click "Use This Photo" to add to gallery
+5. Click "Create Poster" to generate the Valentine's poster
+
+## 💾 Data Storage & GitHub Pages
+
+### How Data is Stored
+- **Local Storage**: User data is stored in browser's localStorage
+- **Persistent**: Data persists for each browser and device
+- **On GitHub Pages**: Data remains on the device that created it
+
+### Important Notes
+- Each browser/device maintains its own data copy
+- Clearing browser cache will remove stored data
+- Use **Export Data** to backup your data
+- Use **Import Data** to restore from backup
+
+### Multi-Device Data Sync (Optional)
+To sync data across devices and GitHub deployments:
+1. Set up a Firebase Realtime Database (free)
+2. Get your Firebase config from Firebase Console
+3. Update the firebaseConfig in `index.html`:
+   ```javascript
+   const firebaseConfig = {
+       apiKey: "YOUR_API_KEY",
+       authDomain: "YOUR_PROJECT.firebaseapp.com",
+       databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com/",
+       projectId: "YOUR_PROJECT_ID",
+       storageBucket: "YOUR_PROJECT.appspot.com",
+       messagingSenderId: "YOUR_SENDER_ID",
+       appId: "YOUR_APP_ID"
+   };
+   ```
+4. Data will automatically sync across all devices
 
 ## 🚀 Quick Start
 
@@ -28,8 +90,8 @@ A beautiful, interactive Valentine's Day website with photo gallery and romantic
    - Name it something like `valentines-memory-gallery`
 
 2. **Upload Files**
-   - Upload your `index.html` file to the repository
-   - Make sure it's at the root level
+   - Upload all files to the repository
+   - Make sure `index.html` is at the root level
 
 3. **Enable GitHub Pages**
    - Go to your repository settings
