@@ -17,6 +17,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 100;
             position: relative;
+            transition: all 0.5s ease-in-out;
         }
         
         .quotes-banner p {
@@ -755,7 +756,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -763,6 +764,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
+            padding: 10px;
         }
 
         .poster-preview.active {
@@ -774,41 +776,52 @@
             background: white;
             border-radius: 15px;
             padding: 20px;
-            max-width: 90%;
-            max-height: 90%;
+            width: 100%;
+            max-width: 500px;
+            max-height: 95vh;
             overflow: auto;
             position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
         .poster-image {
+            width: 100%;
             max-width: 100%;
+            height: auto;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: block;
+            margin: 0 auto;
         }
 
         .poster-actions {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             margin-top: 20px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .poster-action-btn {
-            padding: 12px 25px;
+            padding: 14px 25px;
             border: none;
             border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            min-width: 120px;
+            font-size: 1rem;
+            flex: 1;
+            max-width: 200px;
         }
 
         .download-poster-btn {
-            background: #2ed573;
+            background: linear-gradient(45deg, #2ed573, #1dd1a1);
             color: white;
         }
 
         .close-poster-btn {
-            background: #ff4757;
+            background: linear-gradient(45deg, #ff4757, #ff6b6b);
             color: white;
         }
 
@@ -905,6 +918,25 @@
             .proposal-btn, .live-proposal-btn {
                 width: 100%;
             }
+            
+            /* Poster Preview Mobile Styles */
+            .poster-content {
+                padding: 15px;
+                max-width: 95%;
+                max-height: 90vh;
+            }
+            
+            .poster-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .poster-action-btn {
+                width: 100%;
+                max-width: none;
+                padding: 16px 20px;
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -933,12 +965,29 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            
+            /* Poster Preview Small Mobile Styles */
+            .poster-content {
+                padding: 12px;
+                max-height: 85vh;
+            }
+            
+            .poster-image {
+                max-height: 60vh;
+                object-fit: contain;
+            }
+            
+            .poster-action-btn {
+                padding: 18px 15px;
+                font-size: 1.15rem;
+                min-width: auto;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Quotes Banner -->
-    <div class="quotes-banner">
+    <div class="quotes-banner" id="quotesBanner">
         <p>"if you start in haram=you will end in haram" 😊 &nbsp;&nbsp;|&nbsp;&nbsp; "if you start in halal=you will end in halal" 😊</p>
     </div>
     
@@ -1388,9 +1437,13 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            // Set professional poster dimensions
-            canvas.width = 1200;
-            canvas.height = 1800;
+            // Adjust dimensions based on device for better mobile viewing
+            const isMobile = window.innerWidth <= 768;
+            const canvasWidth = isMobile ? 800 : 1200;
+            const canvasHeight = isMobile ? 1200 : 1800;
+            
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
             
             // Create elegant gradient background
             const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
@@ -1403,18 +1456,20 @@
             
             // Add professional decorative elements
             ctx.fillStyle = 'rgba(255, 182, 193, 0.15)';
-            ctx.font = 'bold 80px Arial';
+            const fontSize = isMobile ? 50 : 80;
+            ctx.font = `bold ${fontSize}px Arial`;
             
             // Add elegant corner decorations
-            ctx.fillText('❦', 50, 100);
-            ctx.fillText('❧', canvas.width - 100, 100);
-            ctx.fillText('❦', 50, canvas.height - 50);
-            ctx.fillText('❧', canvas.width - 100, canvas.height - 50);
+            ctx.fillText('❦', 30, 70);
+            ctx.fillText('❧', canvas.width - 70, 70);
+            ctx.fillText('❦', 30, canvas.height - 30);
+            ctx.fillText('❧', canvas.width - 70, canvas.height - 30);
             
             // Add subtle heart pattern in background
-            ctx.font = '40px Arial';
+            ctx.font = isMobile ? '25px Arial' : '40px Arial';
             ctx.fillStyle = 'rgba(255, 105, 180, 0.08)';
-            for (let i = 0; i < 25; i++) {
+            const heartCount = isMobile ? 15 : 25;
+            for (let i = 0; i < heartCount; i++) {
                 const x = Math.random() * canvas.width;
                 const y = Math.random() * canvas.height;
                 ctx.fillText('❤', x, y);
@@ -1424,8 +1479,8 @@
             const img = new Image();
             img.onload = function() {
                 // Calculate professional image dimensions
-                const maxWidth = canvas.width - 200;
-                const maxHeight = canvas.height - 600;
+                const maxWidth = canvas.width - (isMobile ? 100 : 200);
+                const maxHeight = canvas.height - (isMobile ? 400 : 600);
                 let width = img.width;
                 let height = img.height;
                 
@@ -1440,16 +1495,16 @@
                 }
                 
                 const x = (canvas.width - width) / 2;
-                const y = 250;
+                const y = isMobile ? 150 : 250;
                 
                 // Draw elegant white frame
                 ctx.fillStyle = 'white';
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
-                ctx.shadowBlur = 30;
-                ctx.shadowOffsetX = 5;
-                ctx.shadowOffsetY = 10;
+                ctx.shadowBlur = isMobile ? 20 : 30;
+                ctx.shadowOffsetX = isMobile ? 3 : 5;
+                ctx.shadowOffsetY = isMobile ? 7 : 10;
                 ctx.beginPath();
-                ctx.roundRect(x - 25, y - 25, width + 50, height + 50, 20);
+                ctx.roundRect(x - (isMobile ? 15 : 25), y - (isMobile ? 15 : 25), width + (isMobile ? 30 : 50), height + (isMobile ? 30 : 50), isMobile ? 12 : 20);
                 ctx.fill();
                 
                 // Reset shadow
@@ -1465,32 +1520,33 @@
                 ctx.textAlign = 'center';
                 
                 // Elegant header
-                ctx.font = 'bold 60px Georgia, serif';
+                ctx.font = isMobile ? 'bold 40px Georgia, serif' : 'bold 60px Georgia, serif';
                 ctx.fillStyle = '#d74177';
-                ctx.fillText('Valentine\'s Day', canvas.width / 2, 150);
+                ctx.fillText('Valentine\'s Day', canvas.width / 2, isMobile ? 100 : 150);
                 
                 // Main love message
-                ctx.font = 'bold 70px Georgia, serif';
+                ctx.font = isMobile ? 'bold 45px Georgia, serif' : 'bold 70px Georgia, serif';
                 ctx.fillStyle = '#ff6b9d';
-                ctx.fillText(loveText, canvas.width / 2, 180 + y + height);
+                ctx.fillText(loveText, canvas.width / 2, isMobile ? 130 + y + height : 180 + y + height);
                 
                 // Elegant subtext
-                ctx.font = '35px Georgia, serif';
+                ctx.font = isMobile ? '25px Georgia, serif' : '35px Georgia, serif';
                 ctx.fillStyle = '#c2185b';
-                ctx.fillText('Forever in Love', canvas.width / 2, 250 + y + height);
+                ctx.fillText('Forever in Love', canvas.width / 2, isMobile ? 180 + y + height : 250 + y + height);
                 
                 // Romantic quote instead of creator info
-                ctx.font = '25px Georgia, serif';
+                ctx.font = isMobile ? '18px Georgia, serif' : '25px Georgia, serif';
                 ctx.fillStyle = 'rgba(194, 24, 91, 0.8)';
-                ctx.fillText('"Love is a powerful emotion that can conquer the world"', canvas.width / 2, canvas.height - 120);
+                ctx.fillText('"Love is a powerful emotion that can conquer the world"', canvas.width / 2, canvas.height - (isMobile ? 80 : 120));
                 
                 // Professional footer
-                ctx.font = '25px Arial';
+                ctx.font = isMobile ? '20px Arial' : '25px Arial';
                 ctx.fillStyle = 'rgba(194, 24, 91, 0.7)';
-                ctx.fillText('💕', canvas.width / 2, canvas.height - 40);
+                ctx.fillText('💕', canvas.width / 2, canvas.height - (isMobile ? 30 : 40));
                 
-                // Show preview
-                showPosterPreview(canvas.toDataURL('image/jpeg', 0.95));
+                // Show preview with optimized quality for mobile
+                const quality = isMobile ? 0.85 : 0.95;
+                showPosterPreview(canvas.toDataURL('image/jpeg', quality));
             };
             
             img.src = imageSrc;
@@ -1531,6 +1587,21 @@
         // Initialize everything
         document.addEventListener('DOMContentLoaded', function() {
             createBackgroundElements();
+            
+            // Auto-hide quotes banner after 5 seconds
+            setTimeout(() => {
+                const quotesBanner = document.getElementById('quotesBanner');
+                if (quotesBanner) {
+                    quotesBanner.style.opacity = '0';
+                    quotesBanner.style.transform = 'translateY(-100%)';
+                    quotesBanner.style.transition = 'all 0.5s ease-in-out';
+                    
+                    // Remove from DOM after transition
+                    setTimeout(() => {
+                        quotesBanner.style.display = 'none';
+                    }, 500);
+                }
+            }, 5000); // 5 seconds delay
             
             const params = getUrlParams();
             
