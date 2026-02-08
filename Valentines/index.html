@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Special</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Quotes banner at the top */
+        .quotes-banner {
+            background: linear-gradient(45deg, #ff6b9d, #d74177);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            position: relative;
+        }
+        
+        .quotes-banner p {
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary-pink: #ff6b9d;
+            --light-pink: #ffafcc;
+            --deep-pink: #d74177;
+            --rose-gold: #f8a5c2;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Animated Background Elements */
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 107, 157, 0.5);
+            animation: floatUp 12s infinite ease-in-out;
+            user-select: none;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: floatBubble 15s infinite ease-in-out;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin: 20px 0;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            color: var(--white);
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            animation: pulseGlow 2s infinite;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+            font-weight: 300;
+        }
+
+        /* Link Generator Section */
+        .generator-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            color: white;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.1rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--white);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .generate-btn {
+            background: linear-gradient(45deg, var(--primary-pink), var(--deep-pink));
+            color: var(--white);
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .generated-link {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .link-label {
+            color: white;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .link-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            word-break: break-all;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-family: monospace;
+            position: relative;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #2ed573, #1dd1a1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 48%;
+            font-weight: 600;
+            margin-right: 4%;
+        }
+
+        .copy-btn:last-child {
+            margin-right: 0;
+        }
+
+        .live-btn {
+            background: linear-gradient(45deg, #3742fa, #2f3542);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .live-btn:hover {
+            background: linear-gradient(45deg, #5352ed, #3d3d3d);
+        }
+
+        /* Valentine Section (shown when link is used) */
+        .valentine-section {
+            display: none;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+            padding: 20px;
+        }
+
+        .proposal-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px 20px;
+            max-width: 500px;
+            margin: 20px auto;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .teddy-container {
+            position: relative;
+            margin: 0 auto 30px;
+            width: 200px;
+            height: 160px;
+        }
+
+        .teddy {
+            width: 180px;
+            height: 150px;
+            background: #d4a574;
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(212, 165, 116, 0.4);
+        }
+
+        .teddy-ear-left, .teddy-ear-right {
+            width: 40px;
+            height: 40px;
+            background: #d4a574;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+        }
+
+        .teddy-ear-left {
+            left: 20px;
+        }
+
+        .teddy-ear-right {
+            right: 20px;
+        }
+
+        .teddy-eye {
+            width: 15px;
+            height: 15px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+        }
+
+        .teddy-eye-left {
+            left: 50px;
+        }
+
+        .teddy-eye-right {
+            right: 50px;
+        }
+
+        .teddy-nose {
+            width: 20px;
+            height: 15px;
+            background: #8b4513;
+            border-radius: 50%;
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .teddy-mouth {
+            width: 30px;
+            height: 15px;
+            border-bottom: 3px solid #8b4513;
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .heart-decoration {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 40px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(255, 107, 157, 0.3));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .valentine-title {
+            font-size: 2rem;
+            color: var(--white);
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+            position: relative;
+            min-height: 70px;
+        }
+
+        .proposal-btn {
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .yes-btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+        }
+
+        .no-btn {
+            background: #e8e8e8;
+            color: #666;
+            position: relative;
+            z-index: 2;
+        }
+
+        .no-btn:hover {
+            background: #d0d0d0;
+        }
+
+        .no-btn.moving {
+            position: fixed;
+            transition: all 0.2s ease-out;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            position: relative;
+        }
+
+        .kissing-teddies {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            display: none;
+            animation: fadeInScale 0.8s ease-in;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .kissing-teddies img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .success-text {
+            font-size: 2.5rem;
+            color: #ff1493;
+            font-weight: 700;
+            margin: 20px 0;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .success-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .shy-message {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .celebration {
+            font-size: 3.5rem;
+            margin: 20px 0;
+            animation: pop 0.6s ease-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Creator Info Section */
+        .creator-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .creator-title {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .creator-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .creator-name {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .instagram-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .instagram-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .gallery-title {
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-section {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .upload-btn {
+            background: linear-gradient(45deg, var(--primary-pink), var(--deep-pink));
+            color: var(--white);
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1/1;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Live Preview Modal */
+        .live-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .live-preview.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .live-content {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .live-title {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .live-preview-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .live-teddy-container {
+            position: relative;
+            margin: 0 auto 25px;
+            width: 180px;
+            height: 150px;
+        }
+
+        .live-teddy {
+            width: 160px;
+            height: 140px;
+            background: #d4a574;
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .live-heart-decoration {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 35px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 3px 6px rgba(255, 107, 157, 0.3));
+        }
+
+        .live-valentine-title {
+            font-size: 1.6rem;
+            color: var(--white);
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
+        }
+
+        .live-button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        .live-proposal-btn {
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            flex: 1;
+        }
+
+        .live-yes-btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+        }
+
+        .live-no-btn {
+            background: #e8e8e8;
+            color: #666;
+        }
+
+        .live-shy-message {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .live-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+        }
+
+        .live-action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .copy-live-btn {
+            background: linear-gradient(45deg, #2ed573, #1dd1a1);
+            color: white;
+        }
+
+        .close-live-btn {
+            background: linear-gradient(45deg, #ff4757, #ff6b6b);
+            color: white;
+        }
+
+        .live-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Poster Preview Modal */
+        .poster-preview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .poster-preview.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .poster-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+        }
+
+        .poster-image {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .poster-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .poster-action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-poster-btn {
+            background: #2ed573;
+            color: white;
+        }
+
+        .close-poster-btn {
+            background: #ff4757;
+            color: white;
+        }
+
+        .poster-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations */
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(100vh) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { 
+                transform: translateY(-100px) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes floatBubble {
+            0% { 
+                transform: translateY(100vh) translateX(0) scale(1); 
+                opacity: 0; 
+            }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.2; }
+            100% { 
+                transform: translateY(-100px) translateX(20px) scale(0.5); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% { 
+                text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 2px 2px 20px rgba(255, 107, 157, 0.6);
+                transform: scale(1.01);
+            }
+            100% { 
+                text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .copy-btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            .button-container, .live-button-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .proposal-btn, .live-proposal-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 10px;
+            }
+            
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .valentine-title, .live-valentine-title {
+                font-size: 1.6rem;
+            }
+            
+            .live-content {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .creator-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Quotes Banner -->
+    <div class="quotes-banner">
+        <p>"if you start in haram=you will end in haram" 😊 &nbsp;&nbsp;|&nbsp;&nbsp; "if you start in halal=you will end in halal" 😊</p>
+    </div>
+    
+    <!-- Background Elements -->
+    <div class="background-elements" id="background-elements"></div>
+    
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">💕 Valentine's Day 💕</h1>
+            <p class="subtitle">Create Special Memories Together</p>
+        </div>
+        
+        <!-- Link Generator Section (Main Page) -->
+        <div class="generator-section" id="generatorSection">
+            <h2 style="color: white; margin-bottom: 20px; font-size: 1.5rem;">
+                <i class="fas fa-heart"></i> Create Your Valentine's Link
+            </h2>
+            
+            <div class="form-group">
+                <label class="form-label">Your Name:</label>
+                <input 
+                    type="text" 
+                    id="fromName" 
+                    class="form-input" 
+                    placeholder="Enter your name"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Valentine's Name:</label>
+                <input 
+                    type="text" 
+                    id="toName" 
+                    class="form-input" 
+                    placeholder="Enter your valentine's name"
+                    required
+                >
+            </div>
+            
+            <button class="generate-btn" id="generateBtn">
+                <i class="fas fa-heart"></i> Generate Valentine Link
+            </button>
+            
+            <div class="generated-link" id="generatedLink">
+                <div class="link-label">
+                    <i class="fas fa-link"></i> Your Valentine's Link:
+                </div>
+                <div class="link-box" id="generatedLinkText"></div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="copy-btn" id="copyBtn">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button class="copy-btn live-btn" id="liveBtn">
+                        <i class="fas fa-eye"></i> Live Preview
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Creator Info Section -->
+        <div class="creator-section">
+            <div class="creator-title">
+                <i class="fas fa-code"></i> Created By
+            </div>
+            <div class="creator-info">
+                <div class="creator-name" id="creatorName">Muhammed Anas</div>
+                <a href="https://www.instagram.com/muhammed_anas_ma?igsh=MW5ucXRveW5nc3Y2" class="instagram-link" target="_blank">
+                    <i class="fab fa-instagram"></i> @muhammed_anas_ma
+                </a>
+            </div>
+        </div>
+        
+        <!-- Valentine Section (shown when link is used) -->
+        <div class="valentine-section" id="valentineSection">
+            <div class="proposal-section">
+                <div class="teddy-container">
+                    <div class="heart-decoration">💖</div>
+                    <div class="teddy">
+                        <div class="teddy-ear-left"></div>
+                        <div class="teddy-ear-right"></div>
+                        <div class="teddy-eye teddy-eye-left"></div>
+                        <div class="teddy-eye teddy-eye-right"></div>
+                        <div class="teddy-nose"></div>
+                        <div class="teddy-mouth"></div>
+                    </div>
+                </div>
+                
+                <h2 class="valentine-title" id="valentineText">
+                    Will you be my Valentine? 💕
+                </h2>
+                
+                <div class="button-container">
+                    <button class="proposal-btn yes-btn" id="yesBtn">Yes</button>
+                    <button class="proposal-btn no-btn" id="noBtn">No</button>
+                </div>
+                
+                <p class="shy-message">"No" seems a bit shy 😈</p>
+                
+                <div class="success-message" id="successMessage">
+                    <div class="celebration">🎉💖🎊</div>
+                    <div class="kissing-teddies" id="kissingTeddies">
+                        <img src="https://media.giphy.com/media/KmxmoHUGPDjfQXqGgv/giphy.gif" alt="Kissing teddies">
+                    </div>
+                    <h2 class="success-text">Yay! 💖</h2>
+                    <p class="success-subtitle" id="successText">You made my day so special!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gallery Section (Always visible on main page) -->
+        <div class="gallery-section" id="gallerySection">
+            <h2 class="gallery-title">
+                <i class="fas fa-heart"></i> Valentine's Gallery & Posters
+            </h2>
+            
+            <div class="upload-section">
+                <input type="file" id="photoUpload" accept="image/*" multiple style="display: none;">
+                <button class="upload-btn" id="uploadTrigger">
+                    <i class="fas fa-plus-circle"></i> Add Photos
+                </button>
+                <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                    Upload photos to create personalized Valentine's posters!
+                </div>
+            </div>
+            
+            <div class="gallery-grid" id="galleryGrid">
+                <div style="color: rgba(255,255,255,0.8); grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📸</div>
+                    <div style="font-size: 1.2rem; margin-bottom: 10px;">No Photos Yet</div>
+                    <div style="font-size: 0.95rem;">Upload photos to create beautiful Valentine's posters!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Preview Modal -->
+    <div class="live-preview" id="livePreview">
+        <div class="live-content">
+            <h3 class="live-title">
+                <i class="fas fa-heart"></i> Live Valentine's Preview
+            </h3>
+            
+            <div class="live-preview-section">
+                <div class="live-teddy-container">
+                    <div class="live-heart-decoration">💖</div>
+                    <div class="live-teddy">
+                        <div class="teddy-ear-left" style="width: 35px; height: 35px; top: -12px; left: 15px;"></div>
+                        <div class="teddy-ear-right" style="width: 35px; height: 35px; top: -12px; right: 15px;"></div>
+                        <div class="teddy-eye teddy-eye-left" style="width: 12px; height: 12px; top: 45px; left: 45px;"></div>
+                        <div class="teddy-eye teddy-eye-right" style="width: 12px; height: 12px; top: 45px; right: 45px;"></div>
+                        <div class="teddy-nose" style="width: 15px; height: 12px; top: 65px;"></div>
+                        <div class="teddy-mouth" style="width: 25px; height: 12px; top: 85px;"></div>
+                    </div>
+                </div>
+                
+                <h2 class="live-valentine-title" id="liveValentineText">
+                    Will you be my Valentine? 💕
+                </h2>
+                
+                <div class="live-button-container">
+                    <button class="live-proposal-btn live-yes-btn">Yes</button>
+                    <button class="live-proposal-btn live-no-btn">No</button>
+                </div>
+                
+                <p class="live-shy-message">"No" seems a bit shy 😈</p>
+            </div>
+            
+            <div style="color: rgba(255,255,255,0.9); font-size: 1rem; margin: 20px 0;">
+                This is exactly how your personalized Valentine's link will look!
+            </div>
+            
+            <!-- Creator Info Section in Live Preview -->
+            <div class="creator-section" style="margin-top: 20px;">
+                <div class="creator-title">
+                    <i class="fas fa-code"></i> Created By
+                </div>
+                <div class="creator-info">
+                    <div class="creator-name" id="liveCreatorName">Loading...</div>
+                    <a href="https://www.instagram.com/muhammed_anas_ma?igsh=MW5ucXRveW5nc3Y2" class="instagram-link" target="_blank">
+                        <i class="fab fa-instagram"></i> @muhammed_anas_ma
+                    </a>
+                </div>
+            </div>
+            
+            <div class="live-actions">
+                <button class="live-action-btn copy-live-btn" id="copyLiveBtn">
+                    <i class="fas fa-copy"></i> Copy Link
+                </button>
+                <button class="live-action-btn close-live-btn" id="closeLiveBtn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Poster Preview Modal -->
+    <div class="poster-preview" id="posterPreview">
+        <div class="poster-content">
+            <img id="posterImage" class="poster-image" alt="Valentine's Poster">
+            <div class="poster-actions">
+                <button class="poster-action-btn download-poster-btn" id="downloadPosterBtn">
+                    <i class="fas fa-download"></i> Download Poster
+                </button>
+                <button class="poster-action-btn close-poster-btn" id="closePosterBtn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background elements
+        function createBackgroundElements() {
+            const container = document.getElementById('background-elements');
+            const hearts = ['❤️', '💕', '💖', '💘', '💞', '💗', '💓', '💝'];
+            
+            // Create floating hearts
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (Math.random() * 5 + 10) + 's';
+                container.appendChild(heart);
+            }
+            
+            // Create floating bubbles
+            for (let i = 0; i < 12; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.width = (Math.random() * 40 + 15) + 'px';
+                bubble.style.height = bubble.style.width;
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.animationDelay = Math.random() * 6 + 's';
+                bubble.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                container.appendChild(bubble);
+            }
+        }
+
+        // Parse URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                from: params.get('from'),
+                to: params.get('to')
+            };
+        }
+
+        // Update content with names
+        function updateContent(fromName, toName) {
+            if (fromName && toName) {
+                document.getElementById('valentineText').innerHTML = 
+                    `${toName}, will you be ${fromName}'s Valentine? 💕`;
+                document.getElementById('successText').innerHTML = 
+                    `You made ${fromName} so happy!`;
+                document.getElementById('liveValentineText').innerHTML = 
+                    `${toName}, will you be ${fromName}'s Valentine? 💕`;
+                
+                // Update creator info
+                document.getElementById('creatorName').textContent = fromName;
+            }
+        }
+
+        // Generate single link
+        function generateLink() {
+            const fromName = document.getElementById('fromName').value.trim();
+            const toName = document.getElementById('toName').value.trim();
+            
+            if (!fromName || !toName) {
+                alert('Please enter both names!');
+                return;
+            }
+            
+            const baseUrl = window.location.origin + window.location.pathname;
+            const link = `${baseUrl}?from=${encodeURIComponent(fromName)}&to=${encodeURIComponent(toName)}`;
+            
+            document.getElementById('generatedLinkText').textContent = link;
+            document.getElementById('generatedLink').style.display = 'block';
+        }
+
+        // Copy link to clipboard
+        function copyLink() {
+            const linkText = document.getElementById('generatedLinkText').textContent;
+            
+            navigator.clipboard.writeText(linkText).then(() => {
+                const button = document.getElementById('copyBtn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.background = '#2ed573';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // Show live preview with exact proposal interface
+        function showLivePreview() {
+            const fromName = document.getElementById('fromName').value.trim();
+            const toName = document.getElementById('toName').value.trim();
+            
+            if (!fromName || !toName) {
+                alert('Please enter both names first!');
+                return;
+            }
+            
+            // Update live preview content to match exactly what the link will show
+            document.getElementById('liveValentineText').innerHTML = 
+                `${toName}, will you be ${fromName}'s Valentine? 💕`;
+            
+            // Update creator info in preview
+            const creatorNameElement = document.querySelector('#livePreview .creator-name');
+            if(creatorNameElement) {
+                creatorNameElement.textContent = fromName;
+            }
+            
+            // Also update the liveCreatorName element specifically
+            const liveCreatorNameElement = document.getElementById('liveCreatorName');
+            if(liveCreatorNameElement) {
+                liveCreatorNameElement.textContent = fromName;
+            }
+            
+            document.getElementById('livePreview').classList.add('active');
+        }
+
+        // Copy from live preview
+        function copyFromLive() {
+            const linkText = document.getElementById('generatedLinkText').textContent;
+            
+            if (!linkText) {
+                alert('No link generated yet!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(linkText).then(() => {
+                const button = document.getElementById('copyLiveBtn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.background = '#2ed573';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy link to clipboard');
+            });
+        }
+
+        // Proposal functionality
+        function initializeProposal() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const proposalContent = document.querySelector('.proposal-section');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Move No button on hover/touch
+            function moveNoButton() {
+                noBtn.classList.add('moving');
+                
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const btnWidth = noBtn.offsetWidth;
+                const btnHeight = noBtn.offsetHeight;
+                
+                const maxX = viewportWidth - btnWidth - 20;
+                const maxY = viewportHeight - btnHeight - 20;
+                
+                const randomX = Math.max(20, Math.random() * maxX);
+                const randomY = Math.max(20, Math.random() * maxY);
+                
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+            }
+            
+            noBtn.addEventListener('mouseenter', moveNoButton);
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveNoButton();
+            });
+            
+            // Handle Yes button click
+            yesBtn.addEventListener('click', function() {
+                proposalContent.querySelector('.button-container').style.display = 'none';
+                proposalContent.querySelector('.shy-message').style.display = 'none';
+                proposalContent.querySelector('.valentine-title').style.display = 'none';
+                successMessage.style.display = 'block';
+                
+                // Show kissing teddies with delay
+                setTimeout(() => {
+                    document.getElementById('kissingTeddies').style.display = 'block';
+                }, 500);
+            });
+            
+            // Prevent No button click
+            noBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                moveNoButton();
+            });
+        }
+
+        // Handle photo uploads
+        function handlePhotoUpload() {
+            const fileInput = document.getElementById('photoUpload');
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            // Remove empty state
+            const emptyState = galleryGrid.querySelector('div[style*="grid-column"]');
+            if (emptyState) {
+                emptyState.remove();
+            }
+            
+            for (let i = 0; i < fileInput.files.length; i++) {
+                const file = fileInput.files[i];
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const card = document.createElement('div');
+                        card.className = 'photo-card';
+                        card.innerHTML = `
+                            <img src="${e.target.result}" alt="Photo" class="photo-img">
+                            <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 8px; border-radius: 10px; text-align: center; font-size: 0.8rem; cursor: pointer;" onclick="createValentinePoster('${e.target.result}')">
+                                <i class="fas fa-heart"></i> Create Poster
+                            </div>
+                        `;
+                        galleryGrid.appendChild(card);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        // Create professional Valentine's Day poster from photo
+        function createValentinePoster(imageSrc) {
+            // Get names from inputs (if available)
+            const fromName = document.getElementById('fromName').value.trim() || 'Someone';
+            const toName = document.getElementById('toName').value.trim() || 'Special';
+            const loveText = `${fromName} ❤️ ${toName}`;
+            
+            // Create a canvas for the professional poster
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set professional poster dimensions
+            canvas.width = 1200;
+            canvas.height = 1800;
+            
+            // Create elegant gradient background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#fff5f7');
+            gradient.addColorStop(0.3, '#ffe0e6');
+            gradient.addColorStop(0.7, '#ffc2d1');
+            gradient.addColorStop(1, '#ffb3c6');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add professional decorative elements
+            ctx.fillStyle = 'rgba(255, 182, 193, 0.15)';
+            ctx.font = 'bold 80px Arial';
+            
+            // Add elegant corner decorations
+            ctx.fillText('❦', 50, 100);
+            ctx.fillText('❧', canvas.width - 100, 100);
+            ctx.fillText('❦', 50, canvas.height - 50);
+            ctx.fillText('❧', canvas.width - 100, canvas.height - 50);
+            
+            // Add subtle heart pattern in background
+            ctx.font = '40px Arial';
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.08)';
+            for (let i = 0; i < 25; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                ctx.fillText('❤', x, y);
+            }
+            
+            // Load and draw the image professionally
+            const img = new Image();
+            img.onload = function() {
+                // Calculate professional image dimensions
+                const maxWidth = canvas.width - 200;
+                const maxHeight = canvas.height - 600;
+                let width = img.width;
+                let height = img.height;
+                
+                // Maintain aspect ratio professionally
+                if (width > maxWidth) {
+                    height = (height * maxWidth) / width;
+                    width = maxWidth;
+                }
+                if (height > maxHeight) {
+                    width = (width * maxHeight) / height;
+                    height = maxHeight;
+                }
+                
+                const x = (canvas.width - width) / 2;
+                const y = 250;
+                
+                // Draw elegant white frame
+                ctx.fillStyle = 'white';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+                ctx.shadowBlur = 30;
+                ctx.shadowOffsetX = 5;
+                ctx.shadowOffsetY = 10;
+                ctx.beginPath();
+                ctx.roundRect(x - 25, y - 25, width + 50, height + 50, 20);
+                ctx.fill();
+                
+                // Reset shadow
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                
+                // Draw image
+                ctx.drawImage(img, x, y, width, height);
+                
+                // Add professional text elements
+                ctx.textAlign = 'center';
+                
+                // Elegant header
+                ctx.font = 'bold 60px Georgia, serif';
+                ctx.fillStyle = '#d74177';
+                ctx.fillText('Valentine\'s Day', canvas.width / 2, 150);
+                
+                // Main love message
+                ctx.font = 'bold 70px Georgia, serif';
+                ctx.fillStyle = '#ff6b9d';
+                ctx.fillText(loveText, canvas.width / 2, 180 + y + height);
+                
+                // Elegant subtext
+                ctx.font = '35px Georgia, serif';
+                ctx.fillStyle = '#c2185b';
+                ctx.fillText('Forever in Love', canvas.width / 2, 250 + y + height);
+                
+                // Creator info
+                ctx.font = '25px Arial';
+                ctx.fillStyle = 'rgba(74, 74, 74, 0.8)';
+                ctx.fillText(`Created by ${fromName}`, canvas.width / 2, canvas.height - 120);
+                ctx.fillText('@muhammed_anas_ma', canvas.width / 2, canvas.height - 80);
+                
+                // Professional footer
+                ctx.font = '25px Arial';
+                ctx.fillStyle = 'rgba(194, 24, 91, 0.7)';
+                ctx.fillText('💕', canvas.width / 2, canvas.height - 40);
+                
+                // Show preview
+                showPosterPreview(canvas.toDataURL('image/jpeg', 0.95));
+            };
+            
+            img.src = imageSrc;
+        }
+
+        // Show poster preview modal
+        function showPosterPreview(posterUrl) {
+            const preview = document.getElementById('posterPreview');
+            const image = document.getElementById('posterImage');
+            const downloadBtn = document.getElementById('downloadPosterBtn');
+            
+            image.src = posterUrl;
+            preview.classList.add('active');
+            
+            // Download button functionality
+            downloadBtn.onclick = function() {
+                const link = document.createElement('a');
+                link.href = posterUrl;
+                link.download = 'valentines-professional-poster.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+            
+            // Close button functionality
+            document.getElementById('closePosterBtn').onclick = function() {
+                preview.classList.remove('active');
+            };
+            
+            // Close on backdrop click
+            preview.onclick = function(e) {
+                if (e.target === preview) {
+                    preview.classList.remove('active');
+                }
+            };
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createBackgroundElements();
+            
+            const params = getUrlParams();
+            
+            // Check if this is a shared link
+            if (params.from && params.to) {
+                // Hide generator and gallery sections
+                document.getElementById('generatorSection').style.display = 'none';
+                document.getElementById('gallerySection').style.display = 'none';
+                // Show Valentine section
+                document.getElementById('valentineSection').style.display = 'block';
+                
+                // Update content with names
+                updateContent(params.from, params.to);
+                
+                // Initialize proposal features
+                initializeProposal();
+            } else {
+                // Show generator section
+                document.getElementById('generatorSection').style.display = 'block';
+                document.getElementById('valentineSection').style.display = 'none';
+                document.getElementById('gallerySection').style.display = 'block';
+                
+                // Add event listeners
+                document.getElementById('generateBtn').addEventListener('click', generateLink);
+                document.getElementById('copyBtn').addEventListener('click', copyLink);
+                document.getElementById('liveBtn').addEventListener('click', showLivePreview);
+                document.getElementById('copyLiveBtn').addEventListener('click', copyFromLive);
+                document.getElementById('closeLiveBtn').addEventListener('click', function() {
+                    document.getElementById('livePreview').classList.remove('active');
+                });
+                document.getElementById('uploadTrigger').addEventListener('click', function() {
+                    document.getElementById('photoUpload').click();
+                });
+                document.getElementById('photoUpload').addEventListener('change', handlePhotoUpload);
+                
+                // Add click outside to close live preview
+                document.getElementById('livePreview').addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+                
+                // Initialize live preview proposal buttons
+                initializeLivePreviewProposal();
+            }
+            
+            // Add roundRect method if not supported
+            if (CanvasRenderingContext2D.prototype.roundRect === undefined) {
+                CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                    if (width < 2 * radius) radius = width / 2;
+                    if (height < 2 * radius) radius = height / 2;
+                    this.beginPath();
+                    this.moveTo(x + radius, y);
+                    this.arcTo(x + width, y, x + width, y + height, radius);
+                    this.arcTo(x + width, y + height, x, y + height, radius);
+                    this.arcTo(x, y + height, x, y, radius);
+                    this.arcTo(x, y, x + width, y, radius);
+                    this.closePath();
+                    return this;
+                };
+            }
+            
+            // Prevent zoom on double tap (mobile)
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        });
+        
+        // Initialize live preview proposal functionality
+        function initializeLivePreviewProposal() {
+            const liveNoBtn = document.querySelector('.live-no-btn');
+            const liveYesBtn = document.querySelector('.live-yes-btn');
+            
+            if (!liveNoBtn || !liveYesBtn) return;
+            
+            // Move No button on hover/touch in live preview
+            function moveLiveNoButton() {
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const btnWidth = liveNoBtn.offsetWidth;
+                const btnHeight = liveNoBtn.offsetHeight;
+                
+                const maxX = viewportWidth - btnWidth - 20;
+                const maxY = viewportHeight - btnHeight - 20;
+                
+                const randomX = Math.max(20, Math.random() * maxX);
+                const randomY = Math.max(20, Math.random() * maxY);
+                
+                liveNoBtn.style.position = 'fixed';
+                liveNoBtn.style.left = randomX + 'px';
+                liveNoBtn.style.top = randomY + 'px';
+                liveNoBtn.style.zIndex = '3000'; // Higher than other elements
+            }
+            
+            liveNoBtn.addEventListener('mouseenter', moveLiveNoButton);
+            liveNoBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveLiveNoButton();
+            });
+            
+            // Handle Yes button click in live preview
+            liveYesBtn.addEventListener('click', function() {
+                // Show a confirmation message
+                alert("Great! This is how the final proposal will look when your Valentine clicks 'Yes'!");
+            });
+            
+            // Prevent No button click in live preview
+            liveNoBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                moveLiveNoButton();
+            });
+        }
+    </script>
+</body>
+</html>
