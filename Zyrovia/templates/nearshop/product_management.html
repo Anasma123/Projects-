@@ -1,0 +1,61 @@
+﻿{% extends "base.html" %}
+{% block title %}Product Management | NearShop{% endblock %}
+{% block content %}
+<section class="profile-grid">
+  <article class="panel">
+    <h2>Add Product</h2>
+    {% if product_form.errors %}<div class="form-errors">{{ product_form.errors }}</div>{% endif %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="action" value="add_product">
+      <label>Product Name {{ product_form.product_name }}</label>
+      <label>Category {{ product_form.category }}</label>
+      <label>Price {{ product_form.price }}</label>
+      <label>Stock Quantity {{ product_form.stock_quantity }}</label>
+      <label>Available {{ product_form.is_available }}</label>
+      <button class="btn" type="submit">Add Product</button>
+    </form>
+
+    <h3 style="margin-top:16px;">Products</h3>
+    <div class="ride-list">
+      {% for product in products %}
+        <div class="ride-row">
+          <span>{{ product.product_name }} • ₹{{ product.price }} • Stock {{ product.stock_quantity }}</span>
+          <div class="actions">
+            <a class="btn ghost" href="{% url 'nearshop:edit-product' product.id %}">Edit</a>
+            <form method="post" action="{% url 'nearshop:delete-product' product.id %}">{% csrf_token %}<button class="btn ghost" type="submit">Delete</button></form>
+          </div>
+        </div>
+      {% empty %}
+        <p class="subtext">No products added yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <h2>Create Offer</h2>
+    {% if offer_form.errors %}<div class="form-errors">{{ offer_form.errors }}</div>{% endif %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="action" value="add_offer">
+      <label>Title {{ offer_form.title }}</label>
+      <label>Description {{ offer_form.description }}</label>
+      <label>Discount Percent {{ offer_form.discount_percent }}</label>
+      <label>Valid Until {{ offer_form.valid_until }}</label>
+      <button class="btn" type="submit">Create Offer</button>
+    </form>
+
+    <h3 style="margin-top:16px;">Offers</h3>
+    <div class="ride-list">
+      {% for offer in offers %}
+        <div class="ride-row">
+          <span>{{ offer.title }} • {{ offer.discount_percent }}% • {{ offer.valid_until|date:"M d, Y H:i" }}</span>
+          <form method="post" action="{% url 'nearshop:delete-offer' offer.id %}">{% csrf_token %}<button class="btn ghost" type="submit">Delete</button></form>
+        </div>
+      {% empty %}
+        <p class="subtext">No offers created yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}

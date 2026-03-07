@@ -1,0 +1,694 @@
+2026-02-28 12:23:00,289 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:23:08,283 [ERROR] django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\core\views.py", line 14, in dashboard
+    return render(request, 'core/dashboard.html', {'cards': cards})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 563, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 36: 'static', expected 'endblock'. Did you forget to register or load this tag?
+2026-02-28 12:23:09,586 [ERROR] django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\core\views.py", line 14, in dashboard
+    return render(request, 'core/dashboard.html', {'cards': cards})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 563, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 36: 'static', expected 'endblock'. Did you forget to register or load this tag?
+2026-02-28 12:23:20,941 [ERROR] django.request: Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\core\views.py", line 14, in dashboard
+    return render(request, 'core/dashboard.html', {'cards': cards})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Python311\Lib\site-packages\django\template\base.py", line 563, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 36: 'static', expected 'endblock'. Did you forget to register or load this tag?
+2026-02-28 12:29:22,544 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\zyrovia\settings\base.py changed, reloading.
+2026-02-28 12:29:23,314 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:33:13,385 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\apps.py changed, reloading.
+2026-02-28 12:33:14,228 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:34:34,019 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 12:34:34,806 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:35:49,547 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 12:35:50,261 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:38:35,809 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 12:38:36,554 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:42:23,330 [ERROR] django.security.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+2026-02-28 12:42:23,389 [WARNING] django.request: Bad Request: /
+2026-02-28 12:42:23,389 [ERROR] django.security.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+2026-02-28 12:42:23,406 [WARNING] django.request: Bad Request: /nearride/
+2026-02-28 12:44:24,385 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\zyrovia\settings\base.py changed, reloading.
+2026-02-28 12:44:25,136 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:46:34,664 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\apps.py changed, reloading.
+2026-02-28 12:46:36,115 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:47:26,287 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\views.py changed, reloading.
+2026-02-28 12:47:27,092 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:50:49,656 [WARNING] django.request: Forbidden: /nearshop/owner/products/1/delete/
+2026-02-28 12:51:39,485 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\zyrovia\settings\base.py changed, reloading.
+2026-02-28 12:51:40,207 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:52:23,563 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\apps.py changed, reloading.
+2026-02-28 12:52:24,574 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:53:18,650 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 12:53:19,458 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:56:32,287 [WARNING] django.request: Forbidden: /nearservice/categories/new/
+2026-02-28 12:57:57,693 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\zyrovia\settings\base.py changed, reloading.
+2026-02-28 12:57:58,430 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:59:04,460 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\apps.py changed, reloading.
+2026-02-28 12:59:05,518 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 12:59:51,436 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 12:59:52,279 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:01:22,220 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:01:23,063 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:01:35,683 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\views.py changed, reloading.
+2026-02-28 13:01:36,472 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:01:48,038 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\forms.py changed, reloading.
+2026-02-28 13:01:48,978 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:02:07,757 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 13:02:08,535 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:02:20,100 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 13:02:20,895 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:02:37,706 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 13:02:38,579 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:03:53,121 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:03:53,910 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:06:52,858 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\zyrovia\settings\base.py changed, reloading.
+2026-02-28 13:06:53,639 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:07:41,790 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\users\models.py changed, reloading.
+2026-02-28 13:07:42,686 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:07:54,511 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\models.py changed, reloading.
+2026-02-28 13:07:55,416 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:08:06,207 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-02-28 13:08:07,003 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:08:29,107 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\models.py changed, reloading.
+2026-02-28 13:08:29,924 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:08:48,961 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:08:49,793 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:08:58,496 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:08:59,379 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:09:18,454 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\views.py changed, reloading.
+2026-02-28 13:09:19,268 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:09:29,079 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 13:09:29,920 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:09:55,227 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 13:09:56,040 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:10:07,877 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 13:10:08,785 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:10:24,728 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:10:25,581 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:11:38,502 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\zyrovia\wsgi.py changed, reloading.
+2026-02-28 13:11:39,390 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:24:20,766 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\models.py changed, reloading.
+2026-02-28 13:24:21,877 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:24:33,846 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\forms.py changed, reloading.
+2026-02-28 13:24:34,742 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:24:57,997 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\forms.py changed, reloading.
+2026-02-28 13:24:58,902 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:25:08,714 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\admin.py changed, reloading.
+2026-02-28 13:25:09,753 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:26:02,096 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 13:26:02,836 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:26:13,685 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 13:26:14,495 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:26:24,247 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\urls.py changed, reloading.
+2026-02-28 13:26:24,982 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:27:04,030 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\urls.py changed, reloading.
+2026-02-28 13:27:04,939 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:27:22,974 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:27:24,035 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:30:48,440 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:30:49,464 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:33:59,438 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:34:00,259 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:37:00,759 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:37:01,638 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:39:10,629 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\urls.py changed, reloading.
+2026-02-28 13:39:11,460 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:39:29,377 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 13:39:30,098 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:41:59,613 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\zyrovia\settings\base.py changed, reloading.
+2026-02-28 13:42:00,464 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:42:42,936 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\locations\apps.py changed, reloading.
+2026-02-28 13:42:43,827 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:43:47,878 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\models.py changed, reloading.
+2026-02-28 13:43:48,779 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:44:19,498 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\forms.py changed, reloading.
+2026-02-28 13:44:20,466 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:46:03,834 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\models.py changed, reloading.
+2026-02-28 13:46:04,942 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:46:22,217 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\forms.py changed, reloading.
+2026-02-28 13:46:23,044 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:47:05,615 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 13:47:06,454 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:47:15,244 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 13:47:16,058 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:49:20,187 [ERROR] django.request: Internal Server Error: /nearservice/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: locations_country
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py", line 38, in nearservice_dashboard
+    provider_profile = _provider_for_user(request.user) if request.user.is_authenticated else None
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py", line 20, in _provider_for_user
+    return ServiceProvider.objects.filter(user=user).select_related('category', 'country', 'state', 'district', 'locality').first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 1097, in first
+    for obj in queryset[:1]:
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 400, in __iter__
+    self._fetch_all()
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 1928, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\sql\compiler.py", line 1574, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Python311\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: locations_country
+2026-02-28 13:50:34,583 [ERROR] django.request: Internal Server Error: /nearservice/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: locations_country
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py", line 38, in nearservice_dashboard
+    provider_profile = _provider_for_user(request.user) if request.user.is_authenticated else None
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py", line 20, in _provider_for_user
+    return ServiceProvider.objects.filter(user=user).select_related('category', 'country', 'state', 'district', 'locality').first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 1097, in first
+    for obj in queryset[:1]:
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 400, in __iter__
+    self._fetch_all()
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 1928, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\sql\compiler.py", line 1574, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Python311\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: locations_country
+2026-02-28 13:58:11,686 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\models.py changed, reloading.
+2026-02-28 13:58:12,550 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:58:26,531 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-02-28 13:58:27,372 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:58:37,145 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\models.py changed, reloading.
+2026-02-28 13:58:37,972 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:58:51,948 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\forms.py changed, reloading.
+2026-02-28 13:58:52,799 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:59:03,621 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\forms.py changed, reloading.
+2026-02-28 13:59:04,415 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:59:46,359 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-02-28 13:59:47,210 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 13:59:59,089 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-02-28 13:59:59,846 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:00:10,692 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\forms.py changed, reloading.
+2026-02-28 14:00:11,515 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:00:30,630 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 14:00:31,581 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:00:36,228 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 14:00:37,268 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:00:54,315 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\views.py changed, reloading.
+2026-02-28 14:00:55,096 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:01:06,944 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 14:01:07,716 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:09:08,376 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\locations\views.py changed, reloading.
+2026-02-28 14:09:09,261 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:18:59,534 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\views.py changed, reloading.
+2026-02-28 14:19:00,357 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:19:11,200 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearservice\views.py changed, reloading.
+2026-02-28 14:19:12,050 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 14:46:16,340 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\locations\models.py changed, reloading.
+2026-02-28 14:46:17,383 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:13:28,662 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-02-28 15:13:30,899 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:14:42,884 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\models.py changed, reloading.
+2026-02-28 15:14:43,769 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:14:57,691 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-02-28 15:14:58,499 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:15:18,680 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\forms.py changed, reloading.
+2026-02-28 15:15:19,478 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:18:47,313 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 15:18:48,158 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:20:07,642 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\views.py changed, reloading.
+2026-02-28 15:20:08,499 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:20:18,344 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\urls.py changed, reloading.
+2026-02-28 15:20:19,166 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:20:30,003 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\urls.py changed, reloading.
+2026-02-28 15:20:30,809 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:26:06,102 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\forms.py changed, reloading.
+2026-02-28 15:26:06,948 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:26:42,625 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 15:26:43,386 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:27:39,920 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\urls.py changed, reloading.
+2026-02-28 15:27:40,785 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:30:25,090 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\admin.py changed, reloading.
+2026-02-28 15:30:25,930 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:30:36,743 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\admin.py changed, reloading.
+2026-02-28 15:30:37,522 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:32:14,535 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearshop\views.py changed, reloading.
+2026-02-28 15:32:15,501 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:32:28,406 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-02-28 15:32:29,216 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:34:03,181 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 15:34:04,007 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:36:35,380 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-02-28 15:36:36,181 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-02-28 15:37:31,768 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-02-28 15:37:32,553 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 10:22:45,898 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 10:27:52,881 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\locations\views.py changed, reloading.
+2026-03-07 10:27:54,248 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 10:43:37,060 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-03-07 10:43:38,003 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 10:43:59,421 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 10:44:00,508 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 10:44:17,705 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\urls.py changed, reloading.
+2026-03-07 10:44:18,637 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:01:58,143 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:01:59,551 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:02:14,686 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\locations\models.py changed, reloading.
+2026-03-07 11:02:15,790 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:02:30,799 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\locations\admin.py changed, reloading.
+2026-03-07 11:02:31,747 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:02:55,146 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\services.py changed, reloading.
+2026-03-07 11:02:56,097 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:03:04,841 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\services.py changed, reloading.
+2026-03-07 11:03:05,681 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:03:48,654 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-03-07 11:03:49,550 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:04:06,620 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:04:07,535 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:04:15,312 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:04:16,230 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:04:35,466 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:04:36,340 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:04:52,448 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:04:53,354 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:05:09,449 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:05:10,543 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:05:17,328 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:05:18,801 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:06:10,077 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:06:11,007 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:06:16,579 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:06:17,529 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:06:37,689 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\urls.py changed, reloading.
+2026-03-07 11:06:38,725 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:09:03,633 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-03-07 11:09:04,498 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:09:14,305 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:09:15,316 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:09:31,343 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\admin.py changed, reloading.
+2026-03-07 11:09:32,238 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:10:04,882 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:10:05,715 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:10:21,890 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:10:22,732 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:11:06,144 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:11:07,095 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:11:26,505 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:11:27,354 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:11:48,576 [ERROR] django.request: Internal Server Error: /nearride/
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: nearride_driverprofile.name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py", line 59, in nearride_dashboard
+    driver_profile = driver_profiles.first()
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 1097, in first
+    for obj in queryset[:1]:
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 400, in __iter__
+    self._fetch_all()
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 1928, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\models\sql\compiler.py", line 1574, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Python311\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Python311\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python311\Lib\site-packages\django\db\backends\sqlite3\base.py", line 354, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: nearride_driverprofile.name
+2026-03-07 11:12:40,925 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:12:41,803 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:13:13,433 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-03-07 11:13:14,271 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:18:22,471 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\services.py changed, reloading.
+2026-03-07 11:18:23,404 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:18:34,311 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-03-07 11:18:35,264 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:18:41,023 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:18:41,906 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:20:47,647 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\forms.py changed, reloading.
+2026-03-07 11:20:48,620 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:20:55,429 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:20:56,727 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:27:46,183 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:27:47,039 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:27:51,774 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\admin.py changed, reloading.
+2026-03-07 11:27:52,627 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:28:14,969 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:28:15,882 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:32:11,329 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:32:12,520 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:32:19,286 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:32:20,121 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:36:36,346 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\models.py changed, reloading.
+2026-03-07 11:36:37,307 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:37:09,119 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\admin.py changed, reloading.
+2026-03-07 11:37:10,046 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:37:19,027 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:37:19,846 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:37:27,649 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:37:28,484 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:37:40,446 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:37:41,308 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:38:00,551 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:38:01,398 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:38:05,055 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:38:05,852 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:38:11,590 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:38:12,487 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:38:16,105 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\urls.py changed, reloading.
+2026-03-07 11:38:17,056 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:41:09,580 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:41:10,469 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:42:12,219 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\nearride\views.py changed, reloading.
+2026-03-07 11:42:13,039 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:47:25,123 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\views.py changed, reloading.
+2026-03-07 11:47:26,112 [INFO] django.utils.autoreload: Watching for file changes with StatReloader
+2026-03-07 11:47:31,888 [INFO] django.utils.autoreload: C:\Users\user\OneDrive\Desktop\Zyrovia\apps\control\urls.py changed, reloading.
+2026-03-07 11:47:32,805 [INFO] django.utils.autoreload: Watching for file changes with StatReloader

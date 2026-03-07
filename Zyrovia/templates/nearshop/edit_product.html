@@ -1,0 +1,17 @@
+﻿{% extends "base.html" %}
+{% block title %}Edit Product | NearShop{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <form method="post" class="auth-card" novalidate>
+    {% csrf_token %}
+    <h1>Edit Product</h1>
+    {% if form.errors %}<div class="form-errors">{{ form.errors }}</div>{% endif %}
+    <label>Product Name {{ form.product_name }}</label>
+    <label>Category {{ form.category }}</label>
+    <label>Price {{ form.price }}</label>
+    <label>Stock Quantity {{ form.stock_quantity }}</label>
+    <label>Available {{ form.is_available }}</label>
+    <button class="btn" type="submit">Save Product</button>
+  </form>
+</section>
+{% endblock %}

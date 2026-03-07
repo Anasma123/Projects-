@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Delete Driver | NearRide{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-card">
+    <h1>Delete Driver</h1>
+    <p>Are you sure you want to delete <strong>{{ driver_profile.name }}</strong> ({{ driver_profile.vehicle_number }})?</p>
+    <form method="post" style="display:flex;gap:8px;flex-wrap:wrap;">
+      {% csrf_token %}
+      <button class="btn" type="submit" onclick="return confirm('Delete this driver profile?');">Yes, Delete</button>
+      <a class="btn" href="{% url 'nearride:driver-dashboard' %}">Cancel</a>
+    </form>
+  </div>
+</section>
+{% endblock %}

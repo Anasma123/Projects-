@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Ride Notifications | NearRide{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-card">
+    <h1>Ride Notifications</h1>
+    {% if notifications %}
+      <div style="display:grid;gap:10px;">
+        {% for item in notifications %}
+          <a href="{% url 'nearride:ride-detail' item.ride_id %}" style="text-decoration:none;color:inherit;border:1px solid #e5e7eb;border-radius:10px;padding:10px;display:block;">
+            <p style="margin:0 0 4px;font-weight:600;">{{ item.message }}</p>
+            <p class="subtext" style="margin:0;">Ride #{{ item.ride_id }} • {{ item.created_at|date:"M d, H:i" }}</p>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No notifications yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

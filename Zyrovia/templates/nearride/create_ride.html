@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Create Ride | NearRide{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <form method="post" class="auth-card" novalidate>
+    {% csrf_token %}
+    <h1>Create Ride Request</h1>
+    <p>Tell us where you are and where you need to go.</p>
+    {% if form.errors %}<div class="form-errors">{{ form.errors }}</div>{% endif %}
+    <label>Ride Category {{ form.ride_category }}</label>
+    <h3>Pickup Location</h3>
+    <label>Country {{ form.pickup_country }}</label>
+    <label>State {{ form.pickup_state }}</label>
+    <label>District {{ form.pickup_district }}</label>
+    <label>
+      Search Locality
+      <input type="text" id="id_pickup_locality_search" placeholder="Type pickup locality">
+    </label>
+    <label>Locality {{ form.pickup_locality }}</label>
+    <label>Pickup Location {{ form.pickup_location }}</label>
+    <h3>Destination Location</h3>
+    <label>Country {{ form.destination_country }}</label>
+    <label>State {{ form.destination_state }}</label>
+    <label>District {{ form.destination_district }}</label>
+    <label>
+      Search Locality
+      <input type="text" id="id_destination_locality_search" placeholder="Type destination locality">
+    </label>
+    <label>Locality {{ form.destination_locality }}</label>
+    <label>Destination {{ form.destination }}</label>
+
+    <h3>Select Driver</h3>
+    <label>Driver View {{ form.driver_scope }}</label>
+    <label>Select Driver {{ form.driver_profile }}</label>
+    <div id="driver_selected_meta" style="margin: 6px 0 12px; font-size: 0.92rem;"></div>
+    <button class="btn" type="submit">Send Request</button>
+  </form>
+</section>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/location_dropdowns.js' %}"></script>
+  <script>
+    if (window.ZyroviaLocationDropdowns) {
+      window.ZyroviaLocationDropdowns.init({
+        countryId: 'id_pickup_country',
+        stateId: 'id_pickup_state',
+        districtId: 'id_pickup_district',
+        localityId: 'id_pickup_locality',
+        localitySearchId: 'id_pickup_locality_search'
+      });
+      window.ZyroviaLocationDropdowns.init({
+        countryId: 'id_destination_country',
+        stateId: 'id_destination_state',
+        districtId: 'id_destination_district',
+        localityId: 'id_destination_locality',
+        localitySearchId: 'id_destination_locality_search'
+      });
+    }
+
+    (function () {
+      var categoryEl = document.getElementById('id_ride_category');
+      var pickupStateEl = document.getElementById('id_pickup_state');
+      var pickupDistrictEl = document.getElementById('id_pickup_district');
+      var pickupLocalityEl = document.getElementById('id_pickup_locality');
+      var driverScopeEl = document.getElementById('id_driver_scope');
+      var driverEl = document.getElementById('id_driver_profile');
+      var driverMetaEl = document.getElementById('driver_selected_meta');
+      var apiUrl = "{% url 'nearride:available-drivers-api' %}";
+
+      if (!categoryEl || !pickupStateEl || !pickupDistrictEl || !pickupLocalityEl || !driverScopeEl || !driverEl) {
+        return;
+      }
+
+      function statusBadge(status) {
+        var isActive = status === 'Active';
+        var color = isActive ? '#166534' : '#374151';
+        var bg = isActive ? '#dcfce7' : '#e5e7eb';
+        return '<span style="display:inline-block;padding:2px 8px;border-radius:999px;background:' + bg + ';color:' + color + ';font-weight:600;">' + status + '</span>';
+      }
+
+      function updateDriverMeta() {
+        var selectedOption = driverEl.options[driverEl.selectedIndex];
+        if (!selectedOption || !selectedOption.value) {
+          driverMetaEl.innerHTML = '';
+          return;
+        }
+        var status = selectedOption.getAttribute('data-status') || 'Offline';
+        var phone = selectedOption.getAttribute('data-phone') || '';
+        var district = selectedOption.getAttribute('data-district') || 'N/A';
+        var locality = selectedOption.getAttribute('data-locality') || 'N/A';
+        driverMetaEl.innerHTML = statusBadge(status) + ' ' + district + ' - ' + locality + (phone ? ' - ' + phone : '');
+      }
+
+      function renderDrivers(items) {
+        var previous = driverEl.value;
+        driverEl.innerHTML = '';
+        var placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'Select Driver';
+        driverEl.appendChild(placeholder);
+        items.forEach(function (item) {
+          var option = document.createElement('option');
+          option.value = item.id;
+          option.textContent = item.label;
+          option.setAttribute('data-status', item.status);
+          option.setAttribute('data-phone', item.phone_number);
+          option.setAttribute('data-district', item.district);
+          option.setAttribute('data-locality', item.locality);
+          driverEl.appendChild(option);
+        });
+        if (previous && items.some(function (item) { return String(item.id) === String(previous); })) {
+          driverEl.value = previous;
+        }
+        updateDriverMeta();
+      }
+
+      function fetchDrivers() {
+        var rideCategoryId = categoryEl.value;
+        if (!rideCategoryId) {
+          renderDrivers([]);
+          return;
+        }
+        var params = new URLSearchParams();
+        params.set('ride_category_id', rideCategoryId);
+        if (pickupStateEl.value) params.set('pickup_state_id', pickupStateEl.value);
+        if (pickupDistrictEl.value) params.set('pickup_district_id', pickupDistrictEl.value);
+        if (pickupLocalityEl.value) params.set('pickup_locality_id', pickupLocalityEl.value);
+        params.set('scope', driverScopeEl.value || 'district');
+
+        fetch(apiUrl + '?' + params.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+          .then(function (response) { return response.ok ? response.json() : { items: [] }; })
+          .then(function (data) { renderDrivers((data && data.items) || []); })
+          .catch(function () { renderDrivers([]); });
+      }
+
+      categoryEl.addEventListener('change', fetchDrivers);
+      pickupStateEl.addEventListener('change', fetchDrivers);
+      pickupDistrictEl.addEventListener('change', fetchDrivers);
+      pickupLocalityEl.addEventListener('change', fetchDrivers);
+      driverScopeEl.addEventListener('change', fetchDrivers);
+      driverEl.addEventListener('change', updateDriverMeta);
+      fetchDrivers();
+    })();
+  </script>
+{% endblock %}

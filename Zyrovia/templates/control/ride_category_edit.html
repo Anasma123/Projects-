@@ -1,0 +1,12 @@
+{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Edit Ride Category</h1>
+<section class="panel">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Save Changes</button>
+    <a class="btn ghost" href="{% url 'control:ride-categories' %}">Back</a>
+  </form>
+</section>
+{% endblock %}

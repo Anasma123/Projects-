@@ -1,0 +1,35 @@
+﻿{% extends "base.html" %}
+{% block title %}Provider Dashboard | NearService{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>Provider Dashboard</h1>
+  <p>{{ profile.category.name }} • ⭐ {{ profile.rating_average }} • Pending: {{ pending_count }}</p>
+  <form method="post" action="{% url 'nearservice:toggle-availability' %}">
+    {% csrf_token %}
+    <button class="btn" type="submit">Set {{ profile.is_available|yesno:"Unavailable,Available" }}</button>
+  </form>
+</section>
+
+<section class="panel" style="margin-top:16px;">
+  <h2>Incoming Requests</h2>
+  <div class="ride-list">
+    {% for req in incoming_requests %}
+      <article class="ride-card">
+        <h3>Request #{{ req.id }} - {{ req.category.name }}</h3>
+        <p><strong>Customer:</strong> {{ req.customer.full_name }}</p>
+        <p><strong>Status:</strong> {{ req.get_status_display }}</p>
+        <p>{{ req.problem_description }}</p>
+        <div class="actions">
+          <a class="btn ghost" href="{% url 'nearservice:request-detail' req.id %}">Open</a>
+          {% if req.status == 'requested' %}
+            <form method="post" action="{% url 'nearservice:accept-request' req.id %}">{% csrf_token %}<button class="btn" type="submit">Accept</button></form>
+            <form method="post" action="{% url 'nearservice:reject-request' req.id %}">{% csrf_token %}<button class="btn ghost" type="submit">Reject</button></form>
+          {% endif %}
+        </div>
+      </article>
+    {% empty %}
+      <p class="subtext">No requests yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

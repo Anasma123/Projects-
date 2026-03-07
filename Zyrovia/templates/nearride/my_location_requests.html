@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}My Location Requests | NearRide{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-card">
+    <h1>My Location Requests</h1>
+    <p><a class="btn" href="{% url 'nearride:request-location' %}">Request New Location</a></p>
+    {% if requests_list %}
+      <div style="display:grid;gap:10px;">
+        {% for req in requests_list %}
+          <div style="border:1px solid #e5e7eb;border-radius:10px;padding:10px;">
+            <p style="margin:0 0 6px;font-weight:600;">{{ req.country_name }} - {{ req.state_name }} - {{ req.district_name }} - {{ req.locality_name }}</p>
+            <p style="margin:0 0 6px;">
+              <span style="display:inline-block;padding:2px 8px;border-radius:999px;font-weight:600;background:{% if req.status == 'approved' %}#dcfce7{% elif req.status == 'rejected' %}#fee2e2{% else %}#fef9c3{% endif %};color:{% if req.status == 'approved' %}#166534{% elif req.status == 'rejected' %}#991b1b{% else %}#854d0e{% endif %};">
+                {{ req.get_status_display }}
+              </span>
+            </p>
+            {% if req.admin_note %}
+              <p style="margin:0;">Admin Note: {{ req.admin_note }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No location requests yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Shop Category Management</h1>
+<div class="profile-grid">
+  <article class="panel">
+    <h3>Create Shop Category</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn" type="submit">Add Category</button>
+    </form>
+  </article>
+  <article class="panel">
+    <h3>Existing Shop Categories</h3>
+    <div class="ride-list">
+      {% for category in categories %}
+        <div class="ride-row">
+          <span>{{ category.name }} ({{ category.is_active|yesno:"Active,Inactive" }})</span>
+          <div class="actions">
+            <a class="btn ghost" href="{% url 'control:shop-category-edit' category.id %}">Edit</a>
+            <form method="post" action="{% url 'control:shop-category-delete' category.id %}">
+              {% csrf_token %}
+              <button class="btn ghost" type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      {% empty %}
+        <p class="empty-state">No shop categories found.</p>
+      {% endfor %}
+    </div>
+  </article>
+</div>
+{% endblock %}

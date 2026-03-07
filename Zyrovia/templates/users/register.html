@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Register | Zyrovia{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <form method="post" class="auth-card" novalidate>
+    {% csrf_token %}
+    <h1>Create account</h1>
+    <p>Set up your Zyrovia profile.</p>
+    {% if form.errors %}<div class="form-errors">{{ form.errors }}</div>{% endif %}
+    <label>Full Name {{ form.full_name }}</label>
+    <label>Phone Number {{ form.phone_number }}</label>
+    <label>Email (Optional) {{ form.email }}</label>
+    <label>Profile Image URL (Optional) {{ form.profile_image }}</label>
+    <label>Password {{ form.password }}</label>
+    <label>Confirm Password {{ form.confirm_password }}</label>
+    <button class="btn" type="submit">Create Account</button>
+    <p class="subtext">Already have an account? <a href="{% url 'users:login' %}">Login</a></p>
+  </form>
+</section>
+{% endblock %}

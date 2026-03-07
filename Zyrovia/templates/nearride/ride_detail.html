@@ -1,0 +1,121 @@
+﻿{% extends "base.html" %}
+{% block title %}Ride #{{ ride.id }} | NearRide{% endblock %}
+{% block content %}
+<section class="profile-grid">
+  <article class="panel">
+    <h1>Ride #{{ ride.id }} - {{ ride.get_status_display }}</h1>
+    <p><strong>Ride Category:</strong> {{ ride.ride_category.name|default:ride.get_ride_type_display }}</p>
+    <p><strong>Pickup:</strong> {{ ride.pickup_location }}</p>
+    <p class="subtext">{{ ride.pickup_locality.name|default:"N/A" }}, {{ ride.pickup_district.name|default:"N/A" }}, {{ ride.pickup_state.name|default:"N/A" }}</p>
+    <p><strong>Destination:</strong> {{ ride.destination }}</p>
+    <p class="subtext">{{ ride.destination_locality.name|default:"N/A" }}, {{ ride.destination_district.name|default:"N/A" }}, {{ ride.destination_state.name|default:"N/A" }}</p>
+
+    <h3>Contact</h3>
+    <p><strong>Customer:</strong> {{ ride.customer.full_name }} - <a href="tel:{{ ride.customer.phone_number }}">Call</a></p>
+    {% if ride.driver %}
+      <p><strong>Driver:</strong> {{ ride.driver.full_name }} - <a href="tel:{{ ride.driver.phone_number }}">Call</a></p>
+      {% if request.user.is_authenticated and request.user.id != ride.driver.id and driver_profile_id %}
+      <form method="post" action="{% url 'control:report-create' %}">
+        {% csrf_token %}
+        <input type="hidden" name="target_type" value="driver">
+        <input type="hidden" name="target_id" value="{{ driver_profile_id }}">
+        <label for="id_report_reason_{{ ride.id }}"><strong>Reason</strong></label>
+        <textarea
+          id="id_report_reason_{{ ride.id }}"
+          name="reason"
+          rows="3"
+          maxlength="1200"
+          placeholder="What is the reason for reporting this driver?"
+          required
+        ></textarea>
+        <input type="hidden" name="next_url" value="{% url 'nearride:ride-detail' ride.id %}">
+        <button class="btn ghost" type="submit">Report Driver</button>
+      </form>
+      {% endif %}
+    {% else %}
+      <p class="subtext">Driver not assigned yet.</p>
+    {% endif %}
+
+    <div class="actions">
+      {% if can_accept %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="accept_ride">
+          <button class="btn" type="submit">Accept Ride</button>
+        </form>
+      {% endif %}
+      {% if can_complete %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="complete_ride">
+          <input type="text" name="completion_note" maxlength="255" placeholder="Completion note (optional)">
+          <button class="btn" type="submit">Mark Completed</button>
+        </form>
+      {% endif %}
+      {% if can_reject %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="reject_ride">
+          <input type="text" name="cancel_reason" maxlength="255" placeholder="Reason for rejection" required>
+          <button class="btn ghost" type="submit">Reject Ride</button>
+        </form>
+      {% endif %}
+      {% if can_cancel %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="cancel_ride">
+          <input type="text" name="cancel_reason" maxlength="255" placeholder="Reason for cancellation" required>
+          <button class="btn ghost" type="submit">Cancel Ride</button>
+        </form>
+      {% endif %}
+      {% if can_delete %}
+        <form method="post" onsubmit="return confirm('Delete this ride?');">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="delete_ride">
+          <input type="text" name="delete_reason" maxlength="255" placeholder="Reason for deletion" required>
+          <button class="btn ghost" type="submit">Delete Ride</button>
+        </form>
+      {% endif %}
+    </div>
+
+    {% if ride.cancel_reason %}
+      <p class="subtext"><strong>Cancel/Reject Reason:</strong> {{ ride.cancel_reason }}</p>
+    {% endif %}
+    {% if ride.completion_note %}
+      <p class="subtext"><strong>Completion Note:</strong> {{ ride.completion_note }}</p>
+    {% endif %}
+
+    {% if can_rate %}
+      <h3>Rate Driver</h3>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="rate_driver">
+        {{ rating_form.stars }}
+        <button class="btn" type="submit">Submit Rating</button>
+      </form>
+    {% elif ride.rating %}
+      <p><strong>Your Rating:</strong> {{ ride.rating.stars }}/5</p>
+    {% endif %}
+  </article>
+
+  <article class="panel">
+    <h2>Ride Chat</h2>
+    <div class="chat-box">
+      {% for msg in messages_history %}
+        <div class="chat-item {% if msg.sender_id == request.user.id %}mine{% endif %}">
+          <p class="chat-meta">{{ msg.sender.full_name }} • {{ msg.timestamp|date:"M d, H:i" }}</p>
+          <p>{{ msg.message }}</p>
+        </div>
+      {% empty %}
+        <p class="subtext">No messages yet.</p>
+      {% endfor %}
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="send_message">
+      {{ chat_form.message }}
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </article>
+</section>
+{% endblock %}

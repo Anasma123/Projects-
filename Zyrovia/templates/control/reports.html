@@ -1,0 +1,36 @@
+﻿{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Reports & Flags</h1>
+<table class="admin-table">
+  <thead><tr><th>ID</th><th>Reporter</th><th>Target</th><th>Reason</th><th>Status</th><th>Action</th></tr></thead>
+  <tbody>
+    {% for report in reports %}
+      <tr>
+        <td>{{ report.id }}</td>
+        <td>{{ report.reporter.full_name }}</td>
+        <td>{{ report.get_target_type_display }} #{{ report.target_id }}</td>
+        <td>{{ report.reason }}</td>
+        <td>{{ report.is_resolved|yesno:"Resolved,Open" }}</td>
+        <td>
+          {% if not report.is_resolved %}
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="report_id" value="{{ report.id }}">
+              <select name="action_taken">
+                <option value="none">No direct action</option>
+                {% if report.target_type == 'driver' %}<option value="block_driver">Block driver</option>{% endif %}
+                {% if report.target_type == 'shop' %}<option value="disable_shop">Disable shop</option>{% endif %}
+                {% if report.target_type == 'service_provider' %}<option value="disable_provider">Disable provider</option>{% endif %}
+              </select>
+              <input type="text" name="resolution_note" placeholder="Resolution note">
+              <button class="btn" type="submit">Resolve</button>
+            </form>
+          {% else %}
+            <span class="subtext">{{ report.resolution_note }}</span>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

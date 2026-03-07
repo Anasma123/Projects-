@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Driver Requests | NearRide{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>Pending Ride Requests</h1>
+  <p>Vehicle: {{ driver_profile.get_vehicle_type_display }} | Status: {{ driver_profile.is_online|yesno:"Online,Offline" }}</p>
+  <p class="subtext">Service Area: {{ driver_profile.get_service_area_scope_display }}</p>
+  {% if pending_rides %}
+    <div class="ride-list">
+      {% for ride in pending_rides %}
+        <article class="ride-card">
+          <h3>Ride #{{ ride.id }} - {{ ride.ride_category.name|default:ride.get_ride_type_display }}</h3>
+          <p><strong>Pickup:</strong> {{ ride.pickup_location }}</p>
+          <p class="subtext">{{ ride.pickup_locality.name|default:"N/A" }}, {{ ride.pickup_district.name|default:"N/A" }}, {{ ride.pickup_state.name|default:"N/A" }}</p>
+          <p><strong>Destination:</strong> {{ ride.destination }}</p>
+          <p><strong>Customer:</strong> {{ ride.customer.full_name }}</p>
+          <div class="actions">
+            <form method="post" action="{% url 'nearride:accept-ride' ride.id %}">{% csrf_token %}<button class="btn" type="submit">Accept</button></form>
+            <form method="post" action="{% url 'nearride:reject-ride' ride.id %}">{% csrf_token %}<button class="btn ghost" type="submit">Reject</button></form>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="subtext">No pending rides available right now.</p>
+  {% endif %}
+</section>
+{% endblock %}

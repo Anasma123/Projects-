@@ -1,0 +1,28 @@
+﻿{% extends "base.html" %}
+{% block title %}Service Categories | NearService{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>Service Categories</h1>
+  {% if request.user.is_staff %}
+    <a class="btn" href="{% url 'nearservice:category-create' %}">Add Category</a>
+  {% endif %}
+  <div class="ride-list" style="margin-top:12px;">
+    {% for category in categories %}
+      <div class="ride-row">
+        <span>
+          <strong>{{ category.name }}</strong>
+          <span class="subtext">{{ category.description }}</span>
+        </span>
+        <span>
+          <span class="status-pill">{{ category.is_active|yesno:"Active,Inactive" }}</span>
+          {% if request.user.is_staff %}
+            <a class="btn ghost" href="{% url 'nearservice:category-edit' category.id %}">Edit</a>
+          {% endif %}
+        </span>
+      </div>
+    {% empty %}
+      <p class="subtext">No categories found.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

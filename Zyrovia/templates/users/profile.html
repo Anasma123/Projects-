@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Profile | Zyrovia{% endblock %}
+{% block content %}
+<section class="profile-grid">
+  <article class="panel">
+    <h1>Your Profile</h1>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="action" value="update_profile">
+      {% if profile_form.errors %}<div class="form-errors">{{ profile_form.errors }}</div>{% endif %}
+      <label>Full Name {{ profile_form.full_name }}</label>
+      <label>Phone Number {{ profile_form.phone_number }}</label>
+      <label>Email {{ profile_form.email }}</label>
+      <label>Profile Image URL {{ profile_form.profile_image }}</label>
+      <button class="btn" type="submit">Save Profile</button>
+    </form>
+  </article>
+
+  <article class="panel">
+    <h2>Role Management</h2>
+    <form method="post" class="inline-form">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="add_role">
+      {{ role_form.role }}
+      <button class="btn" type="submit">Add Role</button>
+    </form>
+    <div class="roles-list">
+      {% if roles %}
+        {% for role in roles %}
+          <div class="role-item">
+            <span>{{ role.get_role_display }}</span>
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="remove_role">
+              <input type="hidden" name="role" value="{{ role.role }}">
+              <button class="btn ghost" type="submit">Remove</button>
+            </form>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="subtext">No roles assigned yet.</p>
+      {% endif %}
+    </div>
+  </article>
+</section>
+{% endblock %}

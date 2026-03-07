@@ -1,0 +1,23 @@
+﻿{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Shop Management</h1>
+<table class="admin-table">
+  <thead><tr><th>Shop</th><th>Owner</th><th>Verified</th><th>Active</th><th>Rating</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for shop in shops %}
+      <tr>
+        <td>{{ shop.shop_name }}</td>
+        <td>{{ shop.owner.full_name }}</td>
+        <td>{{ shop.is_verified|yesno:"Yes,No" }}</td>
+        <td>{{ shop.is_active|yesno:"Yes,No" }}</td>
+        <td>{{ shop.average_rating }}</td>
+        <td>
+          <form method="post" style="display:inline;">{% csrf_token %}<input type="hidden" name="shop_id" value="{{ shop.id }}"><input type="hidden" name="action" value="toggle_verified"><button class="btn ghost" type="submit">Verify/Unverify</button></form>
+          <form method="post" style="display:inline;">{% csrf_token %}<input type="hidden" name="shop_id" value="{{ shop.id }}"><input type="hidden" name="action" value="toggle_active"><button class="btn ghost" type="submit">Enable/Disable</button></form>
+          <form method="post" style="display:inline;">{% csrf_token %}<input type="hidden" name="shop_id" value="{{ shop.id }}"><input type="hidden" name="action" value="reject"><button class="btn ghost" type="submit">Reject</button></form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

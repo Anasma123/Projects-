@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Ride Request Submitted | NearRide{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-card">
+    <h1>Ride Request Submitted</h1>
+    <p>Your ride request has been sent.</p>
+    {% if driver_phone %}
+      <p>Dialing driver: <strong>{{ driver_phone }}</strong></p>
+      <p>If the dialer does not open, tap <a href="tel:{{ driver_phone }}">Call Driver</a>.</p>
+    {% else %}
+      <p>No driver phone number available.</p>
+    {% endif %}
+    <p><a class="btn" href="{% url 'nearride:ride-detail' ride.id %}">Go to Ride Details</a></p>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+  {% if driver_phone %}
+    <script>
+      window.location.href = "tel:{{ driver_phone|escapejs }}";
+      setTimeout(function () {
+        window.location.href = "{% url 'nearride:ride-detail' ride.id %}";
+      }, 1200);
+    </script>
+  {% endif %}
+{% endblock %}

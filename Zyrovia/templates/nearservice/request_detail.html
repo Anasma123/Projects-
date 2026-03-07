@@ -1,0 +1,59 @@
+﻿{% extends "base.html" %}
+{% block title %}Service Request #{{ service_request.id }} | NearService{% endblock %}
+{% block content %}
+<section class="profile-grid">
+  <article class="panel">
+    <h1>Request #{{ service_request.id }} - {{ service_request.get_status_display }}</h1>
+    <p><strong>Category:</strong> {{ service_request.category.name }}</p>
+    <p><strong>Problem:</strong> {{ service_request.problem_description }}</p>
+
+    <h3>Contact</h3>
+    <p><strong>Customer:</strong> {{ service_request.customer.full_name }} - <a href="tel:{{ service_request.customer.phone_number }}">Call</a></p>
+    {% if service_request.provider %}
+      <p><strong>Provider:</strong> {{ service_request.provider.user.full_name }} - <a href="tel:{{ service_request.provider.phone_number }}">Call</a></p>
+    {% endif %}
+
+    <div class="actions">
+      {% if is_provider and service_request.status == 'accepted' %}
+        <form method="post">{% csrf_token %}<input type="hidden" name="action" value="mark_completed"><button class="btn" type="submit">Mark Completed</button></form>
+      {% endif %}
+      {% if can_cancel %}
+        <form method="post">{% csrf_token %}<input type="hidden" name="action" value="cancel_request"><button class="btn ghost" type="submit">Cancel Request</button></form>
+      {% endif %}
+    </div>
+
+    {% if can_rate %}
+      <h3>Rate Provider</h3>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="submit_rating">
+        {{ rating_form.rating }}
+        {{ rating_form.review }}
+        <button class="btn" type="submit">Submit Rating</button>
+      </form>
+    {% elif service_request.rating %}
+      <p><strong>Your Rating:</strong> {{ service_request.rating.rating }}/5</p>
+    {% endif %}
+  </article>
+
+  <article class="panel">
+    <h2>Service Chat</h2>
+    <div class="chat-box">
+      {% for msg in messages_history %}
+        <div class="chat-item {% if msg.sender_id == request.user.id %}mine{% endif %}">
+          <p class="chat-meta">{{ msg.sender.full_name }} • {{ msg.timestamp|date:"M d, H:i" }}</p>
+          <p>{{ msg.message }}</p>
+        </div>
+      {% empty %}
+        <p class="subtext">No messages yet.</p>
+      {% endfor %}
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="send_message">
+      {{ chat_form.message }}
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </article>
+</section>
+{% endblock %}

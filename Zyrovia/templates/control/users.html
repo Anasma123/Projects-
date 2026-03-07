@@ -1,0 +1,26 @@
+﻿{% extends "control/base.html" %}
+{% block control_content %}
+<h1>User Management</h1>
+<form method="get" class="inline-form"><input type="text" name="q" value="{{ query }}" placeholder="Search users"><button class="btn" type="submit">Search</button></form>
+<table class="admin-table" style="margin-top:12px;">
+  <thead><tr><th>User</th><th>Phone</th><th>Roles</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for user in users %}
+      <tr>
+        <td>{{ user.full_name }}</td>
+        <td>{{ user.phone_number }}</td>
+        <td>{% for role in user.assigned_roles.all %}<span class="status-pill">{{ role.get_role_display }}</span>{% empty %}<span class="subtext">None</span>{% endfor %}</td>
+        <td>{{ user.is_active|yesno:"Active,Inactive" }}</td>
+        <td>
+          <form method="post" style="display:inline;">{% csrf_token %}<input type="hidden" name="user_id" value="{{ user.id }}"><input type="hidden" name="action" value="toggle_active"><button class="btn ghost" type="submit">Toggle Active</button></form>
+          {% if not user.is_superuser %}
+            <form method="post" style="display:inline;">{% csrf_token %}<input type="hidden" name="user_id" value="{{ user.id }}"><input type="hidden" name="action" value="delete_user"><button class="btn ghost" type="submit">Soft Delete</button></form>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No users found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

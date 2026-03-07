@@ -1,0 +1,84 @@
+﻿{% extends "base.html" %}
+{% block title %}NearShop | Zyrovia{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">NearShop</p>
+  <h1>Discover trusted local stores and curated deals.</h1>
+  <p>Browse shops and offers in guest mode. Sign in to contact owners and manage your own shop.</p>
+</section>
+
+<section class="ride-cta-grid">
+  <a class="panel ride-cta" href="{% url 'nearshop:shop-list' %}">
+    <h2>Browse Shops</h2>
+    <p>Explore product catalogs and pricing from local sellers.</p>
+  </a>
+  {% if request.user.is_authenticated %}
+    {% if owner_shop %}
+      <a class="panel ride-cta" href="{% url 'nearshop:owner-dashboard' %}">
+        <h2>Owner Dashboard</h2>
+        <p>Manage products, stock, offers, and customer interactions.</p>
+      </a>
+    {% else %}
+      <a class="panel ride-cta" href="{% url 'nearshop:register-shop' %}">
+        <h2>Register Shop</h2>
+        <p>Start selling and promoting products in your neighborhood.</p>
+      </a>
+    {% endif %}
+  {% else %}
+    <a class="panel ride-cta" href="{% url 'users:login' %}?next={% url 'nearshop:register-shop' %}">
+      <h2>Become a Shop Owner</h2>
+      <p>Sign in to register and manage your shop.</p>
+    </a>
+  {% endif %}
+</section>
+
+<section class="profile-grid">
+  <article class="panel">
+    <h2>Featured Shops</h2>
+    <div class="ride-list">
+      {% for shop in featured_shops %}
+        <a class="ride-row" href="{% url 'nearshop:shop-detail' shop.id %}">
+          <span>{{ shop.shop_name }} • {{ shop.category.name|default:shop.shop_category }} • {{ shop.state.name|default:"N/A" }}</span>
+          <span class="status-pill">⭐ {{ shop.average_rating }}</span>
+        </a>
+      {% empty %}
+        <p class="subtext">No shops listed yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <h2>Active Offers</h2>
+    <div class="ride-list">
+      {% for offer in active_offers %}
+        <a class="ride-row" href="{% url 'nearshop:shop-detail' offer.shop.id %}">
+          <span>{{ offer.shop.shop_name }} - {{ offer.title }}</span>
+          <span class="offer-badge">{{ offer.discount_percent }}% OFF</span>
+        </a>
+      {% empty %}
+        <p class="subtext">No active offers currently.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+{% if request.user.is_authenticated %}
+<section class="panel" style="margin-top:16px;">
+  <h2>Shop Category Requests</h2>
+  <div class="actions">
+    <a class="btn ghost" href="{% url 'nearshop:request-category' %}">Request New Shop Category</a>
+    <a class="btn ghost" href="{% url 'nearshop:my-shop-category-requests' %}">View My Requests</a>
+  </div>
+  <div class="ride-list" style="margin-top:10px;">
+    {% for req in category_requests %}
+      <div class="ride-row">
+        <span>{{ req.category_name }}</span>
+        <span class="status-badge {{ req.status }}">{{ req.get_status_display }}</span>
+      </div>
+    {% empty %}
+      <p class="empty-state">No category requests yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Shops | NearShop{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>Local Shops</h1>
+  <p class="subtext">Browse shops, products, and deals near you.</p>
+
+  <form method="get" class="inline-form">
+    <select name="category">
+      <option value="">All Shop Categories</option>
+      {% for category in category_options %}
+        <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+    </select>
+    <select name="country" id="id_country_filter">
+      <option value="">All Countries</option>
+      {% for item in countries %}
+        <option value="{{ item.id }}" {% if selected_country == item.id %}selected{% endif %}>{{ item.name }}</option>
+      {% endfor %}
+    </select>
+    <select name="state" id="id_state_filter">
+      <option value="">All States</option>
+      {% for item in states %}
+        <option value="{{ item.id }}" {% if selected_state == item.id %}selected{% endif %}>{{ item.name }}</option>
+      {% endfor %}
+    </select>
+    <select name="district" id="id_district_filter">
+      <option value="">All Districts</option>
+      {% for item in districts %}
+        <option value="{{ item.id }}" {% if selected_district == item.id %}selected{% endif %}>{{ item.name }}</option>
+      {% endfor %}
+    </select>
+    <label style="margin:0;">
+      <input type="text" id="id_locality_search" placeholder="Search locality">
+    </label>
+    <select name="locality" id="id_locality_filter">
+      <option value="">All Localities</option>
+      {% for item in localities %}
+        <option value="{{ item.id }}" {% if selected_locality == item.id %}selected{% endif %}>{{ item.name }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn" type="submit">Filter</button>
+  </form>
+
+  <div class="shop-grid" style="margin-top:14px;">
+    {% for shop in shops %}
+      <article class="shop-card">
+        <h3>{{ shop.shop_name }}</h3>
+        <p>{{ shop.category.name|default:shop.shop_category }}</p>
+        <p class="subtext">{{ shop.locality.name|default:"N/A" }}, {{ shop.district.name|default:"N/A" }}, {{ shop.state.name|default:"N/A" }}</p>
+        <p class="subtext">⭐ {{ shop.average_rating }} {% if shop.is_verified %}• Verified{% endif %}</p>
+        <a class="btn" href="{% url 'nearshop:shop-detail' shop.id %}">View Shop</a>
+      </article>
+    {% empty %}
+      <p class="empty-state">No shops available for selected location.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/location_dropdowns.js' %}"></script>
+  <script>
+    window.ZyroviaLocationDropdowns && window.ZyroviaLocationDropdowns.init({
+      countryId: 'id_country_filter',
+      stateId: 'id_state_filter',
+      districtId: 'id_district_filter',
+      localityId: 'id_locality_filter',
+      localitySearchId: 'id_locality_search'
+    });
+  </script>
+{% endblock %}

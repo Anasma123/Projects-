@@ -1,0 +1,96 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ shop.shop_name }} | NearShop{% endblock %}
+{% block content %}
+<section class="profile-grid">
+  <article class="panel">
+    <h1>{{ shop.shop_name }}</h1>
+    <p><strong>Category:</strong> {{ shop.category.name|default:shop.shop_category }}</p>
+    <p><strong>Address:</strong> {{ shop.address }}</p>
+    <p><strong>Location:</strong> {{ shop.locality.name|default:"N/A" }}, {{ shop.district.name|default:"N/A" }}, {{ shop.state.name|default:"N/A" }}</p>
+    {% if shop.location_text %}<p class="subtext">{{ shop.location_text }}</p>{% endif %}
+    <p><strong>Rating:</strong> ⭐ {{ shop.average_rating }}</p>
+    <p>{{ shop.description }}</p>
+
+    {% if can_contact %}
+      <div class="actions">
+        <a class="btn" href="tel:{{ shop.phone_number }}">Call Shop</a>
+        <form method="post" action="{% url 'control:report-create' %}">
+          {% csrf_token %}
+          <input type="hidden" name="target_type" value="shop">
+          <input type="hidden" name="target_id" value="{{ shop.id }}">
+          <input type="hidden" name="reason" value="Issue reported from NearShop page for {{ shop.shop_name }}">
+          <input type="hidden" name="next_url" value="{% url 'nearshop:shop-detail' shop.id %}">
+          <button class="btn ghost" type="submit">Report Shop</button>
+        </form>
+      </div>
+    {% else %}
+      <p class="subtext">Login to call, chat, and rate this shop.</p>
+    {% endif %}
+
+    <h3>Active Offers</h3>
+    <div class="offer-list">
+      {% for offer in offers %}
+        <div class="offer-card">
+          <p class="offer-badge">{{ offer.discount_percent }}% OFF</p>
+          <h4>{{ offer.title }}</h4>
+          <p>{{ offer.description }}</p>
+          <p class="subtext">Valid until {{ offer.valid_until|date:"M d, Y H:i" }}</p>
+        </div>
+      {% empty %}
+        <p class="subtext">No active offers.</p>
+      {% endfor %}
+    </div>
+
+    {% if can_contact %}
+      <h3>Rate This Shop</h3>
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="submit_rating">
+        {{ rating_form.rating }}
+        {{ rating_form.review_text }}
+        <button class="btn" type="submit">Submit Rating</button>
+      </form>
+      {% if user_rating %}<p class="subtext">Your current rating: {{ user_rating.rating }}/5</p>{% endif %}
+    {% endif %}
+  </article>
+
+  <article class="panel">
+    <h2>Products</h2>
+    <div class="shop-grid">
+      {% for product in products %}
+        <div class="shop-card">
+          <h4>{{ product.product_name }}</h4>
+          <p>{{ product.category }}</p>
+          <p><strong>Price:</strong> ₹{{ product.price }}</p>
+          <p class="subtext">Stock: {{ product.stock_quantity }}</p>
+        </div>
+      {% empty %}
+        <p class="subtext">No products listed.</p>
+      {% endfor %}
+    </div>
+
+    <h2>Shop Chat</h2>
+    <div class="chat-box">
+      {% for msg in messages_history %}
+        <div class="chat-item {% if request.user.is_authenticated and msg.sender_id == request.user.id %}mine{% endif %}">
+          <p class="chat-meta">{{ msg.sender.full_name }} • {{ msg.timestamp|date:"M d, H:i" }}</p>
+          <p>{{ msg.message }}</p>
+        </div>
+      {% empty %}
+        <p class="subtext">No messages yet.</p>
+      {% endfor %}
+    </div>
+
+    {% if can_contact %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="send_message">
+        {{ chat_form.message }}
+        <button class="btn" type="submit">Send Message</button>
+      </form>
+    {% else %}
+      <p class="subtext"><a href="{% url 'users:login' %}?next={% url 'nearshop:shop-detail' shop.id %}">Login</a> to message the shop owner.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

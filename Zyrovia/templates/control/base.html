@@ -1,0 +1,25 @@
+﻿{% extends "base.html" %}
+{% block title %}Admin Control | Zyrovia{% endblock %}
+{% block content %}
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <h3>Admin Panel</h3>
+    <a href="{% url 'control:dashboard' %}">Dashboard</a>
+    <a href="{% url 'control:users' %}">Users</a>
+    <a href="{% url 'control:drivers' %}">Drivers</a>
+    <a href="{% url 'control:shops' %}">Shops</a>
+    <a href="{% url 'control:providers' %}">Providers</a>
+    <a href="{% url 'control:categories' %}">Service Categories</a>
+    <a href="{% url 'control:category-requests' %}">Service Category Requests</a>
+    <a href="{% url 'control:ride-categories' %}">Ride Categories</a>
+    <a href="{% url 'control:ride-category-requests' %}">Ride Category Requests</a>
+    <a href="{% url 'control:shop-categories' %}">Shop Categories</a>
+    <a href="{% url 'control:shop-category-requests' %}">Shop Category Requests</a>
+    <a href="{% url 'control:location-requests' %}">Location Requests</a>
+    <a href="{% url 'control:reports' %}">Reports</a>
+  </aside>
+  <section class="admin-content">
+    {% block control_content %}{% endblock %}
+  </section>
+</div>
+{% endblock %}

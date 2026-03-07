@@ -1,0 +1,11 @@
+﻿{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Edit Category - {{ category.name }}</h1>
+<section class="panel">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Save</button>
+  </form>
+</section>
+{% endblock %}

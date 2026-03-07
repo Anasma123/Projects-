@@ -1,0 +1,22 @@
+﻿{% extends "base.html" %}
+{% block title %}My Category Requests | NearService{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>My Service Category Requests</h1>
+  <a class="btn" href="{% url 'nearservice:request-category' %}">Request Another Category</a>
+  <div class="ride-list" style="margin-top:12px;">
+    {% for req in requests_list %}
+      <article class="ride-card">
+        <h3>{{ req.category_name }}</h3>
+        <p>{{ req.description|default:"No description provided." }}</p>
+        <p><span class="status-badge {{ req.status }}">{{ req.get_status_display }}</span></p>
+        <p class="subtext">Submitted: {{ req.created_at|date:"M d, Y H:i" }}</p>
+        {% if req.reviewed_at %}<p class="subtext">Reviewed: {{ req.reviewed_at|date:"M d, Y H:i" }}</p>{% endif %}
+        {% if req.admin_note %}<p><strong>Admin Note:</strong> {{ req.admin_note }}</p>{% endif %}
+      </article>
+    {% empty %}
+      <p class="empty-state">No category requests submitted yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

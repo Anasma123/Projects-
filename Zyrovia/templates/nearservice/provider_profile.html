@@ -1,0 +1,51 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ provider.user.full_name }} | NearService{% endblock %}
+{% block content %}
+<section class="profile-grid">
+  <article class="panel">
+    <h1>{{ provider.user.full_name }}</h1>
+    <p><strong>Category:</strong> {{ provider.category.name }}</p>
+    <p><strong>Experience:</strong> {{ provider.experience_years }} years</p>
+    <p><strong>Service Area:</strong> {{ provider.get_service_area_scope_display }}</p>
+    <p>
+      <strong>Location:</strong>
+      {% if provider.service_area_scope == 'all' %}
+        All Locations
+      {% else %}
+        {{ provider.locality.name|default:"N/A" }}, {{ provider.district.name|default:"N/A" }}, {{ provider.state.name|default:"N/A" }}
+      {% endif %}
+    </p>
+    {% if provider.location_text %}<p><strong>Location Details:</strong> {{ provider.location_text }}</p>{% endif %}
+    <p><strong>Status:</strong> <span class="status-pill">{{ provider.is_available|yesno:"Available,Unavailable" }}</span></p>
+    <p><strong>Rating:</strong> ⭐ {{ provider.rating_average }}</p>
+    <p>{{ provider.description }}</p>
+    {% if request.user.is_authenticated and request.user.id != provider.user_id %}
+      <div class="actions">
+        <a class="btn" href="{% url 'nearservice:request-service' %}">Request This Service</a>
+        <form method="post" action="{% url 'control:report-create' %}">
+          {% csrf_token %}
+          <input type="hidden" name="target_type" value="service_provider">
+          <input type="hidden" name="target_id" value="{{ provider.id }}">
+          <input type="hidden" name="reason" value="Issue reported from NearService provider profile {{ provider.user.full_name }}">
+          <input type="hidden" name="next_url" value="{% url 'nearservice:provider-profile' provider.id %}">
+          <button class="btn ghost" type="submit">Report Provider</button>
+        </form>
+      </div>
+    {% endif %}
+  </article>
+
+  <article class="panel">
+    <h2>Recent Requests</h2>
+    <div class="ride-list">
+      {% for req in requests_as_provider %}
+        <div class="ride-row">
+          <span>#{{ req.id }} • {{ req.customer.full_name }}</span>
+          <span class="status-pill">{{ req.get_status_display }}</span>
+        </div>
+      {% empty %}
+        <p class="subtext">No service history yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}

@@ -1,0 +1,3667 @@
+﻿[
+    {
+        "state_name":  "ANDAMAN AND NICOBAR ISLANDS",
+        "district_name":  "NICOBARS",
+        "external_id":  "lgd_district_603"
+    },
+    {
+        "state_name":  "ANDAMAN AND NICOBAR ISLANDS",
+        "district_name":  "NORTH AND MIDDLE ANDAMAN",
+        "external_id":  "lgd_district_632"
+    },
+    {
+        "state_name":  "ANDAMAN AND NICOBAR ISLANDS",
+        "district_name":  "SOUTH ANDAMANS",
+        "external_id":  "lgd_district_602"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "ANANTAPUR",
+        "external_id":  "lgd_district_502"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "CHITTOOR",
+        "external_id":  "lgd_district_503"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "EAST GODAVARI",
+        "external_id":  "lgd_district_505"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "GUNTUR",
+        "external_id":  "lgd_district_506"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "KRISHNA",
+        "external_id":  "lgd_district_510"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "KURNOOL",
+        "external_id":  "lgd_district_511"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "PRAKASAM",
+        "external_id":  "lgd_district_517"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "SPSR NELLORE",
+        "external_id":  "lgd_district_515"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "SRIKAKULAM",
+        "external_id":  "lgd_district_519"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "VISAKHAPATANAM",
+        "external_id":  "lgd_district_520"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "VIZIANAGARAM",
+        "external_id":  "lgd_district_521"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "WEST GODAVARI",
+        "external_id":  "lgd_district_523"
+    },
+    {
+        "state_name":  "ANDHRA PRADESH",
+        "district_name":  "Y.S.R.",
+        "external_id":  "lgd_district_504"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "ANJAW",
+        "external_id":  "lgd_district_628"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "CHANGLANG",
+        "external_id":  "lgd_district_229"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "DIBANG VALLEY",
+        "external_id":  "lgd_district_230"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "EAST KAMENG",
+        "external_id":  "lgd_district_231"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "EAST SIANG",
+        "external_id":  "lgd_district_232"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "KAMLE",
+        "external_id":  "lgd_district_718"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "KRA  DAADI",
+        "external_id":  "lgd_district_677"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "KURUNG KUMEY",
+        "external_id":  "lgd_district_233"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "LEPARADA",
+        "external_id":  "lgd_district_724"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "LOHIT",
+        "external_id":  "lgd_district_234"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "LONGDING",
+        "external_id":  "lgd_district_666"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "LOWER DIBANG VALLEY",
+        "external_id":  "lgd_district_235"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "LOWER SIANG",
+        "external_id":  "lgd_district_719"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "LOWER SUBANSIRI",
+        "external_id":  "lgd_district_236"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "NAMSAI",
+        "external_id":  "lgd_district_678"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "PAKKE KESSANG",
+        "external_id":  "lgd_district_723"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "PAPUM PARE",
+        "external_id":  "lgd_district_237"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "SHI YOMI",
+        "external_id":  "lgd_district_725"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "SIANG",
+        "external_id":  "lgd_district_679"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "TAWANG",
+        "external_id":  "lgd_district_238"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "TIRAP",
+        "external_id":  "lgd_district_239"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "UPPER SIANG",
+        "external_id":  "lgd_district_240"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "UPPER SUBANSIRI",
+        "external_id":  "lgd_district_241"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "WEST KAMENG",
+        "external_id":  "lgd_district_242"
+    },
+    {
+        "state_name":  "ARUNACHAL PRADESH",
+        "district_name":  "WEST SIANG",
+        "external_id":  "lgd_district_243"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "BAKSA",
+        "external_id":  "lgd_district_616"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "BARPETA",
+        "external_id":  "lgd_district_280"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "Biswanath",
+        "external_id":  "lgd_district_705"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "BONGAIGAON",
+        "external_id":  "lgd_district_281"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "CACHAR",
+        "external_id":  "lgd_district_282"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "CHARAIDEO",
+        "external_id":  "lgd_district_708"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "CHIRANG",
+        "external_id":  "lgd_district_612"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "DARRANG",
+        "external_id":  "lgd_district_283"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "DHEMAJI",
+        "external_id":  "lgd_district_284"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "DHUBRI",
+        "external_id":  "lgd_district_285"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "DIBRUGARH",
+        "external_id":  "lgd_district_286"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "DIMA HASAO",
+        "external_id":  "lgd_district_299"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "GOALPARA",
+        "external_id":  "lgd_district_287"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "GOLAGHAT",
+        "external_id":  "lgd_district_288"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "HAILAKANDI",
+        "external_id":  "lgd_district_289"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "HOJAI",
+        "external_id":  "lgd_district_709"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "JORHAT",
+        "external_id":  "lgd_district_290"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "KAMRUP",
+        "external_id":  "lgd_district_291"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "KAMRUP METRO",
+        "external_id":  "lgd_district_618"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "KARBI ANGLONG",
+        "external_id":  "lgd_district_292"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "KARIMGANJ",
+        "external_id":  "lgd_district_293"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "KOKRAJHAR",
+        "external_id":  "lgd_district_294"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "LAKHIMPUR",
+        "external_id":  "lgd_district_295"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "MAJULI",
+        "external_id":  "lgd_district_706"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "MARIGAON",
+        "external_id":  "lgd_district_296"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "NAGAON",
+        "external_id":  "lgd_district_297"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "NALBARI",
+        "external_id":  "lgd_district_298"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "SIVASAGAR",
+        "external_id":  "lgd_district_300"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "SONITPUR",
+        "external_id":  "lgd_district_301"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "SOUTH SALMARA MANCACHAR",
+        "external_id":  "lgd_district_707"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "TINSUKIA",
+        "external_id":  "lgd_district_302"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "UDALGURI",
+        "external_id":  "lgd_district_617"
+    },
+    {
+        "state_name":  "ASSAM",
+        "district_name":  "WEST KARBI ANGLONG",
+        "external_id":  "lgd_district_710"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "ARARIA",
+        "external_id":  "lgd_district_188"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "ARWAL",
+        "external_id":  "lgd_district_611"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "AURANGABAD",
+        "external_id":  "lgd_district_189"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "BANKA",
+        "external_id":  "lgd_district_190"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "BEGUSARAI",
+        "external_id":  "lgd_district_191"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "BHAGALPUR",
+        "external_id":  "lgd_district_192"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "BHOJPUR",
+        "external_id":  "lgd_district_193"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "BUXAR",
+        "external_id":  "lgd_district_194"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "DARBHANGA",
+        "external_id":  "lgd_district_195"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "GAYA",
+        "external_id":  "lgd_district_196"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "GOPALGANJ",
+        "external_id":  "lgd_district_197"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "JAMUI",
+        "external_id":  "lgd_district_198"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "JEHANABAD",
+        "external_id":  "lgd_district_199"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "KAIMUR (BHABUA)",
+        "external_id":  "lgd_district_200"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "KATIHAR",
+        "external_id":  "lgd_district_201"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "KHAGARIA",
+        "external_id":  "lgd_district_202"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "KISHANGANJ",
+        "external_id":  "lgd_district_203"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "LAKHISARAI",
+        "external_id":  "lgd_district_204"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "MADHEPURA",
+        "external_id":  "lgd_district_205"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "MADHUBANI",
+        "external_id":  "lgd_district_206"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "MUNGER",
+        "external_id":  "lgd_district_207"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "MUZAFFARPUR",
+        "external_id":  "lgd_district_208"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "NALANDA",
+        "external_id":  "lgd_district_209"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "NAWADA",
+        "external_id":  "lgd_district_210"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "PASHCHIM CHAMPARAN",
+        "external_id":  "lgd_district_211"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "PATNA",
+        "external_id":  "lgd_district_212"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "PURBI CHAMPARAN",
+        "external_id":  "lgd_district_213"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "PURNIA",
+        "external_id":  "lgd_district_214"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "ROHTAS",
+        "external_id":  "lgd_district_215"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SAHARSA",
+        "external_id":  "lgd_district_216"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SAMASTIPUR",
+        "external_id":  "lgd_district_217"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SARAN",
+        "external_id":  "lgd_district_218"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SHEIKHPURA",
+        "external_id":  "lgd_district_219"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SHEOHAR",
+        "external_id":  "lgd_district_220"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SITAMARHI",
+        "external_id":  "lgd_district_221"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SIWAN",
+        "external_id":  "lgd_district_222"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "SUPAUL",
+        "external_id":  "lgd_district_223"
+    },
+    {
+        "state_name":  "BIHAR",
+        "district_name":  "VAISHALI",
+        "external_id":  "lgd_district_224"
+    },
+    {
+        "state_name":  "CHANDIGARH",
+        "district_name":  "CHANDIGARH",
+        "external_id":  "lgd_district_44"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "BALOD",
+        "external_id":  "lgd_district_646"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "BALODA BAZAR",
+        "external_id":  "lgd_district_644"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "BALRAMPUR",
+        "external_id":  "lgd_district_649"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "BASTAR",
+        "external_id":  "lgd_district_374"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "BEMETARA",
+        "external_id":  "lgd_district_650"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "BIJAPUR",
+        "external_id":  "lgd_district_636"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "BILASPUR",
+        "external_id":  "lgd_district_375"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "DANTEWADA",
+        "external_id":  "lgd_district_376"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "DHAMTARI",
+        "external_id":  "lgd_district_377"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "DURG",
+        "external_id":  "lgd_district_378"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "GARIYABAND",
+        "external_id":  "lgd_district_645"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "JANJGIR-CHAMPA",
+        "external_id":  "lgd_district_379"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "JASHPUR",
+        "external_id":  "lgd_district_380"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "KABIRDHAM",
+        "external_id":  "lgd_district_382"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "KANKER",
+        "external_id":  "lgd_district_381"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "KONDAGAON",
+        "external_id":  "lgd_district_643"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "KORBA",
+        "external_id":  "lgd_district_383"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "KOREA",
+        "external_id":  "lgd_district_384"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "MAHASAMUND",
+        "external_id":  "lgd_district_385"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "MUNGELI",
+        "external_id":  "lgd_district_647"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "NARAYANPUR",
+        "external_id":  "lgd_district_637"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "RAIGARH",
+        "external_id":  "lgd_district_386"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "RAIPUR",
+        "external_id":  "lgd_district_387"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "RAJNANDGAON",
+        "external_id":  "lgd_district_388"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "SUKMA",
+        "external_id":  "lgd_district_642"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "SURAJPUR",
+        "external_id":  "lgd_district_648"
+    },
+    {
+        "state_name":  "CHHATTISGARH",
+        "district_name":  "SURGUJA",
+        "external_id":  "lgd_district_389"
+    },
+    {
+        "state_name":  "DADRA AND NAGAR HAVELI",
+        "district_name":  "DADRA AND NAGAR HAVELI",
+        "external_id":  "lgd_district_465"
+    },
+    {
+        "state_name":  "DAMAN AND DIU",
+        "district_name":  "DAMAN",
+        "external_id":  "lgd_district_463"
+    },
+    {
+        "state_name":  "DAMAN AND DIU",
+        "district_name":  "DIU",
+        "external_id":  "lgd_district_464"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "CENTRAL",
+        "external_id":  "lgd_district_77"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "EAST",
+        "external_id":  "lgd_district_78"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "NEW DELHI",
+        "external_id":  "lgd_district_79"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "NORTH",
+        "external_id":  "lgd_district_80"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "NORTH EAST",
+        "external_id":  "lgd_district_81"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "NORTH WEST",
+        "external_id":  "lgd_district_82"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "SHAHDARA",
+        "external_id":  "lgd_district_671"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "SOUTH",
+        "external_id":  "lgd_district_83"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "South East",
+        "external_id":  "lgd_district_670"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "SOUTH WEST",
+        "external_id":  "lgd_district_84"
+    },
+    {
+        "state_name":  "DELHI",
+        "district_name":  "WEST",
+        "external_id":  "lgd_district_85"
+    },
+    {
+        "state_name":  "GOA",
+        "district_name":  "NORTH GOA",
+        "external_id":  "lgd_district_551"
+    },
+    {
+        "state_name":  "GOA",
+        "district_name":  "SOUTH GOA",
+        "external_id":  "lgd_district_552"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "AHMADABAD",
+        "external_id":  "lgd_district_438"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "AMRELI",
+        "external_id":  "lgd_district_439"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "ANAND",
+        "external_id":  "lgd_district_440"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "ARVALLI",
+        "external_id":  "lgd_district_672"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "BANAS KANTHA",
+        "external_id":  "lgd_district_441"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "BHARUCH",
+        "external_id":  "lgd_district_442"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "BHAVNAGAR",
+        "external_id":  "lgd_district_443"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "BOTAD",
+        "external_id":  "lgd_district_676"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "CHHOTAUDEPUR",
+        "external_id":  "lgd_district_668"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "DANG",
+        "external_id":  "lgd_district_444"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "DEVBHUMI DWARKA",
+        "external_id":  "lgd_district_674"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "DOHAD",
+        "external_id":  "lgd_district_445"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "GANDHINAGAR",
+        "external_id":  "lgd_district_446"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "GIR SOMNATH",
+        "external_id":  "lgd_district_675"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "JAMNAGAR",
+        "external_id":  "lgd_district_447"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "JUNAGADH",
+        "external_id":  "lgd_district_448"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "KACHCHH",
+        "external_id":  "lgd_district_449"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "KHEDA",
+        "external_id":  "lgd_district_450"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "MAHESANA",
+        "external_id":  "lgd_district_451"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "Mahisagar",
+        "external_id":  "lgd_district_669"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "MORBI",
+        "external_id":  "lgd_district_673"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "NARMADA",
+        "external_id":  "lgd_district_452"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "NAVSARI",
+        "external_id":  "lgd_district_453"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "PANCH MAHALS",
+        "external_id":  "lgd_district_454"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "PATAN",
+        "external_id":  "lgd_district_455"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "PORBANDAR",
+        "external_id":  "lgd_district_456"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "RAJKOT",
+        "external_id":  "lgd_district_457"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "SABAR KANTHA",
+        "external_id":  "lgd_district_458"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "SURAT",
+        "external_id":  "lgd_district_459"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "SURENDRANAGAR",
+        "external_id":  "lgd_district_460"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "TAPI",
+        "external_id":  "lgd_district_641"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "VADODARA",
+        "external_id":  "lgd_district_461"
+    },
+    {
+        "state_name":  "GUJARAT",
+        "district_name":  "VALSAD",
+        "external_id":  "lgd_district_462"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "AMBALA",
+        "external_id":  "lgd_district_58"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "BHIWANI",
+        "external_id":  "lgd_district_59"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "CHARKI DADRI",
+        "external_id":  "lgd_district_701"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "FARIDABAD",
+        "external_id":  "lgd_district_60"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "FATEHABAD",
+        "external_id":  "lgd_district_61"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "GURUGRAM",
+        "external_id":  "lgd_district_62"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "HISAR",
+        "external_id":  "lgd_district_63"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "JHAJJAR",
+        "external_id":  "lgd_district_64"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "JIND",
+        "external_id":  "lgd_district_65"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "KAITHAL",
+        "external_id":  "lgd_district_66"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "KARNAL",
+        "external_id":  "lgd_district_67"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "KURUKSHETRA",
+        "external_id":  "lgd_district_68"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "MAHENDRAGARH",
+        "external_id":  "lgd_district_69"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "NUH",
+        "external_id":  "lgd_district_604"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "PALWAL",
+        "external_id":  "lgd_district_619"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "PANCHKULA",
+        "external_id":  "lgd_district_70"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "PANIPAT",
+        "external_id":  "lgd_district_71"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "REWARI",
+        "external_id":  "lgd_district_72"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "ROHTAK",
+        "external_id":  "lgd_district_73"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "SIRSA",
+        "external_id":  "lgd_district_74"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "SONIPAT",
+        "external_id":  "lgd_district_75"
+    },
+    {
+        "state_name":  "HARYANA",
+        "district_name":  "YAMUNANAGAR",
+        "external_id":  "lgd_district_76"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "BILASPUR",
+        "external_id":  "lgd_district_15"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "CHAMBA",
+        "external_id":  "lgd_district_16"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "HAMIRPUR",
+        "external_id":  "lgd_district_17"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "KANGRA",
+        "external_id":  "lgd_district_18"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "KINNAUR",
+        "external_id":  "lgd_district_19"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "KULLU",
+        "external_id":  "lgd_district_20"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "LAHUL AND SPITI",
+        "external_id":  "lgd_district_21"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "MANDI",
+        "external_id":  "lgd_district_22"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "SHIMLA",
+        "external_id":  "lgd_district_23"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "SIRMAUR",
+        "external_id":  "lgd_district_24"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "SOLAN",
+        "external_id":  "lgd_district_25"
+    },
+    {
+        "state_name":  "HIMACHAL PRADESH",
+        "district_name":  "UNA",
+        "external_id":  "lgd_district_26"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "ANANTNAG",
+        "external_id":  "lgd_district_1"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "BANDIPORA",
+        "external_id":  "lgd_district_623"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "BARAMULLA",
+        "external_id":  "lgd_district_3"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "Budgam",
+        "external_id":  "lgd_district_2"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "DODA",
+        "external_id":  "lgd_district_4"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "GANDERBAL",
+        "external_id":  "lgd_district_626"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "JAMMU",
+        "external_id":  "lgd_district_5"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "KATHUA",
+        "external_id":  "lgd_district_7"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "KISHTWAR",
+        "external_id":  "lgd_district_620"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "KULGAM",
+        "external_id":  "lgd_district_622"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "KUPWARA",
+        "external_id":  "lgd_district_8"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "POONCH",
+        "external_id":  "lgd_district_10"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "PULWAMA",
+        "external_id":  "lgd_district_11"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "RAJOURI",
+        "external_id":  "lgd_district_12"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "RAMBAN",
+        "external_id":  "lgd_district_621"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "REASI",
+        "external_id":  "lgd_district_627"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "SAMBA",
+        "external_id":  "lgd_district_624"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "SHOPIAN",
+        "external_id":  "lgd_district_625"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "SRINAGAR",
+        "external_id":  "lgd_district_13"
+    },
+    {
+        "state_name":  "JAMMU AND KASHMIR",
+        "district_name":  "UDHAMPUR",
+        "external_id":  "lgd_district_14"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "BOKARO",
+        "external_id":  "lgd_district_322"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "CHATRA",
+        "external_id":  "lgd_district_323"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "DEOGHAR",
+        "external_id":  "lgd_district_324"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "DHANBAD",
+        "external_id":  "lgd_district_325"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "DUMKA",
+        "external_id":  "lgd_district_326"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "EAST SINGHBUM",
+        "external_id":  "lgd_district_327"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "GARHWA",
+        "external_id":  "lgd_district_328"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "GIRIDIH",
+        "external_id":  "lgd_district_329"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "GODDA",
+        "external_id":  "lgd_district_330"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "GUMLA",
+        "external_id":  "lgd_district_331"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "HAZARIBAGH",
+        "external_id":  "lgd_district_332"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "JAMTARA",
+        "external_id":  "lgd_district_333"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "KHUNTI",
+        "external_id":  "lgd_district_606"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "KODERMA",
+        "external_id":  "lgd_district_334"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "LATEHAR",
+        "external_id":  "lgd_district_335"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "LOHARDAGA",
+        "external_id":  "lgd_district_336"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "PAKUR",
+        "external_id":  "lgd_district_337"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "PALAMU",
+        "external_id":  "lgd_district_338"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "RAMGARH",
+        "external_id":  "lgd_district_607"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "RANCHI",
+        "external_id":  "lgd_district_339"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "SAHEBGANJ",
+        "external_id":  "lgd_district_340"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "SARAIKELA KHARSAWAN",
+        "external_id":  "lgd_district_341"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "SIMDEGA",
+        "external_id":  "lgd_district_342"
+    },
+    {
+        "state_name":  "JHARKHAND",
+        "district_name":  "WEST SINGHBHUM",
+        "external_id":  "lgd_district_343"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "BAGALKOTE",
+        "external_id":  "lgd_district_524"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "BALLARI",
+        "external_id":  "lgd_district_528"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "BELAGAVI",
+        "external_id":  "lgd_district_527"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "BENGALURU RURAL",
+        "external_id":  "lgd_district_526"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "BENGALURU URBAN",
+        "external_id":  "lgd_district_525"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "BIDAR",
+        "external_id":  "lgd_district_529"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "CHAMARAJANAGARA",
+        "external_id":  "lgd_district_531"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "CHIKKABALLAPURA",
+        "external_id":  "lgd_district_630"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "CHIKKAMAGALURU",
+        "external_id":  "lgd_district_532"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "CHITRADURGA",
+        "external_id":  "lgd_district_533"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "DAKSHINA KANNADA",
+        "external_id":  "lgd_district_534"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "DAVANGERE",
+        "external_id":  "lgd_district_535"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "DHARWAD",
+        "external_id":  "lgd_district_536"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "GADAG",
+        "external_id":  "lgd_district_537"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "HASSAN",
+        "external_id":  "lgd_district_539"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "HAVERI",
+        "external_id":  "lgd_district_540"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "KALABURAGI",
+        "external_id":  "lgd_district_538"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "KODAGU",
+        "external_id":  "lgd_district_541"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "KOLAR",
+        "external_id":  "lgd_district_542"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "KOPPAL",
+        "external_id":  "lgd_district_543"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "MANDYA",
+        "external_id":  "lgd_district_544"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "MYSURU",
+        "external_id":  "lgd_district_545"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "RAICHUR",
+        "external_id":  "lgd_district_546"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "RAMANAGARA",
+        "external_id":  "lgd_district_631"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "SHIVAMOGGA",
+        "external_id":  "lgd_district_547"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "TUMAKURU",
+        "external_id":  "lgd_district_548"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "UDUPI",
+        "external_id":  "lgd_district_549"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "UTTARA KANNADA",
+        "external_id":  "lgd_district_550"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "VIJAYAPURA",
+        "external_id":  "lgd_district_530"
+    },
+    {
+        "state_name":  "KARNATAKA",
+        "district_name":  "YADGIR",
+        "external_id":  "lgd_district_635"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "ALAPPUZHA",
+        "external_id":  "lgd_district_554"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "ERNAKULAM",
+        "external_id":  "lgd_district_555"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "IDUKKI",
+        "external_id":  "lgd_district_556"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "KANNUR",
+        "external_id":  "lgd_district_557"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "KASARAGOD",
+        "external_id":  "lgd_district_558"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "KOLLAM",
+        "external_id":  "lgd_district_559"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "KOTTAYAM",
+        "external_id":  "lgd_district_560"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "KOZHIKODE",
+        "external_id":  "lgd_district_561"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "MALAPPURAM",
+        "external_id":  "lgd_district_562"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "PALAKKAD",
+        "external_id":  "lgd_district_563"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "PATHANAMTHITTA",
+        "external_id":  "lgd_district_564"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "THIRUVANANTHAPURAM",
+        "external_id":  "lgd_district_565"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "THRISSUR",
+        "external_id":  "lgd_district_566"
+    },
+    {
+        "state_name":  "KERALA",
+        "district_name":  "WAYANAD",
+        "external_id":  "lgd_district_567"
+    },
+    {
+        "state_name":  "LADAKH",
+        "district_name":  "KARGIL",
+        "external_id":  "lgd_district_6"
+    },
+    {
+        "state_name":  "LADAKH",
+        "district_name":  "LEH LADAKH",
+        "external_id":  "lgd_district_9"
+    },
+    {
+        "state_name":  "LAKSHADWEEP",
+        "district_name":  "LAKSHADWEEP DISTRICT",
+        "external_id":  "lgd_district_553"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "AGAR MALWA",
+        "external_id":  "lgd_district_667"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "ALIRAJPUR",
+        "external_id":  "lgd_district_639"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "ANUPPUR",
+        "external_id":  "lgd_district_390"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "ASHOKNAGAR",
+        "external_id":  "lgd_district_391"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "BALAGHAT",
+        "external_id":  "lgd_district_392"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "BARWANI",
+        "external_id":  "lgd_district_393"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "BETUL",
+        "external_id":  "lgd_district_394"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "BHIND",
+        "external_id":  "lgd_district_395"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "BHOPAL",
+        "external_id":  "lgd_district_396"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "BURHANPUR",
+        "external_id":  "lgd_district_397"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "CHHATARPUR",
+        "external_id":  "lgd_district_398"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "CHHINDWARA",
+        "external_id":  "lgd_district_399"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "DAMOH",
+        "external_id":  "lgd_district_400"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "DATIA",
+        "external_id":  "lgd_district_401"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "DEWAS",
+        "external_id":  "lgd_district_402"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "DHAR",
+        "external_id":  "lgd_district_403"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "DINDORI",
+        "external_id":  "lgd_district_404"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "EAST NIMAR",
+        "external_id":  "lgd_district_405"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "GUNA",
+        "external_id":  "lgd_district_406"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "GWALIOR",
+        "external_id":  "lgd_district_407"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "HARDA",
+        "external_id":  "lgd_district_408"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "HOSHANGABAD",
+        "external_id":  "lgd_district_409"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "INDORE",
+        "external_id":  "lgd_district_410"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "JABALPUR",
+        "external_id":  "lgd_district_411"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "JHABUA",
+        "external_id":  "lgd_district_412"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "KATNI",
+        "external_id":  "lgd_district_413"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "KHARGONE",
+        "external_id":  "lgd_district_414"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "MANDLA",
+        "external_id":  "lgd_district_415"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "MANDSAUR",
+        "external_id":  "lgd_district_416"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "MORENA",
+        "external_id":  "lgd_district_417"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "NARSINGHPUR",
+        "external_id":  "lgd_district_418"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "NEEMUCH",
+        "external_id":  "lgd_district_419"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "Niwari",
+        "external_id":  "lgd_district_722"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "PANNA",
+        "external_id":  "lgd_district_420"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "RAISEN",
+        "external_id":  "lgd_district_421"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "RAJGARH",
+        "external_id":  "lgd_district_422"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "RATLAM",
+        "external_id":  "lgd_district_423"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "REWA",
+        "external_id":  "lgd_district_424"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SAGAR",
+        "external_id":  "lgd_district_425"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SATNA",
+        "external_id":  "lgd_district_426"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SEHORE",
+        "external_id":  "lgd_district_427"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SEONI",
+        "external_id":  "lgd_district_428"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SHAHDOL",
+        "external_id":  "lgd_district_429"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SHAJAPUR",
+        "external_id":  "lgd_district_430"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SHEOPUR",
+        "external_id":  "lgd_district_431"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SHIVPURI",
+        "external_id":  "lgd_district_432"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SIDHI",
+        "external_id":  "lgd_district_433"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "SINGRAULI",
+        "external_id":  "lgd_district_638"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "TIKAMGARH",
+        "external_id":  "lgd_district_434"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "UJJAIN",
+        "external_id":  "lgd_district_435"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "UMARIA",
+        "external_id":  "lgd_district_436"
+    },
+    {
+        "state_name":  "MADHYA PRADESH",
+        "district_name":  "VIDISHA",
+        "external_id":  "lgd_district_437"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "AHMEDNAGAR",
+        "external_id":  "lgd_district_466"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "AKOLA",
+        "external_id":  "lgd_district_467"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "AMRAVATI",
+        "external_id":  "lgd_district_468"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "AURANGABAD",
+        "external_id":  "lgd_district_469"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "BEED",
+        "external_id":  "lgd_district_470"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "BHANDARA",
+        "external_id":  "lgd_district_471"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "BULDHANA",
+        "external_id":  "lgd_district_472"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "CHANDRAPUR",
+        "external_id":  "lgd_district_473"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "DHULE",
+        "external_id":  "lgd_district_474"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "GADCHIROLI",
+        "external_id":  "lgd_district_475"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "GONDIA",
+        "external_id":  "lgd_district_476"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "HINGOLI",
+        "external_id":  "lgd_district_477"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "JALGAON",
+        "external_id":  "lgd_district_478"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "JALNA",
+        "external_id":  "lgd_district_479"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "KOLHAPUR",
+        "external_id":  "lgd_district_480"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "LATUR",
+        "external_id":  "lgd_district_481"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "MUMBAI",
+        "external_id":  "lgd_district_482"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "MUMBAI SUBURBAN",
+        "external_id":  "lgd_district_483"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "NAGPUR",
+        "external_id":  "lgd_district_484"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "NANDED",
+        "external_id":  "lgd_district_485"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "NANDURBAR",
+        "external_id":  "lgd_district_486"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "NASHIK",
+        "external_id":  "lgd_district_487"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "OSMANABAD",
+        "external_id":  "lgd_district_488"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "PALGHAR",
+        "external_id":  "lgd_district_665"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "PARBHANI",
+        "external_id":  "lgd_district_489"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "PUNE",
+        "external_id":  "lgd_district_490"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "RAIGAD",
+        "external_id":  "lgd_district_491"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "RATNAGIRI",
+        "external_id":  "lgd_district_492"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "SANGLI",
+        "external_id":  "lgd_district_493"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "SATARA",
+        "external_id":  "lgd_district_494"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "SINDHUDURG",
+        "external_id":  "lgd_district_495"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "SOLAPUR",
+        "external_id":  "lgd_district_496"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "THANE",
+        "external_id":  "lgd_district_497"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "WARDHA",
+        "external_id":  "lgd_district_498"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "WASHIM",
+        "external_id":  "lgd_district_499"
+    },
+    {
+        "state_name":  "MAHARASHTRA",
+        "district_name":  "YAVATMAL",
+        "external_id":  "lgd_district_500"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "BISHNUPUR",
+        "external_id":  "lgd_district_252"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "CHANDEL",
+        "external_id":  "lgd_district_253"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "CHURACHANDPUR",
+        "external_id":  "lgd_district_254"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "IMPHAL EAST",
+        "external_id":  "lgd_district_255"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "IMPHAL WEST",
+        "external_id":  "lgd_district_256"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "JIRIBAM",
+        "external_id":  "lgd_district_713"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "KAKCHING",
+        "external_id":  "lgd_district_711"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "KAMJONG",
+        "external_id":  "lgd_district_717"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "KANGPOKPI",
+        "external_id":  "lgd_district_712"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "NONEY",
+        "external_id":  "lgd_district_714"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "PHERZAWL",
+        "external_id":  "lgd_district_715"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "SENAPATI",
+        "external_id":  "lgd_district_257"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "TAMENGLONG",
+        "external_id":  "lgd_district_258"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "TENGNOUPAL",
+        "external_id":  "lgd_district_716"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "THOUBAL",
+        "external_id":  "lgd_district_259"
+    },
+    {
+        "state_name":  "MANIPUR",
+        "district_name":  "UKHRUL",
+        "external_id":  "lgd_district_260"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "EAST GARO HILLS",
+        "external_id":  "lgd_district_273"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "EAST JAINTIA HILLS",
+        "external_id":  "lgd_district_657"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "EAST KHASI HILLS",
+        "external_id":  "lgd_district_274"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "NORTH GARO HILLS",
+        "external_id":  "lgd_district_656"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "RI BHOI",
+        "external_id":  "lgd_district_276"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "SOUTH GARO HILLS",
+        "external_id":  "lgd_district_277"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "SOUTH WEST GARO HILLS",
+        "external_id":  "lgd_district_663"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "SOUTH WEST KHASI HILLS",
+        "external_id":  "lgd_district_658"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "WEST GARO HILLS",
+        "external_id":  "lgd_district_278"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "WEST JAINTIA HILLS",
+        "external_id":  "lgd_district_275"
+    },
+    {
+        "state_name":  "MEGHALAYA",
+        "district_name":  "WEST KHASI HILLS",
+        "external_id":  "lgd_district_279"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "AIZAWL",
+        "external_id":  "lgd_district_261"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "CHAMPHAI",
+        "external_id":  "lgd_district_262"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "Hnahthial",
+        "external_id":  "lgd_district_726"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "KHAWZAWL",
+        "external_id":  "lgd_district_728"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "KOLASIB",
+        "external_id":  "lgd_district_263"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "LAWNGTLAI",
+        "external_id":  "lgd_district_264"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "LUNGLEI",
+        "external_id":  "lgd_district_265"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "MAMIT",
+        "external_id":  "lgd_district_266"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "SAIHA",
+        "external_id":  "lgd_district_267"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "SAITUAL",
+        "external_id":  "lgd_district_727"
+    },
+    {
+        "state_name":  "MIZORAM",
+        "district_name":  "SERCHHIP",
+        "external_id":  "lgd_district_268"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "DIMAPUR",
+        "external_id":  "lgd_district_244"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "KIPHIRE",
+        "external_id":  "lgd_district_614"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "KOHIMA",
+        "external_id":  "lgd_district_245"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "LONGLENG",
+        "external_id":  "lgd_district_615"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "MOKOKCHUNG",
+        "external_id":  "lgd_district_246"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "MON",
+        "external_id":  "lgd_district_247"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "PEREN",
+        "external_id":  "lgd_district_613"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "PHEK",
+        "external_id":  "lgd_district_248"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "TUENSANG",
+        "external_id":  "lgd_district_249"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "WOKHA",
+        "external_id":  "lgd_district_250"
+    },
+    {
+        "state_name":  "NAGALAND",
+        "district_name":  "ZUNHEBOTO",
+        "external_id":  "lgd_district_251"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "ANUGUL",
+        "external_id":  "lgd_district_344"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "BALANGIR",
+        "external_id":  "lgd_district_345"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "BALESHWAR",
+        "external_id":  "lgd_district_346"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "BARGARH",
+        "external_id":  "lgd_district_347"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "BHADRAK",
+        "external_id":  "lgd_district_348"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "BOUDH",
+        "external_id":  "lgd_district_349"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "CUTTACK",
+        "external_id":  "lgd_district_350"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "DEOGARH",
+        "external_id":  "lgd_district_351"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "DHENKANAL",
+        "external_id":  "lgd_district_352"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "GAJAPATI",
+        "external_id":  "lgd_district_353"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "GANJAM",
+        "external_id":  "lgd_district_354"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "JAGATSINGHAPUR",
+        "external_id":  "lgd_district_355"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "JAJAPUR",
+        "external_id":  "lgd_district_356"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "JHARSUGUDA",
+        "external_id":  "lgd_district_357"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "KALAHANDI",
+        "external_id":  "lgd_district_358"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "KANDHAMAL",
+        "external_id":  "lgd_district_359"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "KENDRAPARA",
+        "external_id":  "lgd_district_360"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "KENDUJHAR",
+        "external_id":  "lgd_district_361"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "KHORDHA",
+        "external_id":  "lgd_district_362"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "KORAPUT",
+        "external_id":  "lgd_district_363"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "MALKANGIRI",
+        "external_id":  "lgd_district_364"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "MAYURBHANJ",
+        "external_id":  "lgd_district_365"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "NABARANGPUR",
+        "external_id":  "lgd_district_366"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "NAYAGARH",
+        "external_id":  "lgd_district_367"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "NUAPADA",
+        "external_id":  "lgd_district_368"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "PURI",
+        "external_id":  "lgd_district_369"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "RAYAGADA",
+        "external_id":  "lgd_district_370"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "SAMBALPUR",
+        "external_id":  "lgd_district_371"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "SONEPUR",
+        "external_id":  "lgd_district_372"
+    },
+    {
+        "state_name":  "ODISHA",
+        "district_name":  "SUNDARGARH",
+        "external_id":  "lgd_district_373"
+    },
+    {
+        "state_name":  "PUDUCHERRY",
+        "district_name":  "KARAIKAL",
+        "external_id":  "lgd_district_598"
+    },
+    {
+        "state_name":  "PUDUCHERRY",
+        "district_name":  "MAHE",
+        "external_id":  "lgd_district_599"
+    },
+    {
+        "state_name":  "PUDUCHERRY",
+        "district_name":  "PONDICHERRY",
+        "external_id":  "lgd_district_600"
+    },
+    {
+        "state_name":  "PUDUCHERRY",
+        "district_name":  "YANAM",
+        "external_id":  "lgd_district_601"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "AMRITSAR",
+        "external_id":  "lgd_district_27"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "BARNALA",
+        "external_id":  "lgd_district_605"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "BATHINDA",
+        "external_id":  "lgd_district_28"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "FARIDKOT",
+        "external_id":  "lgd_district_29"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "FATEHGARH SAHIB",
+        "external_id":  "lgd_district_30"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "FAZILKA",
+        "external_id":  "lgd_district_651"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "FIROZEPUR",
+        "external_id":  "lgd_district_31"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "GURDASPUR",
+        "external_id":  "lgd_district_32"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "HOSHIARPUR",
+        "external_id":  "lgd_district_33"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "JALANDHAR",
+        "external_id":  "lgd_district_34"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "KAPURTHALA",
+        "external_id":  "lgd_district_35"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "LUDHIANA",
+        "external_id":  "lgd_district_36"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "MANSA",
+        "external_id":  "lgd_district_37"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "MOGA",
+        "external_id":  "lgd_district_38"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "PATHANKOT",
+        "external_id":  "lgd_district_662"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "PATIALA",
+        "external_id":  "lgd_district_41"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "RUPNAGAR",
+        "external_id":  "lgd_district_42"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "S.A.S Nagar",
+        "external_id":  "lgd_district_608"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "SANGRUR",
+        "external_id":  "lgd_district_43"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "Shahid Bhagat Singh Nagar",
+        "external_id":  "lgd_district_40"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "SRI MUKTSAR SAHIB",
+        "external_id":  "lgd_district_39"
+    },
+    {
+        "state_name":  "PUNJAB",
+        "district_name":  "Tarn Taran",
+        "external_id":  "lgd_district_609"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "AJMER",
+        "external_id":  "lgd_district_86"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "ALWAR",
+        "external_id":  "lgd_district_87"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "BANSWARA",
+        "external_id":  "lgd_district_88"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "BARAN",
+        "external_id":  "lgd_district_89"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "BARMER",
+        "external_id":  "lgd_district_90"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "BHARATPUR",
+        "external_id":  "lgd_district_91"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "BHILWARA",
+        "external_id":  "lgd_district_92"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "BIKANER",
+        "external_id":  "lgd_district_93"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "BUNDI",
+        "external_id":  "lgd_district_94"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "CHITTORGARH",
+        "external_id":  "lgd_district_95"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "CHURU",
+        "external_id":  "lgd_district_96"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "DAUSA",
+        "external_id":  "lgd_district_97"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "DHOLPUR",
+        "external_id":  "lgd_district_98"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "DUNGARPUR",
+        "external_id":  "lgd_district_99"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "GANGANAGAR",
+        "external_id":  "lgd_district_100"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "HANUMANGARH",
+        "external_id":  "lgd_district_101"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "JAIPUR",
+        "external_id":  "lgd_district_102"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "JAISALMER",
+        "external_id":  "lgd_district_103"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "JALORE",
+        "external_id":  "lgd_district_104"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "JHALAWAR",
+        "external_id":  "lgd_district_105"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "JHUNJHUNU",
+        "external_id":  "lgd_district_106"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "JODHPUR",
+        "external_id":  "lgd_district_107"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "KARAULI",
+        "external_id":  "lgd_district_108"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "KOTA",
+        "external_id":  "lgd_district_109"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "NAGAUR",
+        "external_id":  "lgd_district_110"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "PALI",
+        "external_id":  "lgd_district_111"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "PRATAPGARH",
+        "external_id":  "lgd_district_629"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "RAJSAMAND",
+        "external_id":  "lgd_district_112"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "SAWAI MADHOPUR",
+        "external_id":  "lgd_district_113"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "SIKAR",
+        "external_id":  "lgd_district_114"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "SIROHI",
+        "external_id":  "lgd_district_115"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "TONK",
+        "external_id":  "lgd_district_116"
+    },
+    {
+        "state_name":  "RAJASTHAN",
+        "district_name":  "UDAIPUR",
+        "external_id":  "lgd_district_117"
+    },
+    {
+        "state_name":  "SIKKIM",
+        "district_name":  "EAST DISTRICT",
+        "external_id":  "lgd_district_225"
+    },
+    {
+        "state_name":  "SIKKIM",
+        "district_name":  "NORTH DISTRICT",
+        "external_id":  "lgd_district_226"
+    },
+    {
+        "state_name":  "SIKKIM",
+        "district_name":  "SOUTH DISTRICT",
+        "external_id":  "lgd_district_227"
+    },
+    {
+        "state_name":  "SIKKIM",
+        "district_name":  "WEST DISTRICT",
+        "external_id":  "lgd_district_228"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "Ariyalur",
+        "external_id":  "lgd_district_610"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "CHENGALPATTU",
+        "external_id":  "lgd_district_730"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "CHENNAI",
+        "external_id":  "lgd_district_568"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "COIMBATORE",
+        "external_id":  "lgd_district_569"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "CUDDALORE",
+        "external_id":  "lgd_district_570"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "DHARMAPURI",
+        "external_id":  "lgd_district_571"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "DINDIGUL",
+        "external_id":  "lgd_district_572"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "ERODE",
+        "external_id":  "lgd_district_573"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "KALLAKURICHI",
+        "external_id":  "lgd_district_729"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "KANCHIPURAM",
+        "external_id":  "lgd_district_574"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "KANNIYAKUMARI",
+        "external_id":  "lgd_district_575"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "KARUR",
+        "external_id":  "lgd_district_576"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "KRISHNAGIRI",
+        "external_id":  "lgd_district_577"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "MADURAI",
+        "external_id":  "lgd_district_578"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "NAGAPATTINAM",
+        "external_id":  "lgd_district_579"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "NAMAKKAL",
+        "external_id":  "lgd_district_580"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "PERAMBALUR",
+        "external_id":  "lgd_district_581"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "PUDUKKOTTAI",
+        "external_id":  "lgd_district_582"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "RAMANATHAPURAM",
+        "external_id":  "lgd_district_583"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "Ranipet",
+        "external_id":  "lgd_district_731"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "SALEM",
+        "external_id":  "lgd_district_584"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "SIVAGANGA",
+        "external_id":  "lgd_district_585"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "TENKASI",
+        "external_id":  "lgd_district_733"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "THANJAVUR",
+        "external_id":  "lgd_district_586"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "THE NILGIRIS",
+        "external_id":  "lgd_district_587"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "THENI",
+        "external_id":  "lgd_district_588"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "THIRUVALLUR",
+        "external_id":  "lgd_district_589"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "THIRUVARUR",
+        "external_id":  "lgd_district_590"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "TIRUCHIRAPPALLI",
+        "external_id":  "lgd_district_591"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "TIRUNELVELI",
+        "external_id":  "lgd_district_592"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "Tirupathur",
+        "external_id":  "lgd_district_732"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "TIRUPPUR",
+        "external_id":  "lgd_district_634"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "TIRUVANNAMALAI",
+        "external_id":  "lgd_district_593"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "TUTICORIN",
+        "external_id":  "lgd_district_594"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "VELLORE",
+        "external_id":  "lgd_district_595"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "VILLUPURAM",
+        "external_id":  "lgd_district_596"
+    },
+    {
+        "state_name":  "TAMIL NADU",
+        "district_name":  "VIRUDHUNAGAR",
+        "external_id":  "lgd_district_597"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "ADILABAD",
+        "external_id":  "lgd_district_501"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "BHADRADRI KOTHAGUDEM",
+        "external_id":  "lgd_district_690"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "HYDERABAD",
+        "external_id":  "lgd_district_507"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "Jagitial",
+        "external_id":  "lgd_district_681"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "JANGOAN",
+        "external_id":  "lgd_district_689"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "JAYASHANKAR BHUPALAPALLY",
+        "external_id":  "lgd_district_687"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "JOGULAMBA GADWAL",
+        "external_id":  "lgd_district_695"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "KAMAREDDY",
+        "external_id":  "lgd_district_685"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "KARIMNAGAR",
+        "external_id":  "lgd_district_508"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "KHAMMAM",
+        "external_id":  "lgd_district_509"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "KUMURAM BHEEM ASIFABAD",
+        "external_id":  "lgd_district_699"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "MAHABUBABAD",
+        "external_id":  "lgd_district_688"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "MAHABUBNAGAR",
+        "external_id":  "lgd_district_512"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "MANCHERIAL",
+        "external_id":  "lgd_district_684"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "MEDAK",
+        "external_id":  "lgd_district_513"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "MEDCHAL MALKAJGIRI",
+        "external_id":  "lgd_district_700"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "Mulugu",
+        "external_id":  "lgd_district_720"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "NAGARKURNOOL",
+        "external_id":  "lgd_district_694"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "NALGONDA",
+        "external_id":  "lgd_district_514"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "Narayanpet",
+        "external_id":  "lgd_district_721"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "Nirmal",
+        "external_id":  "lgd_district_680"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "NIZAMABAD",
+        "external_id":  "lgd_district_516"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "PEDDAPALLI",
+        "external_id":  "lgd_district_682"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "RAJANNA SIRCILLA",
+        "external_id":  "lgd_district_683"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "RANGA REDDY",
+        "external_id":  "lgd_district_518"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "SANGAREDDY",
+        "external_id":  "lgd_district_691"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "SIDDIPET",
+        "external_id":  "lgd_district_692"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "SURYAPET",
+        "external_id":  "lgd_district_696"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "VIKARABAD",
+        "external_id":  "lgd_district_698"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "WANAPARTHY",
+        "external_id":  "lgd_district_693"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "WARANGAL RURAL",
+        "external_id":  "lgd_district_522"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "WARANGAL URBAN",
+        "external_id":  "lgd_district_686"
+    },
+    {
+        "state_name":  "TELANGANA",
+        "district_name":  "YADADRI BHUVANAGIRI",
+        "external_id":  "lgd_district_697"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "Dhalai",
+        "external_id":  "lgd_district_269"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "Gomati",
+        "external_id":  "lgd_district_654"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "Khowai",
+        "external_id":  "lgd_district_652"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "North Tripura",
+        "external_id":  "lgd_district_270"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "Sepahijala",
+        "external_id":  "lgd_district_653"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "South Tripura",
+        "external_id":  "lgd_district_271"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "Unakoti",
+        "external_id":  "lgd_district_655"
+    },
+    {
+        "state_name":  "TRIPURA",
+        "district_name":  "West Tripura",
+        "external_id":  "lgd_district_272"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "AGRA",
+        "external_id":  "lgd_district_118"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "ALIGARH",
+        "external_id":  "lgd_district_119"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "AMBEDKAR NAGAR",
+        "external_id":  "lgd_district_121"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "Amethi",
+        "external_id":  "lgd_district_640"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "AMROHA",
+        "external_id":  "lgd_district_154"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "AURAIYA",
+        "external_id":  "lgd_district_122"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "AYODHYA",
+        "external_id":  "lgd_district_140"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "AZAMGARH",
+        "external_id":  "lgd_district_123"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BAGHPAT",
+        "external_id":  "lgd_district_124"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BAHRAICH",
+        "external_id":  "lgd_district_125"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BALLIA",
+        "external_id":  "lgd_district_126"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BALRAMPUR",
+        "external_id":  "lgd_district_127"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BANDA",
+        "external_id":  "lgd_district_128"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BARABANKI",
+        "external_id":  "lgd_district_129"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BAREILLY",
+        "external_id":  "lgd_district_130"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BASTI",
+        "external_id":  "lgd_district_131"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BHADOHI",
+        "external_id":  "lgd_district_179"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BIJNOR",
+        "external_id":  "lgd_district_132"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BUDAUN",
+        "external_id":  "lgd_district_133"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "BULANDSHAHR",
+        "external_id":  "lgd_district_134"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "CHANDAULI",
+        "external_id":  "lgd_district_135"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "CHITRAKOOT",
+        "external_id":  "lgd_district_136"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "DEORIA",
+        "external_id":  "lgd_district_137"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "ETAH",
+        "external_id":  "lgd_district_138"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "ETAWAH",
+        "external_id":  "lgd_district_139"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "FARRUKHABAD",
+        "external_id":  "lgd_district_141"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "FATEHPUR",
+        "external_id":  "lgd_district_142"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "FIROZABAD",
+        "external_id":  "lgd_district_143"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "GAUTAM BUDDHA NAGAR",
+        "external_id":  "lgd_district_144"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "GHAZIABAD",
+        "external_id":  "lgd_district_145"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "GHAZIPUR",
+        "external_id":  "lgd_district_146"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "GONDA",
+        "external_id":  "lgd_district_147"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "GORAKHPUR",
+        "external_id":  "lgd_district_148"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "HAMIRPUR",
+        "external_id":  "lgd_district_149"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "HAPUR",
+        "external_id":  "lgd_district_661"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "HARDOI",
+        "external_id":  "lgd_district_150"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "HATHRAS",
+        "external_id":  "lgd_district_163"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "JALAUN",
+        "external_id":  "lgd_district_151"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "JAUNPUR",
+        "external_id":  "lgd_district_152"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "JHANSI",
+        "external_id":  "lgd_district_153"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "KANNAUJ",
+        "external_id":  "lgd_district_155"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "KANPUR DEHAT",
+        "external_id":  "lgd_district_156"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "KANPUR NAGAR",
+        "external_id":  "lgd_district_157"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "Kasganj",
+        "external_id":  "lgd_district_633"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "KAUSHAMBI",
+        "external_id":  "lgd_district_158"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "KHERI",
+        "external_id":  "lgd_district_159"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "KUSHI NAGAR",
+        "external_id":  "lgd_district_160"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "LALITPUR",
+        "external_id":  "lgd_district_161"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "LUCKNOW",
+        "external_id":  "lgd_district_162"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MAHARAJGANJ",
+        "external_id":  "lgd_district_164"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MAHOBA",
+        "external_id":  "lgd_district_165"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MAINPURI",
+        "external_id":  "lgd_district_166"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MATHURA",
+        "external_id":  "lgd_district_167"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MAU",
+        "external_id":  "lgd_district_168"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MEERUT",
+        "external_id":  "lgd_district_169"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MIRZAPUR",
+        "external_id":  "lgd_district_170"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MORADABAD",
+        "external_id":  "lgd_district_171"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "MUZAFFARNAGAR",
+        "external_id":  "lgd_district_172"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "PILIBHIT",
+        "external_id":  "lgd_district_173"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "PRATAPGARH",
+        "external_id":  "lgd_district_174"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "PRAYAGRAJ",
+        "external_id":  "lgd_district_120"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "RAE BARELI",
+        "external_id":  "lgd_district_175"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "RAMPUR",
+        "external_id":  "lgd_district_176"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SAHARANPUR",
+        "external_id":  "lgd_district_177"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SAMBHAL",
+        "external_id":  "lgd_district_659"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SANT KABEER NAGAR",
+        "external_id":  "lgd_district_178"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SHAHJAHANPUR",
+        "external_id":  "lgd_district_180"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SHAMLI",
+        "external_id":  "lgd_district_660"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SHRAVASTI",
+        "external_id":  "lgd_district_181"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SIDDHARTH NAGAR",
+        "external_id":  "lgd_district_182"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SITAPUR",
+        "external_id":  "lgd_district_183"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SONBHADRA",
+        "external_id":  "lgd_district_184"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "SULTANPUR",
+        "external_id":  "lgd_district_185"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "UNNAO",
+        "external_id":  "lgd_district_186"
+    },
+    {
+        "state_name":  "UTTAR PRADESH",
+        "district_name":  "VARANASI",
+        "external_id":  "lgd_district_187"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "ALMORA",
+        "external_id":  "lgd_district_45"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "BAGESHWAR",
+        "external_id":  "lgd_district_46"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "CHAMOLI",
+        "external_id":  "lgd_district_47"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "CHAMPAWAT",
+        "external_id":  "lgd_district_48"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "DEHRADUN",
+        "external_id":  "lgd_district_49"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "HARIDWAR",
+        "external_id":  "lgd_district_50"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "NAINITAL",
+        "external_id":  "lgd_district_51"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "PAURI GARHWAL",
+        "external_id":  "lgd_district_52"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "PITHORAGARH",
+        "external_id":  "lgd_district_53"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "RUDRA PRAYAG",
+        "external_id":  "lgd_district_54"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "TEHRI GARHWAL",
+        "external_id":  "lgd_district_55"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "UDAM SINGH NAGAR",
+        "external_id":  "lgd_district_56"
+    },
+    {
+        "state_name":  "UTTARAKHAND",
+        "district_name":  "UTTAR KASHI",
+        "external_id":  "lgd_district_57"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "24 PARAGANAS NORTH",
+        "external_id":  "lgd_district_303"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "24 PARAGANAS SOUTH",
+        "external_id":  "lgd_district_304"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "Alipurduar",
+        "external_id":  "lgd_district_664"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "BANKURA",
+        "external_id":  "lgd_district_305"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "BIRBHUM",
+        "external_id":  "lgd_district_307"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "COOCHBEHAR",
+        "external_id":  "lgd_district_308"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "DARJEELING",
+        "external_id":  "lgd_district_309"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "DINAJPUR DAKSHIN",
+        "external_id":  "lgd_district_310"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "DINAJPUR UTTAR",
+        "external_id":  "lgd_district_311"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "HOOGHLY",
+        "external_id":  "lgd_district_312"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "HOWRAH",
+        "external_id":  "lgd_district_313"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "JALPAIGURI",
+        "external_id":  "lgd_district_314"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "Jhargram",
+        "external_id":  "lgd_district_703"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "KALIMPONG",
+        "external_id":  "lgd_district_702"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "KOLKATA",
+        "external_id":  "lgd_district_315"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "MALDAH",
+        "external_id":  "lgd_district_316"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "MEDINIPUR EAST",
+        "external_id":  "lgd_district_317"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "MEDINIPUR WEST",
+        "external_id":  "lgd_district_318"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "MURSHIDABAD",
+        "external_id":  "lgd_district_319"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "NADIA",
+        "external_id":  "lgd_district_320"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "PASCHIM BARDHAMAN",
+        "external_id":  "lgd_district_704"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "PURBA BARDHAMAN",
+        "external_id":  "lgd_district_306"
+    },
+    {
+        "state_name":  "WEST BENGAL",
+        "district_name":  "PURULIA",
+        "external_id":  "lgd_district_321"
+    }
+]

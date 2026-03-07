@@ -1,0 +1,54 @@
+﻿{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Zyrovia{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="{% url 'core:dashboard' %}">Zyrovia</a>
+      <nav class="top-nav">
+        <a href="{% url 'core:dashboard' %}">Home</a>
+        <a href="{% url 'nearride:dashboard' %}">NearRide</a>
+        <a href="{% url 'nearshop:dashboard' %}">NearShop</a>
+        <a href="{% url 'nearservice:dashboard' %}">NearService</a>
+        {% if request.user.is_staff %}
+          <a href="{% url 'control:dashboard' %}">Admin</a>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+          <span class="profile-pill">{{ request.user.full_name|default:request.user.phone_number }}</span>
+          <a href="{% url 'users:profile' %}">Profile</a>
+          <a class="btn ghost" href="{% url 'users:logout' %}">Logout</a>
+        {% else %}
+          <a href="{% url 'users:login' %}">Login</a>
+          <a class="btn" href="{% url 'users:register' %}">Create Account</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p>Zyrovia Platform</p>
+      <p class="subtext">NearRide · NearShop · NearService</p>
+    </div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

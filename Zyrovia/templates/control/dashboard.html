@@ -1,0 +1,46 @@
+﻿{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Platform Overview</h1>
+<div class="admin-cards">
+  <article class="admin-card"><h4>Total Users</h4><p>{{ users_count }}</p></article>
+  <article class="admin-card"><h4>Total Drivers</h4><p>{{ drivers_count }}</p></article>
+  <article class="admin-card"><h4>Total Shops</h4><p>{{ shops_count }}</p></article>
+  <article class="admin-card"><h4>Total Providers</h4><p>{{ service_providers_count }}</p></article>
+  <article class="admin-card"><h4>Total Rides</h4><p>{{ rides_count }}</p></article>
+  <article class="admin-card"><h4>Total Products</h4><p>{{ products_count }}</p></article>
+  <article class="admin-card"><h4>Service Requests</h4><p>{{ service_requests_count }}</p></article>
+  <article class="admin-card"><h4>Shop Interactions</h4><p>{{ shop_interactions }}</p></article>
+</div>
+
+<div class="profile-grid" style="margin-top:16px;">
+  <article class="panel">
+    <h3>Recent Activity</h3>
+    <div class="ride-list">
+      {% for item in recent_items %}
+        <div class="ride-row"><span>{{ item.label }}</span><span class="subtext">{{ item.time|date:"M d, H:i" }}</span></div>
+      {% empty %}
+        <p class="subtext">No activity yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <h3>Basic Analytics</h3>
+    <table class="admin-table">
+      <thead><tr><th>Date</th><th>New Users</th><th>Rides</th><th>Service Requests</th></tr></thead>
+      <tbody>
+        {% for row in analytics_rows %}
+          <tr>
+            <td>{{ row.day }}</td>
+            <td>{{ row.users }}</td>
+            <td>{{ row.rides }}</td>
+            <td>{{ row.services }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4">No analytics yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </article>
+</div>
+{% endblock %}

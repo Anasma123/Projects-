@@ -1,0 +1,44 @@
+{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Location Requests</h1>
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Hierarchy</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Reviewed</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for req in requests_list %}
+      <tr>
+        <td>{{ req.id }}</td>
+        <td>{{ req.requested_by.full_name }}</td>
+        <td>{{ req.country_name }} / {{ req.state_name }} / {{ req.district_name }} / {{ req.locality_name }}</td>
+        <td>{{ req.get_status_display }}</td>
+        <td>{{ req.created_at|date:"M d, Y H:i" }}</td>
+        <td>{{ req.reviewed_at|date:"M d, Y H:i"|default:"-" }}</td>
+        <td>
+          {% if req.status == 'pending' %}
+            <form method="post" class="inline-form">
+              {% csrf_token %}
+              <input type="hidden" name="request_id" value="{{ req.id }}">
+              <input type="text" name="admin_note" maxlength="255" placeholder="Admin note (optional)">
+              <button class="btn" type="submit" name="action" value="approve">Approve</button>
+              <button class="btn ghost" type="submit" name="action" value="reject">Reject</button>
+            </form>
+          {% else %}
+            <span class="subtext">{{ req.admin_note|default:"Reviewed" }}</span>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="7">No location requests found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

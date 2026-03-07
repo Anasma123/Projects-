@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}My Drivers | NearRide{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="auth-card">
+    <h1>My Drivers</h1>
+    <p><a class="btn" href="{% url 'nearride:become-driver' %}">Add New Driver</a></p>
+    {% if drivers %}
+      <div style="display:grid;gap:12px;">
+        {% for driver in drivers %}
+          <div style="border:1px solid #e5e7eb;border-radius:12px;padding:12px;">
+            <h3 style="margin:0 0 8px;">{{ driver.name }}</h3>
+            <p style="margin:0 0 4px;">{{ driver.get_vehicle_type_display }} | {{ driver.vehicle_number }}</p>
+            <p style="margin:0 0 8px;">{{ driver.phone_number }} | {{ driver.district.name|default:"N/A" }} | {{ driver.locality.name|default:"N/A" }}</p>
+            <p style="margin:0 0 10px;">
+              <span style="display:inline-block;padding:2px 8px;border-radius:999px;background:{% if driver.is_online %}#dcfce7{% else %}#e5e7eb{% endif %};color:{% if driver.is_online %}#166534{% else %}#374151{% endif %};font-weight:600;">
+                {{ driver.is_online|yesno:"Online,Offline" }}
+              </span>
+            </p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a class="btn" href="{% url 'nearride:edit-driver' driver.id %}">Edit</a>
+              <form method="post" action="{% url 'nearride:toggle-driver-status-by-id' driver.id %}">
+                {% csrf_token %}
+                <button class="btn" type="submit">Toggle Status</button>
+              </form>
+              <a class="btn" href="{% url 'nearride:delete-driver' driver.id %}">Delete</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No drivers yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

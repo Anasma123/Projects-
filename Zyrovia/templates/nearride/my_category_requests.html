@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}My Ride Category Requests | NearRide{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>My Ride Category Requests</h1>
+  <div class="ride-list">
+    {% for req in requests_list %}
+      <div class="ride-row">
+        <div>
+          <strong>{{ req.category_name }}</strong>
+          <p class="subtext">{{ req.description|default:"No description" }}</p>
+          {% if req.admin_note %}<p class="subtext">Admin Note: {{ req.admin_note }}</p>{% endif %}
+        </div>
+        <span class="status-badge {{ req.status }}">{{ req.get_status_display }}</span>
+      </div>
+    {% empty %}
+      <p class="empty-state">No ride category requests yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

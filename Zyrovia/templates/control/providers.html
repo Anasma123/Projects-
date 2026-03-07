@@ -1,0 +1,23 @@
+﻿{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Service Provider Management</h1>
+<table class="admin-table">
+  <thead><tr><th>Provider</th><th>Category</th><th>Verified</th><th>Active</th><th>Available</th><th>Rating</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for provider in providers %}
+      <tr>
+        <td>{{ provider.user.full_name }}</td>
+        <td>{{ provider.category.name }}</td>
+        <td>{{ provider.is_verified|yesno:"Yes,No" }}</td>
+        <td>{{ provider.is_active|yesno:"Yes,No" }}</td>
+        <td>{{ provider.is_available|yesno:"Yes,No" }}</td>
+        <td>{{ provider.rating_average }}</td>
+        <td>
+          <form method="post" style="display:inline;">{% csrf_token %}<input type="hidden" name="provider_id" value="{{ provider.id }}"><input type="hidden" name="action" value="toggle_verified"><button class="btn ghost" type="submit">Approve/Unapprove</button></form>
+          <form method="post" style="display:inline;">{% csrf_token %}<input type="hidden" name="provider_id" value="{{ provider.id }}"><input type="hidden" name="action" value="toggle_active"><button class="btn ghost" type="submit">Enable/Disable</button></form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

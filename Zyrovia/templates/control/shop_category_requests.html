@@ -1,0 +1,56 @@
+{% extends "control/base.html" %}
+{% block control_content %}
+<h1>Shop Category Requests</h1>
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Requested By</th>
+      <th>Category Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for req in requests_list %}
+      <tr>
+        <td>{{ req.id }}</td>
+        <td>{{ req.requested_by.full_name }}</td>
+        <td>
+          {% if req.status == 'pending' %}
+            <input type="text" form="shop-request-form-{{ req.id }}" name="category_name" value="{{ req.category_name }}" required>
+          {% else %}
+            {{ req.category_name }}
+          {% endif %}
+        </td>
+        <td>
+          {% if req.status == 'pending' %}
+            <textarea form="shop-request-form-{{ req.id }}" name="description" rows="2">{{ req.description }}</textarea>
+          {% else %}
+            {{ req.description|default:"-" }}
+          {% endif %}
+        </td>
+        <td><span class="status-badge {{ req.status }}">{{ req.get_status_display }}</span></td>
+        <td>{{ req.created_at|date:"M d, Y H:i" }}</td>
+        <td>
+          {% if req.status == 'pending' %}
+            <form method="post" id="shop-request-form-{{ req.id }}">
+              {% csrf_token %}
+              <input type="hidden" name="request_id" value="{{ req.id }}">
+              <input type="text" name="admin_note" placeholder="Optional admin note">
+              <button class="btn" type="submit" name="action" value="approve">Approve</button>
+              <button class="btn ghost" type="submit" name="action" value="reject">Reject</button>
+            </form>
+          {% else %}
+            <p class="subtext">{{ req.admin_note|default:"Reviewed" }}</p>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="7">No shop category requests found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

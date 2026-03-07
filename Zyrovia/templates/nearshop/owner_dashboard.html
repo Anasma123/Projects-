@@ -1,0 +1,43 @@
+﻿{% extends "base.html" %}
+{% block title %}Owner Dashboard | NearShop{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>{{ shop.shop_name }} - Owner Dashboard</h1>
+  <p>{{ shop.category.name|default:shop.shop_category }} • {{ shop.location_text }}</p>
+  <p>⭐ {{ shop.average_rating }} {% if shop.is_verified %}• Verified{% endif %}</p>
+  <div class="actions">
+    <a class="btn" href="{% url 'nearshop:edit-shop' %}">Edit Shop Details</a>
+    <a class="btn ghost" href="{% url 'nearshop:product-management' %}">Manage Products & Offers</a>
+  </div>
+</section>
+
+<section class="profile-grid">
+  <article class="panel">
+    <h2>Products</h2>
+    <div class="ride-list">
+      {% for product in products %}
+        <div class="ride-row">
+          <span>{{ product.product_name }} • ₹{{ product.price }}</span>
+          <span class="status-pill">Stock {{ product.stock_quantity }}</span>
+        </div>
+      {% empty %}
+        <p class="subtext">No products yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <h2>Offers</h2>
+    <div class="ride-list">
+      {% for offer in offers %}
+        <div class="ride-row">
+          <span>{{ offer.title }}</span>
+          <span class="offer-badge">{{ offer.discount_percent }}% OFF</span>
+        </div>
+      {% empty %}
+        <p class="subtext">No offers yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}

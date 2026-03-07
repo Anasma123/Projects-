@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Request Ride Category | NearRide{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <form method="post" class="auth-card" novalidate>
+    {% csrf_token %}
+    <h1>Request New Ride Category</h1>
+    {% if form.errors %}<div class="form-errors">{{ form.errors }}</div>{% endif %}
+    <label>Category Name {{ form.category_name }}</label>
+    <label>Description {{ form.description }}</label>
+    <button class="btn" type="submit">Submit Request</button>
+  </form>
+</section>
+{% endblock %}

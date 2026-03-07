@@ -1,0 +1,97 @@
+﻿{% extends "base.html" %}
+{% block title %}NearService | Zyrovia{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">NearService</p>
+  <h1>Book trusted local professionals in minutes.</h1>
+  <p>Browse categories and providers in guest mode. Sign in to request and manage services.</p>
+</section>
+
+<section class="ride-cta-grid">
+  <a class="panel ride-cta" href="{% url 'nearservice:categories' %}">
+    <h2>Service Categories</h2>
+    <p>Explore active categories like Electrician, Plumber, and more.</p>
+  </a>
+  <a class="panel ride-cta" href="{% url 'nearservice:provider-list' %}">
+    <h2>Find Providers</h2>
+    <p>Compare providers by category, location, and rating.</p>
+  </a>
+  {% if request.user.is_authenticated %}
+    <a class="panel ride-cta" href="{% url 'nearservice:request-service' %}">
+      <h2>Request Service</h2>
+      <p>Create a service request with category and provider selection.</p>
+    </a>
+    <a class="panel ride-cta" href="{% url 'nearservice:request-category' %}">
+      <h2>Request New Category</h2>
+      <p>Suggest a missing service category for admin approval.</p>
+    </a>
+  {% else %}
+    <a class="panel ride-cta" href="{% url 'users:login' %}?next={% url 'nearservice:request-service' %}">
+      <h2>Request Service</h2>
+      <p>Login to create service bookings.</p>
+    </a>
+  {% endif %}
+</section>
+
+<section class="profile-grid">
+  <article class="panel">
+    <h2>Active Categories</h2>
+    <div class="ride-list">
+      {% for category in categories %}
+        <div class="ride-row">
+          <span>{{ category.name }}</span>
+          <span class="status-pill">Active</span>
+        </div>
+      {% empty %}
+        <p class="subtext">No categories available.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <h2>Available Providers</h2>
+    <div class="ride-list">
+      {% for provider in providers %}
+        <a class="ride-row" href="{% url 'nearservice:provider-profile' provider.id %}">
+          <span>{{ provider.user.full_name }} • {{ provider.category.name }} • {{ provider.state.name|default:"Location N/A" }}</span>
+          <span class="status-pill">⭐ {{ provider.rating_average }}</span>
+        </a>
+      {% empty %}
+        <p class="subtext">No providers currently available.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+{% if request.user.is_authenticated %}
+<section class="panel" style="margin-top:16px;">
+  {% if provider_profile %}
+    <h2>Your Provider Status</h2>
+    <p>{{ provider_profile.category.name }} • {{ provider_profile.is_available|yesno:"Available,Unavailable" }}</p>
+    <div class="actions">
+      <a class="btn" href="{% url 'nearservice:provider-manage' %}">Manage Provider Profile</a>
+      <a class="btn ghost" href="{% url 'nearservice:provider-dashboard' %}">Provider Dashboard</a>
+    </div>
+  {% else %}
+    <h2>Become a Service Provider</h2>
+    <p class="subtext">Offer your services and receive direct customer requests.</p>
+    <a class="btn" href="{% url 'nearservice:become-provider' %}">Become Provider</a>
+  {% endif %}
+</section>
+
+<section class="panel" style="margin-top:16px;">
+  <h2>Your Category Requests</h2>
+  <a class="btn ghost" href="{% url 'nearservice:my-category-requests' %}">View All Requests</a>
+  <div class="ride-list" style="margin-top:10px;">
+    {% for req in category_requests %}
+      <div class="ride-row">
+        <span>{{ req.category_name }}</span>
+        <span class="status-badge {{ req.status }}">{{ req.get_status_display }}</span>
+      </div>
+    {% empty %}
+      <p class="empty-state">You have not requested any new categories yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

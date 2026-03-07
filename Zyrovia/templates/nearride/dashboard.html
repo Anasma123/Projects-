@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}NearRide | Zyrovia{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">NearRide</p>
+  <h1>Book and manage rides with startup-grade simplicity.</h1>
+  <p>Create rides as a customer, or operate as a driver when online.</p>
+</section>
+
+<section class="ride-cta-grid">
+  <a class="panel ride-cta" href="{% if request.user.is_authenticated %}{% url 'nearride:create-ride' %}{% else %}{% url 'users:login' %}?next={% url 'nearride:create-ride' %}{% endif %}">
+    <h2>Create Ride Request</h2>
+    <p>Choose pickup, destination, and ride type.</p>
+  </a>
+
+  {% if driver_profile %}
+    <article class="panel ride-cta">
+      <h2>Driver Mode</h2>
+      <p>Drivers: {{ driver_profiles|length }} | Pending requests: {{ pending_for_driver }}</p>
+      <p class="subtext">Latest driver: {{ driver_profile.name }} ({{ driver_profile.get_vehicle_type_display }})</p>
+      <a class="btn" href="{% url 'nearride:driver-dashboard' %}">Manage Drivers</a>
+      <p class="subtext">Pending requests for you: {{ pending_for_driver }}</p>
+      <a class="btn ghost" href="{% url 'nearride:driver-requests' %}">View Driver Requests</a>
+    </article>
+  {% else %}
+    <a class="panel ride-cta" href="{% url 'nearride:become-driver' %}">
+      <h2>Become a Driver</h2>
+      <p>Start receiving ride requests with your vehicle profile.</p>
+    </a>
+  {% endif %}
+</section>
+
+<section class="panel" style="margin-bottom:16px;">
+  <form method="get" class="inline-form">
+    <select name="category">
+      <option value="">All Ride Categories</option>
+      {% for category in category_options %}
+        <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn" type="submit">Filter</button>
+  </form>
+  {% if request.user.is_authenticated %}
+    <div class="actions" style="margin-top:10px;">
+      <a class="btn ghost" href="{% url 'nearride:request-category' %}">Request New Ride Category</a>
+      <a class="btn ghost" href="{% url 'nearride:my-ride-category-requests' %}">My Ride Category Requests</a>
+      <a class="btn ghost" href="{% url 'nearride:request-location' %}">Request New Location</a>
+      <a class="btn ghost" href="{% url 'nearride:my-location-requests' %}">My Location Requests</a>
+      <a class="btn ghost" href="{% url 'nearride:my-notifications' %}">Notifications ({{ unread_notifications_count }})</a>
+    </div>
+  {% endif %}
+</section>
+
+{% if request.user.is_authenticated %}
+<section class="panel" style="margin-bottom:16px;">
+  <h2>Recent Notifications</h2>
+  {% if recent_notifications %}
+    <div class="ride-list">
+      {% for note in recent_notifications %}
+        <a class="ride-row" href="{% url 'nearride:ride-detail' note.ride_id %}">
+          <span>{{ note.message }}</span>
+          <span class="status-pill">{{ note.created_at|date:"M d, H:i" }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">No notifications yet.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if is_guest %}
+  <section class="panel">
+    <h2>Guest Mode</h2>
+    <p class="subtext">Sign in to request rides, become a driver, accept requests, chat, call, and rate completed trips.</p>
+    <a class="btn" href="{% url 'users:login' %}?next={% url 'nearride:dashboard' %}">Login to Continue</a>
+  </section>
+{% endif %}
+
+<section class="profile-grid">
+  <article class="panel">
+    <h2>Your Customer Rides</h2>
+    {% if customer_rides %}
+      <div class="ride-list">
+        {% for ride in customer_rides %}
+          <a class="ride-row" href="{% url 'nearride:ride-detail' ride.id %}">
+            <span>#{{ ride.id }} {{ ride.ride_category.name|default:ride.get_ride_type_display }}</span>
+            <span class="status-pill">{{ ride.get_status_display }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No rides requested yet.</p>
+    {% endif %}
+  </article>
+
+  <article class="panel">
+    <h2>Your Driver Rides</h2>
+    {% if driver_rides %}
+      <div class="ride-list">
+        {% for ride in driver_rides %}
+          <a class="ride-row" href="{% url 'nearride:ride-detail' ride.id %}">
+            <span>#{{ ride.id }} {{ ride.ride_category.name|default:ride.get_ride_type_display }}</span>
+            <span class="status-pill">{{ ride.get_status_display }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No driver rides yet.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

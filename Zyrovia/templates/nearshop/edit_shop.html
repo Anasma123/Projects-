@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Edit Shop | NearShop{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <form method="post" class="auth-card" novalidate>
+    {% csrf_token %}
+    <h1>Edit Shop Details</h1>
+    {% if form.errors %}<div class="form-errors">{{ form.errors }}</div>{% endif %}
+    <label>Shop Name {{ form.shop_name }}</label>
+    <label>Shop Category {{ form.category }}</label>
+    <label>Address {{ form.address }}</label>
+    <label>Country {{ form.country }}</label>
+    <label>State {{ form.state }}</label>
+    <label>District {{ form.district }}</label>
+    <label>
+      Search Locality
+      <input type="text" id="id_locality_search" placeholder="Type locality name">
+    </label>
+    <label>Locality {{ form.locality }}</label>
+    <label>Location Text {{ form.location_text }}</label>
+    <label>Phone Number {{ form.phone_number }}</label>
+    <label>Description {{ form.description }}</label>
+    <button class="btn" type="submit">Save Changes</button>
+  </form>
+</section>
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'js/location_dropdowns.js' %}"></script>
+  <script>
+    window.ZyroviaLocationDropdowns && window.ZyroviaLocationDropdowns.init({
+      countryId: 'id_country',
+      stateId: 'id_state',
+      districtId: 'id_district',
+      localityId: 'id_locality',
+      localitySearchId: 'id_locality_search'
+    });
+  </script>
+{% endblock %}
