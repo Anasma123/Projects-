@@ -1,4 +1,4 @@
 Django==5.1.5
 gunicorn==23.0.0
 psycopg[binary]==3.2.3
-python-3.11.9
+whitenoise==6.7.0
