@@ -860,3 +860,148 @@ main {
         transition: none !important;
     }
 }
+
+/* ── MSF Social Media Footer Section ─────────────────────────────────────── */
+.msf-social-section {
+    position: relative;
+    z-index: 10;
+    padding: 70px 18px 60px;
+    background: linear-gradient(180deg,
+        rgba(3, 12, 7, 0) 0%,
+        rgba(3, 12, 7, 0.85) 40%,
+        rgba(3, 12, 7, 0.98) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.msf-social-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.msf-social-header {
+    margin-bottom: 40px;
+}
+
+.msf-social-label {
+    display: inline-block;
+    color: var(--gold);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.msf-social-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-family: var(--font-heading);
+    color: var(--white);
+    font-weight: 900;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+}
+
+.msf-social-sub {
+    color: var(--gray-text);
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.msf-social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.msf-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    transition:
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.35s;
+    position: relative;
+    overflow: hidden;
+}
+
+.msf-pill i {
+    font-size: 1.15rem;
+    line-height: 1;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.msf-pill:hover {
+    transform: translateY(-4px) scale(1.04);
+    filter: brightness(1.12);
+}
+
+.msf-pill:hover i {
+    transform: rotate(-8deg) scale(1.15);
+}
+
+/* Instagram */
+.msf-instagram {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    box-shadow: 0 8px 28px rgba(253, 29, 29, 0.35);
+}
+.msf-instagram:hover {
+    box-shadow: 0 16px 42px rgba(253, 29, 29, 0.5);
+}
+
+/* Facebook */
+.msf-facebook {
+    background: linear-gradient(135deg, #1877f2, #0d5ec9);
+    box-shadow: 0 8px 28px rgba(24, 119, 242, 0.35);
+}
+.msf-facebook:hover {
+    box-shadow: 0 16px 42px rgba(24, 119, 242, 0.5);
+}
+
+/* YouTube */
+.msf-youtube {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    box-shadow: 0 8px 28px rgba(255, 0, 0, 0.35);
+}
+.msf-youtube:hover {
+    box-shadow: 0 16px 42px rgba(255, 0, 0, 0.5);
+}
+
+/* WhatsApp */
+.msf-whatsapp {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
+}
+.msf-whatsapp:hover {
+    box-shadow: 0 16px 42px rgba(37, 211, 102, 0.5);
+}
+
+/* Gmail */
+.msf-gmail {
+    background: linear-gradient(135deg, #ea4335, #b31412);
+    box-shadow: 0 8px 28px rgba(234, 67, 53, 0.35);
+}
+.msf-gmail:hover {
+    box-shadow: 0 16px 42px rgba(234, 67, 53, 0.5);
+}
+
+@media (max-width: 540px) {
+    .msf-social-links {
+        gap: 10px;
+    }
+    .msf-pill {
+        padding: 12px 18px;
+        font-size: 0.88rem;
+    }
+}

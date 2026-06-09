@@ -206,120 +206,197 @@ document.addEventListener('keydown', function (e) {
 let currentUploadedImage = null;
 let officialPosterLoaded = false;
 const officialPosterImg = new Image();
-officialPosterImg.src = 'assets/official-poster.jpeg';
-officialPosterImg.onload = function() {
+
+// Simple direct load — background.jpeg is always same-origin (file:// or localhost),
+// so no CORS issue and canvas will NOT be tainted.
+officialPosterImg.onload = function () {
     officialPosterLoaded = true;
+    if (typeof refreshPosterGlobal === 'function') refreshPosterGlobal();
 };
+officialPosterImg.onerror = function () {
+    console.error('background.jpeg load failed — check assets/ folder');
+};
+officialPosterImg.src = 'assets/background.jpeg';
+
+
+function drawRoundedRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+}
 
 function drawPoster(userImg, nameText) {
     const canvas = document.getElementById('posterCanvas');
     if (!canvas || !officialPosterLoaded) return;
     const ctx = canvas.getContext('2d');
-    
-    // Set canvas dimensions dynamically to match the official poster
-    canvas.width = officialPosterImg.width;
-    canvas.height = officialPosterImg.height;
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // 1. Draw the base official poster background
-    ctx.drawImage(officialPosterImg, 0, 0, canvas.width, canvas.height);
-    
-    // 2. Calculate coordinates dynamically based on canvas dimensions (e.g. 750x1060 base)
-    const baseW = 750;
-    const baseH = 1060;
-    const scale = canvas.width / baseW;
-    
-    // 3. User photo circular frame in the bottom-left wave area (positioned below Y: 800 to avoid text overlap)
-    const cx = 105 * scale;
-    const cy = 900 * scale;
-    const r = 58 * scale;
-    
+
+    // background.jpeg is square (1080x1080). Lock canvas to 1080x1080.
+    const SIZE = 1080;
+    canvas.width  = SIZE;
+    canvas.height = SIZE;
+    ctx.clearRect(0, 0, SIZE, SIZE);
+
+    // 1. Draw background.jpeg scaled to fill the square canvas
+    const bw = officialPosterImg.width  || SIZE;
+    const bh = officialPosterImg.height || SIZE;
+    const bScale = Math.max(SIZE / bw, SIZE / bh);
+    const bDrawW = bw * bScale;
+    const bDrawH = bh * bScale;
+    ctx.drawImage(officialPosterImg,
+        (SIZE - bDrawW) / 2, (SIZE - bDrawH) / 2,
+        bDrawW, bDrawH);
+
+    // ── Layout constants ──────────────────────────────────────────────────────
+    // The background has:
+    //   top band  : ~0 – 230px  (logo + title + date)
+    //   empty zone: ~230 – 770px  ← we place content here
+    //   bottom band: ~770 – 1080px (event info)
+    const ZONE_TOP    = 250;   // top of the empty center zone
+    const ZONE_BOTTOM = 760;   // bottom of the empty center zone
+    const ZONE_MID_Y  = (ZONE_TOP + ZONE_BOTTOM) / 2;  // ≈ 505
+
+    const LEFT_CX  = SIZE * 0.27;   // photo circle center-x  (left third)
+    const RIGHT_CX = SIZE * 0.68;   // text block center-x    (right portion)
+
+    // ── Photo radius ─────────────────────────────────────────────────────────
+    const R = 155;   // radius in px
+    const photocy = ZONE_MID_Y + 10;
+
+    // ── 2. Draw outer glow ring ───────────────────────────────────────────────
+    const gradient = ctx.createRadialGradient(
+        LEFT_CX, photocy, R + 4,
+        LEFT_CX, photocy, R + 22
+    );
+    gradient.addColorStop(0,   'rgba(21,122,70,0.55)');
+    gradient.addColorStop(0.5, 'rgba(21,122,70,0.20)');
+    gradient.addColorStop(1,   'rgba(21,122,70,0.00)');
+    ctx.beginPath();
+    ctx.arc(LEFT_CX, photocy, R + 22, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // ── 3. Clip & draw user photo ─────────────────────────────────────────────
     if (userImg) {
         ctx.save();
         ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.arc(LEFT_CX, photocy, R, 0, Math.PI * 2);
         ctx.closePath();
         ctx.clip();
-        
-        const imgWidth = userImg.width;
-        const imgHeight = userImg.height;
-        const imgRatio = imgWidth / imgHeight;
-        
-        let drawWidth, drawHeight, drawX, drawY;
-        if (imgRatio > 1) {
-            drawHeight = r * 2;
-            drawWidth = drawHeight * imgRatio;
-            drawX = cx - drawWidth / 2;
-            drawY = cy - r;
+
+        const ir = userImg.width / userImg.height;
+        let dw, dh, dx, dy;
+        if (ir > 1) {
+            dh = R * 2;  dw = dh * ir;
+            dx = LEFT_CX - dw / 2;  dy = photocy - R;
         } else {
-            drawWidth = r * 2;
-            drawHeight = drawWidth / imgRatio;
-            drawX = cx - r;
-            drawY = cy - drawHeight / 2;
+            dw = R * 2;  dh = dw / ir;
+            dx = LEFT_CX - R;  dy = photocy - dh / 2;
         }
-        
-        ctx.drawImage(userImg, drawX, drawY, drawWidth, drawHeight);
+        ctx.drawImage(userImg, dx, dy, dw, dh);
         ctx.restore();
-        
-        // Green Ring matching the theme
-        ctx.strokeStyle = '#157a46';
-        ctx.lineWidth = 3 * scale;
+    } else {
+        // placeholder silhouette
+        ctx.save();
         ctx.beginPath();
-        ctx.arc(cx, cy, r + 1.5 * scale, 0, Math.PI * 2);
-        ctx.stroke();
-    }
-    
-    // 4. Draw name banner below the photo
-    if (nameText) {
-        ctx.font = `800 ${Math.round(15 * scale)}px "Outfit", "Noto Serif Malayalam", sans-serif`;
-        ctx.textAlign = 'center';
-        
-        const textWidth = ctx.measureText(nameText).width;
-        const bannerW = Math.max(90 * scale, textWidth + 18 * scale);
-        const bannerH = 26 * scale;
-        const bannerX = cx - bannerW / 2;
-        const bannerY = (cy + r + 10 * scale);
-        
-        ctx.fillStyle = '#157a46'; // Forest green theme color
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1 * scale;
-        
-        // Rounded corner banner
-        const rx = bannerX;
-        const ry = bannerY;
-        const rw = bannerW;
-        const rh = bannerH;
-        const rad = 5 * scale;
-        
-        ctx.beginPath();
-        ctx.moveTo(rx + rad, ry);
-        ctx.lineTo(rx + rw - rad, ry);
-        ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rad);
-        ctx.lineTo(rx + rw, ry + rh - rad);
-        ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rad, ry + rh);
-        ctx.lineTo(rx + rad, ry + rh);
-        ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rad);
-        ctx.lineTo(rx, ry + rad);
-        ctx.quadraticCurveTo(rx, ry, rx + rad, ry);
-        ctx.closePath();
+        ctx.arc(LEFT_CX, photocy, R, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(200,230,210,0.60)';
         ctx.fill();
-        ctx.stroke();
-        
-        // Name Text inside badge
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(nameText, cx, bannerY + 18 * scale);
+        ctx.restore();
     }
-    
-    // 5. Draw "ഞാനും പങ്കെടുക്കുന്നു!" above the photo
-    ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
-    ctx.shadowBlur = 6 * scale;
-    ctx.fillStyle = '#104e2d'; // Deep green
-    ctx.font = `bold ${Math.round(20 * scale)}px "Chilanka", "Gayathri", cursive`;
-    ctx.fillText('ഞാനും', cx, cy - r - 26 * scale);
-    ctx.fillText('പങ്കെടുക്കുന്നു!', cx, cy - r - 6 * scale);
-    
-    // Reset shadow
+
+    // ── 4. Green border ring ──────────────────────────────────────────────────
+    ctx.strokeStyle = '#157a46';
+    ctx.lineWidth   = 6;
+    ctx.beginPath();
+    ctx.arc(LEFT_CX, photocy, R + 4, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // thin white inner ring
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.lineWidth   = 2.5;
+    ctx.beginPath();
+    ctx.arc(LEFT_CX, photocy, R - 3, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // ── 5. Name badge below photo ─────────────────────────────────────────────
+    if (nameText) {
+        const badgeFontSize = 26;
+        ctx.font = `700 ${badgeFontSize}px "Outfit", sans-serif`;
+        const tw = ctx.measureText(nameText).width;
+        const bW  = tw + 36;
+        const bH  = 40;
+        const bX  = LEFT_CX - bW / 2;
+        const bY  = photocy + R + 16;
+
+        // shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.18)';
+        ctx.shadowBlur  = 8;
+
+        drawRoundedRect(ctx, bX, bY, bW, bH, 10);
+        ctx.fillStyle = '#157a46';
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.fillStyle  = '#ffffff';
+        ctx.textAlign  = 'center';
+        ctx.fillText(nameText, LEFT_CX, bY + bH - 10);
+    }
+
+    // ── 6. Right-side text: "ഞാനും" + "പങ്കെടുക്കുന്നു" ───────────────────────
+    const textBlockCenterY = ZONE_MID_Y;
+
+    // decorative top dash line
+    ctx.strokeStyle = '#157a46';
+    ctx.lineWidth   = 3;
+    ctx.setLineDash([10, 6]);
+    const lineLeft  = RIGHT_CX - 140;
+    const lineRight = RIGHT_CX + 140;
+    ctx.beginPath();
+    ctx.moveTo(lineLeft,  textBlockCenterY - 118);
+    ctx.lineTo(lineRight, textBlockCenterY - 118);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // "ഞാനും"
+    ctx.shadowColor = 'rgba(0,0,0,0.10)';
+    ctx.shadowBlur  = 6;
+    ctx.fillStyle   = '#104e2d';
+    ctx.font        = `bold 72px "Noto Serif Malayalam", "Chilanka", serif`;
+    ctx.textAlign   = 'center';
+    ctx.fillText('ഞാനും', RIGHT_CX, textBlockCenterY - 48);
+
+    // "പങ്കെടുക്കുന്നു"
+    ctx.font      = `900 58px "Noto Serif Malayalam", "Chilanka", serif`;
+    ctx.fillStyle = '#157a46';
+    ctx.fillText('പങ്കെടുക്കുന്നു', RIGHT_CX, textBlockCenterY + 24);
+
+    // decorative bottom dash line
+    ctx.strokeStyle = '#157a46';
+    ctx.lineWidth   = 3;
+    ctx.setLineDash([10, 6]);
+    ctx.beginPath();
+    ctx.moveTo(lineLeft,  textBlockCenterY + 54);
+    ctx.lineTo(lineRight, textBlockCenterY + 54);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // small green dot accent
+    ctx.shadowBlur = 0;
+    [RIGHT_CX - 30, RIGHT_CX, RIGHT_CX + 30].forEach(dotX => {
+        ctx.beginPath();
+        ctx.arc(dotX, textBlockCenterY + 78, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#157a46';
+        ctx.fill();
+    });
+
     ctx.shadowBlur = 0;
 }
 
@@ -381,6 +458,9 @@ function initPosterGenerator() {
         link.click();
     });
     
+    // Expose refreshPoster globally so the background image load callback can call it
+    window.refreshPosterGlobal = refreshPoster;
+
     // If the background image loads after the user has selected their picture
     officialPosterImg.addEventListener('load', function() {
         refreshPoster();
